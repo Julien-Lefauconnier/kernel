@@ -1,4 +1,4 @@
-# kernel/kernel/journals/timeline/timeline_entry.py
+# kernel/journals/timeline/timeline_entry.py
 
 from dataclasses import dataclass, field
 from datetime import datetime
