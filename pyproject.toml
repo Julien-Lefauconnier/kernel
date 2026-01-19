@@ -32,5 +32,7 @@ dependencies = []
 testpaths = ["tests"]
 addopts = "-q"
 
-[tool.setuptools]
-packages = ["kernel"]
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["kernel*"]
+
