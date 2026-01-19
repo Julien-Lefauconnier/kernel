@@ -1,0 +1,14 @@
+# OS
+.DS_Store
+
+# Python bytecode
+__pycache__/
+*.pyc
+
+# Packaging / build
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+.venv/
