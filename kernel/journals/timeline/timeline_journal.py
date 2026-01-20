@@ -3,6 +3,10 @@
 from typing import List
 
 from .timeline_entry import TimelineEntry
+from kernel.invariants.timeline.timeline_invariants import (
+    assert_entry_has_timestamp,
+    assert_monotonic,
+)
 
 
 class TimelineJournal:
@@ -33,9 +37,18 @@ class TimelineJournal:
         """
         Append a timeline entry to the journal.
 
-        The entry must already respect TimelineEntry invariants.
+        Timeline invariants are enforced at append time.
         """
+        # 🔒 Local invariant (explicit)
+        assert_entry_has_timestamp(entry)
+
+        # 🔒 Global invariant (monotonic time)
+        if self._entries:
+            last = self._entries[-1]
+            assert_monotonic(last, entry)
+
         self._entries.append(entry)
+
 
     # ------------------------------------------------------------------
     # Read API
