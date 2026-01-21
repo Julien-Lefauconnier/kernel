@@ -81,3 +81,13 @@ def test_cursor_comparison_with_other_type_fails():
 
     with pytest.raises(TypeError):
         _ = cursor < "not-a-cursor"
+
+def test_cursor_now_factory():
+    before = datetime.utcnow()
+
+    cursor = TimelineCursor.now()
+
+    after = datetime.utcnow()
+
+    assert isinstance(cursor, TimelineCursor)
+    assert before <= cursor.timestamp <= after

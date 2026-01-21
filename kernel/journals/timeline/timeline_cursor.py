@@ -60,3 +60,13 @@ class TimelineCursor:
             ) from exc
 
         return cls(timestamp=ts)
+    
+    # --------------------------------------------------
+    # Factories
+    # --------------------------------------------------
+    @classmethod
+    def now(cls) -> "TimelineCursor":
+        """
+        Convenience constructor for a cursor at current time.
+        """
+        return cls(timestamp=datetime.utcnow())
