@@ -1,381 +1,167 @@
-# Timeline — Journalisation factuelle, gouvernée et lisible (ZKCS / ARVIS)
+# Timeline Kernel
 
-Le module `timeline` définit **comment Veramem expose l’activité observable du système**
-à des fins de **transparence, d’audit et de gouvernance humaine**,
-**sans jamais exposer de raisonnement interne, de contenu utilisateur ou de données sensibles**.
+## Purpose
 
-Ce document décrit **l’état réel et actuel** de la Timeline tel qu’implémenté aujourd’hui, ainsi que son **cadre contractuel** a
+The **Timeline Kernel** provides a **pure, deterministic, zero-knowledge timeline projection layer**.
+It is designed to be **portable, auditable, and reusable** across systems.
 
----
-
-## 🎯 Principe fondamental
-
-> La Timeline n’explique pas comment le système pense.  
-> Elle expose **ce qui est observable**, **quand**, et **sous quelle forme déclarative**.
-
-La Timeline est :
-
-- une **trace**, pas une explication,
-- un **miroir factuel**, pas un narrateur,
-- un **support de gouvernance**, pas un moteur de décision.
-
-Toute narration, interprétation ou causalité est **hors de son périmètre**.
+The kernel exposes **no business logic**, **no inference**, and **no interpretation**.
+It only guarantees **structural and temporal correctness**.
 
 ---
 
-## 🧠 Rôle réel de la Timeline (état actuel)
+## Core Principles
 
-La Timeline n’est plus un simple journal technique.
+The Timeline Kernel:
 
-Elle constitue aujourd’hui :
+- ❌ Does **not** infer intent
+- ❌ Does **not** interpret meaning
+- ❌ Does **not** enrich or mutate events
+- ❌ Does **not** assume domain semantics
 
-- une **trace factuelle immuable** des événements observables,
-- un **miroir déclaratif** d’états système et cognitifs (post-cognitifs),
-- un **socle de gouvernance humaine** et d’audit,
-- une **surface ZKCS vérifiable**, strictement non interprétative.
-
-👉 La Timeline est **passive**, **non prescriptive**, mais **centrale** dans l’architecture Veramem.
-
----
-
-## 🧩 Nature des entrées de Timeline
-
-Chaque entrée de Timeline est :
-
-- déclarative
-- non exécutable
-- non actionnable
-- immuable
-- indépendante du contenu utilisateur
-
-La Timeline distingue explicitement deux **natures sémantiques**.
-
-### 🔹 EVENT — Événement factuel
-
-Un fait ponctuel observable, survenu à un instant précis.
-
-Exemples :
-- action proposée / validée / refusée
-- accès ou modification d’un document
-- feedback humain explicite
-
-Un EVENT **décrit ce qui s’est produit**, sans en déduire causes ou conséquences.
+It **only**:
+- ✅ Preserves temporal ordering
+- ✅ Projects kernel facts into timeline entries
+- ✅ Enforces hard invariants
+- ✅ Remains deterministic and stateless
 
 ---
 
-### 🔹 STATE — État déclaratif
+## Architecture Overview
 
-Un instantané lisible d’un état système ou cognitif.
-
-Exemples :
-- introspection système
-- état de compréhension
-- état de mémoire long terme
-- présence d’une décision humaine (gouvernance)
-
-Un STATE :
-- n’implique aucune causalité
-- ne déclenche aucune action
-- ne prescrit aucun comportement
-
----
-
-## ⏱️ Invariant temporel
-
-Chaque entrée de Timeline :
-
-- possède **obligatoirement** un timestamp
-- est comparable chronologiquement
-- peut être ordonnée de manière déterministe
-
-📌 L’ordre temporel **n’implique aucune causalité**.
+```
+kernel/
+├── invariants/
+│   └── timeline/
+│       └── timeline_invariants.py
+├── journals/
+│   └── timeline/
+│       ├── timeline_entry.py
+│       ├── timeline_journal.py
+│       ├── timeline_reader.py
+│       ├── timeline_projector.py
+│       ├── timeline_query.py
+│       ├── timeline_slice.py
+│       ├── timeline_summary.py
+│       ├── timeline_view.py
+│       └── ...
+├── ports/
+│   └── timeline_port.py
+└── tests/
+    └── test_timeline_*_kernel.py
+```
 
 ---
 
-## 📐 Propriétés invariantes
+## Timeline Invariants (Hard Guarantees)
 
-### 1️⃣ Neutralité sémantique
+Defined in `timeline_invariants.py`:
 
-La Timeline :
-- ne juge pas
-- ne recommande pas
-- ne corrige pas
-- n’explique pas
+1. **Timestamp Presence**
+   - Every `TimelineEntry` MUST have a non-null timestamp.
 
-Elle **expose des faits et des états**, elle **n’interprète jamais**.
+2. **Monotonic Append**
+   - Timeline entries MUST be appended in non-decreasing temporal order.
 
----
+3. **Immutability**
+   - Entries are immutable once created (structurally enforced).
 
-### 2️⃣ Zéro contenu utilisateur
-
-Aucune entrée de Timeline ne contient :
-
-- texte utilisateur
-- prompts ou réponses générées
-- fichiers
-- embeddings
-- raisonnements intermédiaires
-
-Uniquement :
-- des types déclaratifs
-- des métadonnées minimales
-- des états abstraits
-- des références de traçabilité
+These invariants are **normative guarantees** of the kernel.
 
 ---
 
-### 3️⃣ Non-actionnabilité stricte
+## TimelineProjector
 
-Une entrée de Timeline :
+### What it is
 
-- ne déclenche aucune action
-- ne modifie aucun état
-- n’est jamais rejouée
-- n’est jamais interprétée automatiquement
+A **pure projection utility** that converts kernel facts into timeline entries.
 
-La Timeline est **passive par conception**.
+- Stateless
+- Deterministic
+- Optional
+- Replaceable by consumers
 
----
+### What it does
 
-## 🧭 Timeline canonique vs Timeline Views
+- Accepts **unordered kernel events**
+- Sorts them by canonical timestamp
+- Emits `TimelineEntry` objects
 
-la Timeline est explicitement **structurée en deux niveaux**.
+### What it does NOT do
 
-### Timeline canonique (`/timeline`)
-
-- exhaustive
-- factuelle
-- non filtrée
-- orientée système
-- **source unique de vérité**
-
-Elle expose *tout ce qui est observable*.
+- ❌ Infer causality
+- ❌ Enforce business semantics
+- ❌ Modify input events
+- ❌ Persist data
 
 ---
 
-### Timeline Views (`/timeline/views`)
+## Supported Kernel Events
 
-- projections **déclaratives** de lecture
-- filtrées par **rôle explicite**
-- orientées audit, UI et gouvernance
-- **post-cognitives par construction**
+The default projector supports:
 
-Les Views :
-- ne modifient jamais la timeline canonique
-- ne produisent aucune cognition
-- n’interprètent jamais les données
+- `ActionEvent`
+- `ActionValidationEvent`
+- `KnowledgeEvent`
 
-👉 Voir `timeline/views/README.md` pour le contrat détaillé.
+Each event is mapped to a **structural timeline entry** only.
 
 ---
 
-## 🧭 Rôles simultanés assumés
+## Determinism & Zero-Knowledge
 
-La Timeline remplit aujourd’hui plusieurs rôles **distincts mais non confondus** :
+Given the same input events:
 
-1️⃣ **Trace factuelle** — ce qui s’est produit  
-2️⃣ **Awareness & lisibilité humaine** — ce qui est observable  
-3️⃣ **Support de gouvernance** — ce qui peut être audité
+- Output is **always identical**
+- No external state is accessed
+- No hidden knowledge is introduced
 
-👉 Ces rôles sont **explicitement séparés via les Timeline Views**.
-
----
-
-## ⚖️ Gouvernance et accès
-
-- la Timeline canonique est **interne**
-- les Timeline Views sont **exposées via une gouvernance déclarative**
-- l’accès dépend **uniquement du rôle de la view**, jamais de logique implicite
-
-Aucune Timeline View :
-- n’est utilisée comme entrée décisionnelle
-- n’automatise une décision
+This makes the Timeline Kernel:
+- Auditable
+- Replayable
+- Safe for distributed systems
 
 ---
 
-## 🔐 Garanties Zero-Knowledge (ZKCS)
+## Testing Strategy
 
-La Timeline garantit strictement :
+The kernel includes **exhaustive tests** validating:
 
-- ❌ aucune chaîne de pensée
-- ❌ aucun raisonnement sérialisé
-- ❌ aucun contenu utilisateur
-- ❌ aucune reconstruction implicite
-- ❌ aucune inférence cachée
+- Sorting behavior
+- Cursor logic
+- Query slicing
+- View building
+- Invariant enforcement
+- Reader & projector behavior
 
-Chaque entrée est :
-- autonome
-- minimale
-- explicite
-- vérifiable
+All tests must pass for any kernel release.
 
 ---
 
-## 🏗️ Architecture réelle
+## Usage Contract
 
-Le module `timeline` fournit :
+The Timeline Kernel guarantees:
 
-- des entrées immuables (`TimelineEntry`)
-- une taxonomie déclarative (`TimelineEntryType`)
-- un builder stateless (`TimelineBuilder`)
-- des projections publiques (DTO)
-- des résumés factuels (`TimelineSummary`)
-- des **Timeline Views gouvernées** (`TimelineView`)
+- Structural correctness
+- Temporal ordering
+- No semantic coupling
 
-Il ne fournit :
-- aucune logique métier
-- aucune analyse
-- aucune interprétation
-- aucune narration
+Consumers are responsible for:
+- Interpretation
+- Presentation
+- Business meaning
+- UI / UX concerns
 
 ---
 
-## 🚦 Phases couvertes
+## Status
 
- — Clarification sémantique & invariants
- — Timeline Views (domaine)
- — API Timeline Views
- — Gouvernance d’accès
+✅ **Timeline Kernel: COMPLETE & STABLE**
 
-👉 L’ensemble est **implémenté, testé et verrouillé**.
+Future kernel extractions (Audit, Knowledge, Signals) will follow the same model.
 
 ---
 
-## 🧠 Philosophie ARVIS
+## License
 
-- Transparence ≠ exposition
-- Traçabilité ≠ surveillance
-- Gouvernance ≠ automatisation
-- Lisibilité ≠ interprétation
-
-La Timeline est un **miroir factuel gouvernable**, pas un narrateur.
-
-> *Ce que Veramem fait est traçable.*  
-> *Ce que Veramem pense reste privé.*
-
-
-
----
-
-## 🔗 Relation avec les autres modules
-
-### Cognition
-
-La Timeline peut exposer :
-- conflits cognitifs
-- gaps de raisonnement
-- intentions déclaratives
-- états de connaissance ou d’incertitude
-
-Elle ne :
-- reproduit pas la cognition
-- n’enregistre pas le raisonnement
-- n’en déduit rien
-
----
-
-### Action
-
-La Timeline reflète :
-- les actions proposées
-- les décisions utilisateur
-- les refus explicites
-
-Elle ne :
-- déclenche aucune action
-- automatise aucune décision
-- modifie aucun workflow
-
----
-
-### Gouvernance & Control Center
-
-La Timeline est une **source passive** pour :
-- l’audit
-- la gouvernance
-- l’explicabilité
-- la supervision humaine
-
-Elle ne constitue **jamais une autorité décisionnelle**.
-
----
-
-## 🔐 Garanties Zero-Knowledge (ZKCS)
-
-La Timeline garantit strictement :
-
-- ❌ aucune chaîne de pensée
-- ❌ aucun raisonnement sérialisé
-- ❌ aucun contenu utilisateur
-- ❌ aucune reconstruction implicite
-- ❌ aucune inférence cachée
-
-Chaque entrée est :
-- autonome
-- minimale
-- explicite
-- vérifiable
-
----
-
-## 🧭 Philosophie de conception (ARVIS)
-
-- Transparence ≠ exposition
-- Traçabilité ≠ surveillance
-- Audit ≠ contrôle
-- Historique ≠ mémoire sémantique
-- Observation ≠ interprétation
-
-La Timeline est **un miroir factuel**, pas un narrateur.
-
----
-
-## 🚧 Portée actuelle
-
-Le module fournit :
-
-- des structures d’entrées immuables
-- un builder stateless
-- des règles d’ordonnancement
-- une intégration passive avec cognition, action et gouvernance
-
-Il ne fournit :
-
-- aucune logique métier
-- aucune analyse
-- aucune interprétation
-- aucune narration
-
----
-
-## 🔮 Extensions futures (non engageantes)
-
-Potentiels usages futurs :
-
-- vues utilisateur dérivées
-- résumés narratifs (hors Timeline)
-- exports réglementaires
-- audits multi-acteurs
-- visualisations externes
-
-Toute extension :
-- est **hors du contrat Timeline**
-- repose sur des couches supérieures
-- ne modifie pas les invariants
-
----
-
-## 🧠 Résumé
-
-La Timeline est :
-
-- la mémoire temporelle factuelle de Veramem
-- la trace observable de son activité
-- le socle de la transparence ZKCS
-- un pilier de gouvernance ARVIS
-
-Elle montre **ce qui est observable**,  
-sans jamais révéler **ce qui est pensé**.
-
-> *Ce que Veramem fait est traçable.  
-> Ce que Veramem pense reste privé.*
+MIT — free to use, modify, and embed.

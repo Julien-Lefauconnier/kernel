@@ -1,5 +1,18 @@
 # kernel/invariants/timeline/timeline_invariants.py
 
+"""
+TIMELINE KERNEL INVARIANTS (NORMATIVE)
+
+These invariants are HARD GUARANTEES of the kernel.
+Any consumer relying on this kernel may assume they are always true.
+
+The kernel will NEVER:
+- infer intent
+- reorder events semantically
+- enrich entries with meaning
+- mutate entries after append
+"""
+
 from kernel.journals.timeline.timeline_entry import TimelineEntry
 
 

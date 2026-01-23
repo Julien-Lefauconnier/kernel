@@ -1,5 +1,19 @@
 # kernel/journals/timeline/timeline_projector.py
 
+"""
+TimelineProjector is a PURE structural projection tool.
+
+It:
+- does not interpret events
+- does not infer causality
+- does not guarantee semantic ordering
+- does not represent business truth
+
+It is OPTIONAL.
+Consumers MAY replace it with their own projector.
+"""
+
+
 from typing import Iterable, List, Any
 from uuid import uuid4
 from datetime import datetime
@@ -35,21 +49,18 @@ def project_timeline(
 
     - Pure function
     - No side effects
-    - No inference
+    - No inference beyond temporal ordering
     - Zero-knowledge compliant
     """
 
     entries: List[TimelineEntry] = []
 
-    # 1) Sort facts by their canonical timestamp
+    # 1) Sort facts by canonical timestamp
     sorted_events = sorted(events, key=_timestamp)
 
     # 2) Project facts → timeline entries
     for evt in sorted_events:
-        
-        # -------------------------
-        # Action proposed
-        # -------------------------
+
         if isinstance(evt, ActionEvent):
             entries.append(
                 TimelineEntry(
@@ -65,9 +76,6 @@ def project_timeline(
                 )
             )
 
-        # -------------------------
-        # Action validation
-        # -------------------------
         elif isinstance(evt, ActionValidationEvent):
             entry_type = (
                 TimelineEntryType.ACTION_VALIDATED
@@ -80,11 +88,7 @@ def project_timeline(
                     entry_id=str(uuid4()),
                     created_at=evt.decided_at,
                     type=entry_type,
-                    title=(
-                        "Action accepted"
-                        if evt.decision == "ACCEPTED"
-                        else "Action refused"
-                    ),
+                    title="Action accepted" if evt.decision == "ACCEPTED" else "Action refused",
                     description=None,
                     action_id=evt.action_ref,
                     place_id=evt.place_ref,
@@ -92,10 +96,7 @@ def project_timeline(
                     nature=TimelineEntryNature.EVENT,
                 )
             )
-        
-        # -------------------------
-        # Knowledge state (STATE)
-        # -------------------------
+
         elif isinstance(evt, KnowledgeEvent):
             entries.append(
                 TimelineEntry(
