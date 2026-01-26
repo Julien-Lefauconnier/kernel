@@ -8,13 +8,9 @@ from kernel.journals.observation.observation_event import ObservationEvent
 from kernel.journals.observation.patterns.normative_pattern import NormativePattern
 
 
-class ObservationPort(Protocol):
+class ObservationWriterPort(Protocol):
     """
     Kernel port: append-only writer for observation events.
-
-    Contract:
-    - MUST only append events (no inference / no aggregation)
-    - MUST be safe from stack (adapter implemented in API)
     """
 
     def record(self, event: ObservationEvent) -> None: ...
@@ -27,3 +23,7 @@ class NormativePatternProviderPort(Protocol):
     """
 
     def list_patterns(self, *, user_id: str) -> Iterable[NormativePattern]: ...
+
+
+# Legacy name (to be removed in v0.2)
+ObservationPort = ObservationWriterPort

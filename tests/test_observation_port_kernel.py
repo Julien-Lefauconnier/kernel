@@ -83,3 +83,14 @@ def test_observation_port_has_minimal_contract():
 
     for name in forbidden:
         assert not hasattr(ObservationPort, name)
+
+
+def test_observation_writer_port_exists():
+    from kernel.ports.observation_port import ObservationWriterPort
+
+    assert ObservationWriterPort is not None
+
+
+def test_observation_port_alias_exists():
+    from kernel.ports.observation_port import ObservationPort
+    assert ObservationPort is not None
