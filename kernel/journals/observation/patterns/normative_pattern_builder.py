@@ -2,6 +2,7 @@
 
 import hashlib
 from typing import Dict, Iterable, Tuple, List
+import logging
 
 from kernel.journals.observation.observation_event import ObservationEvent
 from kernel.journals.observation.patterns.normative_pattern import NormativePattern
@@ -13,6 +14,8 @@ class NormativePatternBuilder:
 
     Groups normative observation events.
     """
+
+    _log = logging.getLogger("kernel.normative_pattern_builder")
 
     @staticmethod
     def _make_id(user_id: str, signal_type: str) -> str:
@@ -32,7 +35,24 @@ class NormativePatternBuilder:
             if e.source_type != "normative":
                 continue
 
-            signal_type = getattr(e.payload, "signal_type", None)
+            # --------------------------------------------------
+            # DEBUG — runtime payload inspection (temporary)
+            # --------------------------------------------------
+            cls._log.info(
+                "normative.pattern.payload.inspect",
+                extra={
+                    "payload_type": str(type(e.payload)),
+                    "payload_repr": repr(e.payload),
+                },
+            )
+            
+            signal_type = None
+
+            if isinstance(e.payload, dict):
+                signal_type = e.payload.get("signal_type")
+            else:
+                signal_type = getattr(e.payload, "signal_type", None)
+
             if signal_type is None:
                 continue
 
@@ -43,6 +63,19 @@ class NormativePatternBuilder:
         for (user_id, signal_type), items in grouped.items():
             items = sorted(items, key=lambda x: x.created_at)
 
+            refs = []
+
+            for evt in items:
+                bid = None
+
+                if isinstance(evt.payload, dict):
+                    bid = evt.payload.get("bundle_id")
+                else:
+                    bid = getattr(evt.payload, "bundle_id", None)
+
+                if bid:
+                    refs.append(bid)
+
             patterns.append(
                 NormativePattern(
                     pattern_id=cls._make_id(user_id, signal_type),
@@ -51,7 +84,7 @@ class NormativePatternBuilder:
                     occurrences=len(items),
                     first_seen_at=items[0].created_at,
                     last_seen_at=items[-1].created_at,
-                    source_refs=[],
+                    source_refs=sorted(set(refs)),
                 )
             )
 
