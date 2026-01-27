@@ -27,3 +27,6 @@ class ObservationBuilder:
             },
             created_at=signal.created_at or datetime.utcnow(),
         )
+
+
+    
