@@ -2,7 +2,6 @@
 
 import hashlib
 from typing import Dict, Iterable, Tuple, List
-import logging
 
 from kernel.journals.observation.observation_event import ObservationEvent
 from kernel.journals.observation.patterns.normative_pattern import NormativePattern
@@ -14,8 +13,6 @@ class NormativePatternBuilder:
 
     Groups normative observation events.
     """
-
-    _log = logging.getLogger("kernel.normative_pattern_builder")
 
     @staticmethod
     def _make_id(user_id: str, signal_type: str) -> str:
@@ -35,17 +32,6 @@ class NormativePatternBuilder:
             if e.source_type != "normative":
                 continue
 
-            # --------------------------------------------------
-            # DEBUG — runtime payload inspection (temporary)
-            # --------------------------------------------------
-            cls._log.info(
-                "normative.pattern.payload.inspect",
-                extra={
-                    "payload_type": str(type(e.payload)),
-                    "payload_repr": repr(e.payload),
-                },
-            )
-            
             signal_type = None
 
             if isinstance(e.payload, dict):

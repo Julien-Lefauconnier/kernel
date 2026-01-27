@@ -39,7 +39,13 @@ class NormativePatternProviderPort(Protocol):
     Used by governance explainability wiring (stack reads patterns, kernel defines contract).
     """
 
-    def list_patterns(self, *, user_id: str) -> Iterable[NormativePattern]: ...
+    def list_patterns(
+        self,
+        *,
+        user_id: str,
+        since: datetime | None = None,
+        until: datetime | None = None,
+    ) -> Iterable[NormativePattern]: ...
 
 
 # Legacy name (to be removed in v0.2)
