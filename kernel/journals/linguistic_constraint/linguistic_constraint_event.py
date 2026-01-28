@@ -29,3 +29,11 @@ class LinguisticConstraintEvent:
     reason: Optional[str]
 
     observed_at: datetime
+
+    def __post_init__(self):
+        if self.reason == "ACT_NOT_AUTHORIZED_FOR_MODE":
+            object.__setattr__(
+                self,
+                "reason",
+                "ACT_NOT_AUTHORIZED_FOR_CONVERSATION_MODE",
+            )
