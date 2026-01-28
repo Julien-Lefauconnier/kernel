@@ -28,14 +28,21 @@ class InMemoryLinguisticConstraintJournal(LinguisticConstraintJournal):
         self,
         *,
         user_id: str,
+        place_id: str | None = None,
         since: Optional[datetime] = None,
         until: Optional[datetime] = None,
     ) -> List[LinguisticConstraintEvent]:
+
         results = [e for e in self._events if e.user_id == user_id]
+
+        if place_id is not None:
+            results = [e for e in results if e.place_id == place_id]
 
         if since is not None:
             results = [e for e in results if e.observed_at >= since]
+
         if until is not None:
             results = [e for e in results if e.observed_at <= until]
 
         return results
+

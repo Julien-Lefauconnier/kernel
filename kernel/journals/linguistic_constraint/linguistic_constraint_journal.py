@@ -15,6 +15,7 @@ class LinguisticConstraintJournal(Protocol):
         self,
         *,
         user_id: str,
+        place_id: str | None = None,
         since: Optional[datetime] = None,
         until: Optional[datetime] = None,
     ) -> List[LinguisticConstraintEvent]: ...
