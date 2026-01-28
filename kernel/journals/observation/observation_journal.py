@@ -25,6 +25,7 @@ class ObservationJournal(Protocol):
         self,
         *,
         user_id: str,
+        place_id: str | None = None,
         since: datetime | None = None,
         until: datetime | None = None,
     ) -> List[ObservationEvent]:

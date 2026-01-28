@@ -21,3 +21,5 @@ class ObservationEvent:
     source_type: str       # e.g. "normative", "governance", "cognitive"
     payload: Any           # opaque, kernel never inspects it
     created_at: datetime
+    #  optional fields
+    place_id: str | None = None

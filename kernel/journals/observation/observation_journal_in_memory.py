@@ -26,11 +26,15 @@ class InMemoryObservationJournal(ObservationJournal):
         self,
         *,
         user_id: str,
+        place_id: str | None = None,
         since: datetime | None = None,
         until: datetime | None = None,
     ) -> List[ObservationEvent]:
 
         results = [e for e in self._events if e.user_id == user_id]
+
+        if place_id is not None:
+            results = [e for e in results if e.place_id == place_id]
 
         if since is not None:
             results = [e for e in results if e.created_at >= since]
