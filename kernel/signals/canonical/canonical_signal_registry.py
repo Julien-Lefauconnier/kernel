@@ -28,3 +28,7 @@ class CanonicalSignalRegistry:
     @classmethod
     def all(cls) -> Tuple[CanonicalSignalSpec, ...]:
         return tuple(cls._registry.values())
+    
+    @classmethod
+    def _clear_for_tests(cls) -> None:
+        cls._registry.clear()
