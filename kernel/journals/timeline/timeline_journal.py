@@ -66,11 +66,11 @@ class TimelineJournal:
     # Test / lifecycle helpers
     # ------------------------------------------------------------------
 
-    def reset(self) -> None:
+    def _reset_for_tests(self) -> None:
         """
-        Clear all recorded entries.
-
-        Intended for tests only.
+        TEST-ONLY METHOD.
+        Clears all recorded timeline entries.
+        MUST NOT be used in production code.
         """
         self._entries.clear()
 
@@ -100,4 +100,4 @@ def reset_timeline_journal() -> None:
     """
     Reset the global timeline journal (tests only).
     """
-    _DEFAULT_TIMELINE_JOURNAL.reset()
+    _DEFAULT_TIMELINE_JOURNAL._reset_for_tests()

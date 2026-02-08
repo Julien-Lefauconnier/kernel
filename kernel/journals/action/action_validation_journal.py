@@ -44,9 +44,11 @@ class ActionValidationJournal:
     # Test helpers
     # -------------------------------------------------
 
-    def reset(self) -> None:
+    def _reset_for_tests(self) -> None:
         """
-        Clear all events (tests only).
+        TEST-ONLY METHOD.
+        Clears all recorded validation events.
+        MUST NOT be used in production code.
         """
         self._events.clear()
 
@@ -67,4 +69,4 @@ def list_action_validation_events() -> List[ActionValidationEvent]:
 
 
 def reset_action_validation_journal() -> None:
-    _DEFAULT_ACTION_VALIDATION_JOURNAL.reset()
+    _DEFAULT_ACTION_VALIDATION_JOURNAL._reset_for_tests()

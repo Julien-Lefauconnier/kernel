@@ -69,6 +69,6 @@ def test_signal_journal_can_be_reset_for_tests():
 
     assert len(journal.list_signals()) == 2
 
-    journal.reset()
+    journal._reset_for_tests()
 
     assert journal.list_signals() == []

@@ -1,212 +1,321 @@
-# Kernel — Contract of Responsibility
+# Veramem Kernel Contract
 
-> **Status**: Canonical — must be read before contributing
->
-> This document defines the **explicit contract** between the **Kernel** and any consuming application (e.g. Veramem).
->
-> The Kernel is intentionally strict. Any ambiguity here must be resolved in favor of **immutability, declarativity, and temporal correctness**.
+This document defines the explicit, non-negotiable guarantees provided by the Veramem Kernel.
 
----
+It exists to:
+- state what the kernel guarantees, without ambiguity
+- define which behaviors are considered stable
+- clarify what constitutes a breaking change
+- prevent misuse or misinterpretation of the kernel’s role
+- provide a durable reference for audits and long-term maintenance
 
-## 1. What the Kernel **IS**
+This contract applies to the Veramem Kernel only.
+It does not cover application stacks, integrations, or reflexive layers built on top of it.
 
-The Kernel is a **minimal cognitive substrate** whose role is to **record**, **structure**, and **expose** immutable signals over time.
+Any behavior not explicitly guaranteed by this document must be considered unstable and subject to change.
 
-It provides:
+## Scope of Guarantees
 
-* 📜 **Append-only journals**
-* 🧱 **Immutable domain primitives**
-* ⏱ **Strict temporal invariants**
-* 🧭 **Declarative representations of events and states**
+The guarantees defined in this contract apply exclusively to the following aspects of the Veramem Kernel:
 
-The Kernel is:
+- the semantic meaning of kernel-level facts
+- the append-only nature of journals and timelines
+- the enforcement of explicit invariants
+- the determinism of kernel state transitions
+- the authority of the kernel over temporal ordering
+- the absence of interpretation, policy, or execution logic
 
-* Deterministic
-* Side-effect free
-* Application-agnostic
+These guarantees apply:
+- regardless of deployment environment
+- regardless of integration context
+- regardless of application stack or consumer behavior
 
-It can be embedded, imported, or vendored by higher-level systems.
+The contract does not guarantee:
+- performance characteristics
+- memory usage or storage efficiency
+- backward compatibility beyond the guarantees explicitly stated
+- stability of internal implementation details
+- stability of test-only mechanisms
 
----
+Only the externally observable behaviors described in this contract are considered stable.
 
-## 2. What the Kernel **IS NOT**
+## Non-Negotiable Invariants
 
-The Kernel deliberately does **not**:
+The following invariants are absolute.
+They apply at all times, under all circumstances, and across all integrations.
 
-* ❌ Execute actions
-* ❌ Make decisions
-* ❌ Enforce policies
-* ❌ Resolve conflicts
-* ❌ Apply business rules
-* ❌ Maintain mutable runtime state
+Any violation of these invariants constitutes a kernel contract breach.
 
-In particular:
+### Immutability of Facts
 
-> **The Kernel never decides what should happen.**
-> It only records **what happened**, **what was observed**, or **what was declared**.
+All kernel-level facts are immutable.
 
-Any logic that answers *"should we"*, *"can we"*, or *"what now"* belongs **outside** the Kernel.
+Once a fact is recorded in a journal or timeline:
+- it cannot be modified
+- it cannot be deleted
+- it cannot be reordered
+- it cannot be replaced
 
----
+The kernel provides no mechanism to alter historical facts at runtime.
 
-## 3. Core Invariants (Non‑Negotiable)
+### Append-Only Journals
 
-All Kernel code MUST respect the following invariants.
+All kernel journals are append-only.
 
-### 3.1 Immutability
+Facts may only be added at the end of a journal.
+Any attempt to insert, overwrite, or retroactively modify entries is forbidden.
 
-* All domain objects are immutable after construction
-* No in-place mutation
-* No setters
-* No internal state transitions
+Append operations either:
+- succeed fully
+- or fail without partial state change
 
-If a value changes over time, it is represented by **multiple entries**, not mutation.
+### Temporal Monotonicity
 
----
+The kernel enforces a single, strictly monotonic timeline.
 
-### 3.2 Append‑Only Semantics
+Timeline entries must:
+- contain an explicit timestamp
+- be appended in non-decreasing temporal order
 
-* Journals only grow
-* Past entries are never rewritten or deleted
-* Corrections are represented as **new entries**
+The kernel rejects any entry that violates temporal monotonicity.
 
----
+### Deterministic State Evolution
 
-### 3.3 Temporal Strictness
+Kernel state evolution is deterministic.
 
-* Every entry **must** be time-bound
-* `created_at` (or equivalent) is mandatory
-* Time is monotonic within a journal context
+Given the same sequence of valid inputs:
+- the kernel will always produce the same state
+- the same journals
+- the same timeline
 
-The Kernel does **not** infer time — it records it.
+No hidden randomness, implicit side effects, or external state may influence kernel behavior.
 
----
+### Explicit Invariant Enforcement
 
-### 3.4 Declarativity
+All kernel writes are validated against explicit invariants at the time of insertion.
 
-Kernel structures describe **facts**, not **intentions**.
+Invalid data is rejected at the boundary.
+The kernel never attempts to:
+- auto-correct invalid states
+- infer missing information
+- resolve inconsistencies internally
 
-Allowed:
+### No Interpretation or Policy
 
-* “Action X was proposed”
-* “Decision Y was validated”
-* “Constraint Z was observed”
+The kernel does not interpret facts.
 
-Forbidden:
+It does not:
+- infer meaning
+- apply policy
+- resolve conflicts
+- prioritize outcomes
+- execute decisions
 
-* “Execute X”
-* “Apply policy Y”
-* “Resolve conflict Z”
+Any system that performs interpretation, governance, or execution operates outside the kernel.
 
----
+### No Side Effects
 
-## 4. Responsibility Split
+Kernel operations produce no side effects.
 
-This table defines **who owns what**.
+The kernel does not:
+- perform I/O
+- trigger callbacks
+- emit events
+- schedule tasks
+- mutate external state
 
-| Concern                     | Kernel | Application |
-| --------------------------- | ------ | ----------- |
-| Timeline entries            | ✅      | ❌           |
-| Journals                    | ✅      | ❌           |
-| Action proposal recording   | ✅      | ❌           |
-| Action resolution recording | ✅      | ❌           |
-| Control state               | ❌      | ✅           |
-| Policy enforcement          | ❌      | ✅           |
-| Action execution            | ❌      | ✅           |
-| Decision making             | ❌      | ✅           |
-| UI / API mapping            | ❌      | ✅           |
+Its only effect is the deterministic evolution of its internal factual state.
 
-If a feature touches **both columns**, it is almost certainly misdesigned.
+## Test-Only Mechanisms
 
----
+The Veramem Kernel includes limited mechanisms intended exclusively for isolated testing.
 
-## 5. Timeline Model Contract
+These mechanisms exist solely to:
+- allow deterministic test execution
+- ensure test independence
+- validate invariants under controlled conditions
 
-### 5.1 TimelineEntry
+### Explicit Test Scope
 
-A `TimelineEntry` represents a **single immutable fact**.
+Test-only mechanisms are:
+- explicitly named
+- explicitly documented
+- explicitly excluded from runtime usage
 
-Guaranteed properties:
+They are not part of the kernel’s public runtime contract.
 
-* Immutable
-* Time-bound
-* Declarative
-* Serializable
+### No Runtime Availability
 
-It may reference:
+Test-only mechanisms must not be:
+- reachable through runtime APIs
+- accessible via integration layers
+- callable by application code
+- relied upon for system behavior
 
-* `action_id` (what action is concerned)
-* `place_id` (contextual scope)
-* `origin_ref` (traceability)
+Any use of test-only mechanisms outside of isolated testing constitutes a contract violation.
 
-But it never:
+### State Reset Semantics
 
-* Executes the action
-* Validates permissions
-* Applies policies
+Where provided, state reset mechanisms:
+- clear in-memory kernel state
+- do not alter invariant definitions
+- do not bypass invariant enforcement
+- do not mutate historical facts at runtime
 
----
+They exist solely to restore a clean test environment.
 
-### 5.2 Specialized Entries
+### Non-Observability Guarantee
 
-Specializations (e.g. `ActionResolutionTimelineEntry`) are:
+The presence or absence of test-only mechanisms must not:
+- affect kernel behavior
+- influence determinism
+- alter factual recording
+- leak into observable runtime state
 
-* Still immutable
-* Still declarative
-* Still append-only
+Removing all test-only mechanisms must not change kernel semantics.
 
-They **add information**, never behavior.
+### No Backward Compatibility Guarantee
 
-Example:
+Test-only mechanisms are exempt from backward compatibility guarantees.
 
-> “Action A was VALIDATED”
-> not
-> “Action A should now execute”
+They may:
+- change
+- be renamed
+- be restricted
+- be removed
 
----
+without constituting a breaking change to the kernel contract.
 
-## 6. Tests as Contract Enforcers
+## Signal Lineage & Traceability
 
-Kernel tests are **contract tests**, not implementation tests.
+The Veramem Kernel provides first-class primitives for signal lineage and traceability.
 
-They MUST:
+Signal lineage is a structural property of the kernel.
+It exists to preserve historical integrity, not to explain meaning.
 
-* Enforce immutability
-* Reject hidden side-effects
-* Fail if decision logic appears
-* Fail if temporal invariants are bypassed
+### Lineage as Structural Truth
 
-If a test requires mocking execution or policy:
+Every signal recorded by the kernel:
+- has a stable identity
+- belongs to an explicit lineage
+- preserves its ancestry across transformations
 
-> ❌ The test does not belong in the Kernel
+Lineage relationships are:
+- explicit
+- immutable
+- deterministic
 
----
+They cannot be inferred, guessed, or retroactively constructed.
 
-## 7. Versioning & Evolution
+### No Semantic Interpretation
 
-The Kernel evolves **slowly and conservatively**.
+Signal lineage does not imply semantic causality.
 
-Rules:
+The kernel does not:
+- infer cause-effect relationships
+- interpret signal meaning
+- assign responsibility or intent
+- construct narratives
 
-* Breaking changes require a major version bump
-* New fields must be additive and optional
-* Removal of fields is strongly discouraged
+Lineage only encodes factual relationships between signals.
 
-Applications adapt to the Kernel — **never the opposite**.
+### Deterministic Reconstruction
 
----
+Given the full kernel state:
+- signal lineage can be deterministically reconstructed
+- no external context is required
+- no hidden state is involved
 
-## 8. Guiding Principle (TL;DR)
+Lineage reconstruction yields the same result across all environments.
 
-> **The Kernel remembers.**
-> **The Application decides.**
+### Closed World Constraint
 
-If you hesitate about where code belongs:
+The kernel enforces a closed world for signal lineage.
 
-* If it *records*: Kernel
-* If it *thinks*: Application
-* If it *acts*: Application
+All lineage relationships must:
+- reference existing kernel signals
+- respect canonical signal definitions
+- satisfy lineage invariants
 
----
+The kernel rejects lineage that:
+- references unknown signals
+- violates canonical constraints
+- introduces ambiguity
 
-*End of contract.*
+### Audit and Verification
+
+Signal lineage enables:
+- deterministic audit
+- reproducible verification
+- historical integrity checks
+
+It does not provide:
+- explanations
+- justifications
+- governance decisions
+- user-facing narratives
+
+Those concerns belong to external layers.
+
+## Versioning & Compatibility
+
+The Veramem Kernel follows a strict contract-first versioning policy.
+
+Compatibility is defined exclusively by this contract.
+Any behavior not explicitly guaranteed herein is subject to change.
+
+### Contract Stability
+
+The following elements are considered stable across compatible versions:
+- the guarantees explicitly stated in this contract
+- the non-negotiable invariants
+- the observable behavior of kernel journals and timelines
+- the semantics of signal lineage as defined by contract
+
+As long as these elements hold, the kernel is considered compatible.
+
+### Implementation Freedom
+
+Internal implementation details are not part of the contract.
+
+The kernel makes no guarantee regarding:
+- internal data structures
+- class layouts or method signatures
+- module organization
+- performance characteristics
+- memory usage
+- internal optimization strategies
+
+These may change freely between versions without constituting a breaking change.
+
+### Test-Only Mechanisms
+
+Test-only mechanisms are explicitly excluded from compatibility guarantees.
+
+They may:
+- change
+- be renamed
+- be restricted
+- be removed
+
+without notice or version guarantees.
+
+### Breaking Changes
+
+A breaking change occurs only if:
+- a contract guarantee is violated
+- a non-negotiable invariant is weakened or removed
+- observable kernel behavior deviates from the contract
+
+Refactoring, reorganization, or optimization alone does not constitute a breaking change.
+
+### Version Signaling
+
+Kernel versions signal:
+- contract compatibility
+- invariant stability
+
+They do not signal:
+- feature completeness
+- integration readiness
+- application-level guarantees

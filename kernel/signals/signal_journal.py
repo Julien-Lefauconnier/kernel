@@ -53,14 +53,13 @@ class SignalJournal:
     # Test / lifecycle helpers
     # ------------------------------------------------------------------
 
-    def reset(self) -> None:
+    def _reset_for_tests(self) -> None:
         """
-        Clear all recorded signals.
-
-        Intended for tests only.
+        TEST-ONLY METHOD.
+        Clears all recorded signals.
+        MUST NOT be used in production code.
         """
         self._signals.clear()
-
 
 # ------------------------------------------------------------------
 # Singleton (V1)
@@ -87,4 +86,4 @@ def reset_signal_journal() -> None:
     """
     Reset the global signal journal (tests only).
     """
-    _DEFAULT_SIGNAL_JOURNAL.reset()
+    _DEFAULT_SIGNAL_JOURNAL._reset_for_tests()

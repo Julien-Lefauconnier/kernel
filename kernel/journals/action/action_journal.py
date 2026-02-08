@@ -53,11 +53,11 @@ class ActionJournal:
     # Test helpers
     # -------------------------------------------------
 
-    def reset(self) -> None:
+    def _reset_for_tests(self) -> None:
         """
-        Clear all recorded events.
-
-        Intended for tests only.
+        TEST-ONLY METHOD.
+        Clears all recorded events.
+        MUST NOT be used in production code.
         """
         self._events.clear()
 
@@ -87,4 +87,4 @@ def reset_action_journal() -> None:
     """
     Reset the global journal (tests only).
     """
-    _DEFAULT_ACTION_JOURNAL.reset()
+    _DEFAULT_ACTION_JOURNAL._reset_for_tests()
