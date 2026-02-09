@@ -8,5 +8,4 @@ You may obtain a copy of the License at
 
     http://www.apache.org/licenses/LICENSE-2.0
 
-This project provides a deterministic kernel for factual recording,
-temporal ordering, and signal lineage enforcement.
+This project provides a deterministic kernel for factual recording, temporal ordering, and signal lineage enforcement.

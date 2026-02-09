@@ -3,30 +3,34 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "kernel"
-version = "0.1.0"
-description = "Minimal cognitive kernel providing immutable signals, append-only journals, and strict temporal invariants."
+name = "veramem-kernel"
+version = "1.0.1"
+description = "Minimal deterministic cognitive kernel for traceable and auditable reasoning systems."
 readme = "README.md"
 requires-python = ">=3.10"
-license = { text = "MIT" }
+license = { file = "LICENSE" }
 
 authors = [
     { name = "Julien Lefauconnier" }
 ]
 
 classifiers = [
-    "Development Status :: 3 - Alpha",
+    "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: MIT License",
+    "License :: OSI Approved :: Apache Software License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Operating System :: OS Independent",
     "Topic :: Software Development :: Libraries",
-    "Topic :: System :: Distributed Computing",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 
 dependencies = []
+
+[project.urls]
+Repository = "https://github.com/Julien-Lefauconnier/kernel"
+Issues = "https://github.com/Julien-Lefauconnier/kernel/issues"
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -35,4 +39,3 @@ addopts = "-q"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["kernel*"]
-
