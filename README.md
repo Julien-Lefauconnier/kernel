@@ -14,6 +14,13 @@ It records what happened, in which order, and under which constraints — nothin
 Veramem Kernel is intentionally incomplete.
 Its purpose is not to be a framework, an application runtime, or an orchestration layer, but a sovereign foundation upon which higher-level systems can safely be built.
 
+## Installation
+
+The Veramem Kernel is published on PyPI.
+```
+pip install veramem-kernel
+```
+
 ## What the Veramem Kernel is NOT
 
 The Veramem Kernel is not an application framework, a policy engine, or a cognitive interpreter.
@@ -141,6 +148,20 @@ The Veramem Kernel explicitly does NOT aim to:
 - offer real-time reactivity or event-driven orchestration
 
 If a feature requires interpretation, policy, execution, or presentation, it does not belong in the kernel.
+
+## Open Source Scope
+
+This repository contains only the Veramem Kernel.
+
+The kernel is fully open-source and provides the deterministic, invariant-enforcing cognitive core of the Veramem ecosystem.
+
+It does not include:
+- storage backends
+- orchestration or execution layers
+- deployment tooling
+- hosted or commercial services
+
+Those components belong to a separate, private application stack and are not part of this repository or its license.
 
 ## License
 
