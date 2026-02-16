@@ -2,8 +2,8 @@
 
 from datetime import datetime
 
-from kernel.journals.observation import ObservationBuilder
-from kernel.journals.observation.observation_event import ObservationEvent
+from veramem_kernel.journals.observation import ObservationBuilder
+from veramem_kernel.journals.observation.observation_event import ObservationEvent
 
 
 class DummyNormativeSignal:

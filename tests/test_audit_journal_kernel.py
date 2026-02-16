@@ -2,8 +2,8 @@
 
 import pytest
 
-from kernel.journals.audit.audit_event import AuditEvent
-from kernel.journals.audit.audit_journal import AuditJournal
+from veramem_kernel.journals.audit.audit_event import AuditEvent
+from veramem_kernel.journals.audit.audit_journal import AuditJournal
 
 
 def test_audit_journal_starts_empty():

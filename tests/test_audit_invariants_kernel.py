@@ -3,8 +3,8 @@
 import pytest
 from datetime import datetime
 
-from kernel.journals.audit.audit_event import AuditEvent
-from kernel.invariants.audit.audit_invariants import (
+from veramem_kernel.journals.audit.audit_event import AuditEvent
+from veramem_kernel.invariants.audit.audit_invariants import (
     assert_has_timestamp,
     assert_has_identity,
     assert_is_immutable,

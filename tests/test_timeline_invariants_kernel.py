@@ -3,9 +3,9 @@
 from datetime import datetime, timedelta
 import pytest
 
-from kernel.journals.timeline.timeline_entry import TimelineEntry
-from kernel.journals.timeline.timeline_types import TimelineEntryType
-from kernel.invariants.timeline.timeline_invariants import (
+from veramem_kernel.journals.timeline.timeline_entry import TimelineEntry
+from veramem_kernel.journals.timeline.timeline_types import TimelineEntryType
+from veramem_kernel.invariants.timeline.timeline_invariants import (
     assert_entry_has_timestamp,
     assert_monotonic,
 )

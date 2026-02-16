@@ -3,7 +3,7 @@
 from datetime import datetime
 from dataclasses import FrozenInstanceError
 
-from kernel.signals.signal_event import SignalEvent
+from veramem_kernel.signals.signal_event import SignalEvent
 
 
 def test_signal_event_creation_minimal():

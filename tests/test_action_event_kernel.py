@@ -3,7 +3,7 @@
 from datetime import datetime
 import pytest
 
-from kernel.journals.action.action_event import ActionEvent
+from veramem_kernel.journals.action.action_event import ActionEvent
 
 
 def test_action_event_is_immutable():

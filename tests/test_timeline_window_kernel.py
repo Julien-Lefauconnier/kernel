@@ -3,8 +3,8 @@
 from datetime import datetime, timedelta
 import pytest
 
-from kernel.journals.timeline.timeline_cursor import TimelineCursor
-from kernel.journals.timeline.timeline_window import TimelineWindow
+from veramem_kernel.journals.timeline.timeline_cursor import TimelineCursor
+from veramem_kernel.journals.timeline.timeline_window import TimelineWindow
 
 def test_window_can_be_created_empty():
     window = TimelineWindow()

@@ -3,8 +3,8 @@
 import pytest
 from datetime import datetime
 
-from kernel.ports.observation_port import ObservationPort
-from kernel.journals.observation.observation_event import ObservationEvent
+from veramem_kernel.ports.observation_port import ObservationPort
+from veramem_kernel.journals.observation.observation_event import ObservationEvent
 
 
 class DummyObservationPort(ObservationPort):
@@ -86,11 +86,11 @@ def test_observation_port_has_minimal_contract():
 
 
 def test_observation_writer_port_exists():
-    from kernel.ports.observation_port import ObservationWriterPort
+    from veramem_kernel.ports.observation_port import ObservationWriterPort
 
     assert ObservationWriterPort is not None
 
 
 def test_observation_port_alias_exists():
-    from kernel.ports.observation_port import ObservationPort
+    from veramem_kernel.ports.observation_port import ObservationPort
     assert ObservationPort is not None

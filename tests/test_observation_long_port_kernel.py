@@ -1,6 +1,6 @@
 # tests/test_observation_long_port_kernel.py
 
-from kernel.ports.observation_long_port import (
+from veramem_kernel.ports.observation_long_port import (
     ObservationLongReaderPort,
     ObservationLongWriterPort,
 )

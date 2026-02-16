@@ -1,6 +1,6 @@
 # tests/test_access_decision_kernel.py
 
-from kernel.access.access_decision import AccessDecision
+from veramem_kernel.access.access_decision import AccessDecision
 
 
 def test_access_decision_enum_values():

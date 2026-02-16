@@ -1,11 +1,11 @@
 # tests/test_canonical_signal_closed_world_key_category_kernel.py
 
 import pytest
-from kernel.signals.canonical import (
+from veramem_kernel.signals.canonical import (
     CanonicalSignalKey,
     CanonicalSignalCategory,
 )
-from kernel.signals.canonical.canonical_signal_registry import (
+from veramem_kernel.signals.canonical.canonical_signal_registry import (
     CanonicalSignalRegistry,
 )
 

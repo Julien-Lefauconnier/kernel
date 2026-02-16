@@ -2,12 +2,12 @@
 
 from datetime import datetime, timedelta
 
-from kernel.journals.timeline.timeline_projector import project_timeline
-from kernel.journals.timeline.timeline_types import TimelineEntryType
+from veramem_kernel.journals.timeline.timeline_projector import project_timeline
+from veramem_kernel.journals.timeline.timeline_types import TimelineEntryType
 
-from kernel.journals.action.action_event import ActionEvent
-from kernel.journals.action.action_validation_event import ActionValidationEvent
-from kernel.journals.knowledge.knowledge_event import KnowledgeEvent
+from veramem_kernel.journals.action.action_event import ActionEvent
+from veramem_kernel.journals.action.action_validation_event import ActionValidationEvent
+from veramem_kernel.journals.knowledge.knowledge_event import KnowledgeEvent
 
 
 

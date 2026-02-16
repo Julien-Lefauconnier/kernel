@@ -2,8 +2,8 @@
 
 from datetime import datetime, timedelta
 
-from kernel.signals.signal import Signal
-from kernel.signals.signal_journal import SignalJournal
+from veramem_kernel.signals.signal import Signal
+from veramem_kernel.signals.signal_journal import SignalJournal
 
 
 def test_signal_journal_append_is_append_only():

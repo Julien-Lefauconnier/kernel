@@ -4,9 +4,9 @@ from dataclasses import FrozenInstanceError
 
 import pytest
 
-from kernel.signals.canonical.canonical_signal_category import CanonicalSignalCategory
-from kernel.signals.canonical.canonical_signal_key import CanonicalSignalKey
-from kernel.signals.lineage.signal_lineage_patch import (
+from veramem_kernel.signals.canonical.canonical_signal_category import CanonicalSignalCategory
+from veramem_kernel.signals.canonical.canonical_signal_key import CanonicalSignalKey
+from veramem_kernel.signals.lineage.signal_lineage_patch import (
     SignalLineagePatch,
     SignalLineagePatchType,
 )

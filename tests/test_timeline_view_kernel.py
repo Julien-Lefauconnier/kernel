@@ -4,14 +4,14 @@ import pytest
 from datetime import datetime
 from uuid import uuid4
 
-from kernel.journals.timeline.timeline_entry import (
+from veramem_kernel.journals.timeline.timeline_entry import (
     TimelineEntry,
     TimelineEntryNature,
 )
-from kernel.journals.timeline.timeline_types import TimelineEntryType
-from kernel.journals.timeline.timeline_view import TimelineView
-from kernel.journals.timeline.timeline_view_builder import TimelineViewBuilder
-from kernel.journals.timeline.timeline_view_types import TimelineViewRole
+from veramem_kernel.journals.timeline.timeline_types import TimelineEntryType
+from veramem_kernel.journals.timeline.timeline_view import TimelineView
+from veramem_kernel.journals.timeline.timeline_view_builder import TimelineViewBuilder
+from veramem_kernel.journals.timeline.timeline_view_types import TimelineViewRole
 
 
 def make_entry(entry_type, *, nature=TimelineEntryNature.EVENT):

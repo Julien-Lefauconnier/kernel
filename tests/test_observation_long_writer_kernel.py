@@ -1,6 +1,6 @@
 # tests/test_observation_long_writer_kernel.py
 
-from kernel.journals.observation_long import (
+from veramem_kernel.journals.observation_long import (
     ObservationLongJournalInMemory,
     ObservationLongWriter,
     ObservationLongBuilder,

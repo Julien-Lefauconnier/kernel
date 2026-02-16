@@ -2,9 +2,9 @@
 
 import pytest
 
-from kernel.ports.audit_port import append_audit
-from kernel.journals.audit import get_audit_journal
-from kernel.journals.audit.audit_event import AuditEvent
+from veramem_kernel.ports.audit_port import append_audit
+from veramem_kernel.journals.audit import get_audit_journal
+from veramem_kernel.journals.audit.audit_event import AuditEvent
 
 
 def test_append_audit_port_appends_event():

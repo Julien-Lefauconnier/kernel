@@ -2,7 +2,7 @@
 
 import pytest
 from datetime import datetime, timedelta
-from kernel.journals.timeline.timeline_cursor import TimelineCursor
+from veramem_kernel.journals.timeline.timeline_cursor import TimelineCursor
 
 
 def test_cursor_can_be_created_with_timestamp():

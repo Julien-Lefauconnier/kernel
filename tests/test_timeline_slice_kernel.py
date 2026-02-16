@@ -3,10 +3,10 @@
 from datetime import datetime
 import pytest
 
-from kernel.journals.timeline.timeline_slice import TimelineSlice
-from kernel.journals.timeline.timeline_cursor import TimelineCursor
-from kernel.journals.timeline.timeline_entry import TimelineEntry
-from kernel.journals.timeline.timeline_types import TimelineEntryType
+from veramem_kernel.journals.timeline.timeline_slice import TimelineSlice
+from veramem_kernel.journals.timeline.timeline_cursor import TimelineCursor
+from veramem_kernel.journals.timeline.timeline_entry import TimelineEntry
+from veramem_kernel.journals.timeline.timeline_types import TimelineEntryType
 
 
 def make_entry(ts):
