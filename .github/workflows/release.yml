@@ -1,0 +1,70 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: write          
+  id-token: write          
+  attestations: write      
+  actions: read
+
+jobs:
+  build-sign-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install tooling
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -U build twine
+
+      - name: Build sdist/wheel
+        run: |
+          rm -rf dist build
+          python -m build
+
+      - name: Twine check
+        run: |
+          python -m twine check dist/*
+
+      # ✅ Build provenance (GitHub attestations)
+      - name: Attest build provenance
+        uses: actions/attest-build-provenance@v1
+        with:
+          subject-path: "dist/*"
+
+      # ✅ Sigstore signature (keyless, via OIDC)
+      - name: Sign artifacts with Sigstore
+        uses: sigstore/gh-action-sigstore-python@v3
+        with:
+          inputs: dist/*
+
+      # ✅ GitHub Release (attache dist + signatures)
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            dist/*
+          generate_release_notes: true
+
+      # ✅ Publish to PyPI (Trusted Publishing)
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: dist
