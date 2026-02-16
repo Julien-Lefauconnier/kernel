@@ -8,7 +8,22 @@ version = "1.0.2"
 description = "Minimal deterministic cognitive kernel for traceable and auditable reasoning systems."
 readme = "README.md"
 requires-python = ">=3.10"
-license = { file = "LICENSE" }
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+
+keywords = [
+    "ai",
+    "cognitive",
+    "deterministic",
+    "auditability",
+    "traceability",
+    "reasoning",
+    "kernel"
+]
+
+maintainers = [
+    { name = "Julien Lefauconnier" }
+]
 
 authors = [
     { name = "Julien Lefauconnier" }
@@ -17,7 +32,6 @@ authors = [
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
-    "License :: OSI Approved :: Apache Software License",
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
@@ -36,6 +50,17 @@ Issues = "https://github.com/Julien-Lefauconnier/kernel/issues"
 testpaths = ["tests"]
 addopts = "-q"
 
+[tool.setuptools]
+include-package-data = true
+zip-safe = false
+
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["veramem_kernel*"]
+exclude = ["tests*", "docs*", "examples*"]
+
+[tool.setuptools.package-data]
+"veramem_kernel" = ["py.typed"]
+
+[tool.setuptools_scm]
+fallback_version = "1.0.2"
