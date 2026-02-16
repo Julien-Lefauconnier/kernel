@@ -2,10 +2,10 @@
 
 from datetime import datetime, timedelta
 
-from kernel.journals.timeline.timeline_reader import TimelineReader
-from kernel.journals.timeline.timeline_cursor import TimelineCursor
-from kernel.journals.timeline.timeline_window import TimelineWindow
-from kernel.journals.action.action_event import ActionEvent
+from veramem_kernel.journals.timeline.timeline_reader import TimelineReader
+from veramem_kernel.journals.timeline.timeline_cursor import TimelineCursor
+from veramem_kernel.journals.timeline.timeline_window import TimelineWindow
+from veramem_kernel.journals.action.action_event import ActionEvent
 
 
 def make_event(ts: datetime) -> ActionEvent:

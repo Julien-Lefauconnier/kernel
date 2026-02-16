@@ -2,20 +2,20 @@
 
 import pytest
 
-from kernel.signals.lineage.signal_lineage_patch_applier import (
+from veramem_kernel.signals.lineage.signal_lineage_patch_applier import (
     apply_signal_lineage_patches,
 )
-from kernel.signals.lineage.signal_lineage_patch import (
+from veramem_kernel.signals.lineage.signal_lineage_patch import (
     SignalLineagePatch,
     SignalLineagePatchType,
 )
-from kernel.signals.lineage.signal_lineage_view import SignalLineageView
-from kernel.signals.lineage.signal_lineage_node import SignalLineageNode
-from kernel.signals.canonical.canonical_signal_key import (
+from veramem_kernel.signals.lineage.signal_lineage_view import SignalLineageView
+from veramem_kernel.signals.lineage.signal_lineage_node import SignalLineageNode
+from veramem_kernel.signals.canonical.canonical_signal_key import (
     CanonicalSignalKey,
     CanonicalSignalCategory,
 )
-from kernel.journals.timeline.timeline_cursor import TimelineCursor
+from veramem_kernel.journals.timeline.timeline_cursor import TimelineCursor
 
 
 def _key(code: str) -> CanonicalSignalKey:

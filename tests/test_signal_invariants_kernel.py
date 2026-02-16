@@ -3,8 +3,8 @@
 import pytest
 from datetime import datetime
 
-from kernel.signals.signal import Signal
-from kernel.invariants.signal.signal_invariants import (
+from veramem_kernel.signals.signal import Signal
+from veramem_kernel.invariants.signal.signal_invariants import (
     assert_signal_has_timestamp,
     assert_signal_is_immutable,
     assert_signal_payload_exists,

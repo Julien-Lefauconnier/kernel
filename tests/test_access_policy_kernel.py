@@ -1,9 +1,9 @@
 # tests/test_access_policy_kernel.py
 
 import pytest
-from kernel.access.access_policy import AccessPolicy
-from kernel.access.access_context import AccessContext
-from kernel.access.access_decision import AccessDecision
+from veramem_kernel.access.access_policy import AccessPolicy
+from veramem_kernel.access.access_context import AccessContext
+from veramem_kernel.access.access_decision import AccessDecision
 
 
 class DummyPolicy(AccessPolicy):

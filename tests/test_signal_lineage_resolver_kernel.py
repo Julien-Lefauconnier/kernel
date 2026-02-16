@@ -3,17 +3,17 @@
 import pytest
 from datetime import datetime
 
-from kernel.signals.canonical.canonical_signal_key import CanonicalSignalKey
-from kernel.signals.canonical.canonical_signal_category import CanonicalSignalCategory
-from kernel.signals.lineage.signal_lineage_node import SignalLineageNode
-from kernel.signals.lineage.signal_lineage_errors import (
+from veramem_kernel.signals.canonical.canonical_signal_key import CanonicalSignalKey
+from veramem_kernel.signals.canonical.canonical_signal_category import CanonicalSignalCategory
+from veramem_kernel.signals.lineage.signal_lineage_node import SignalLineageNode
+from veramem_kernel.signals.lineage.signal_lineage_errors import (
     SignalLineageResolutionError,
 )
-from kernel.signals.lineage.signal_lineage_view import SignalLineageView
-from kernel.signals.lineage.signal_lineage_resolver import (
+from veramem_kernel.signals.lineage.signal_lineage_view import SignalLineageView
+from veramem_kernel.signals.lineage.signal_lineage_resolver import (
     resolve_signal_lineage_view,
 )
-from kernel.journals.timeline.timeline_cursor import TimelineCursor
+from veramem_kernel.journals.timeline.timeline_cursor import TimelineCursor
 
 
 # ---------------------------------------------------------------------

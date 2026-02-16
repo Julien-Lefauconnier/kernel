@@ -2,7 +2,7 @@
 
 import pytest
 
-from kernel.signals.canonical import (
+from veramem_kernel.signals.canonical import (
     CanonicalSignalCategory,
     CanonicalSignalKey,
     CanonicalSignalSpec,

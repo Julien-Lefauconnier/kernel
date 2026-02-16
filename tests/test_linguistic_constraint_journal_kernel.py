@@ -2,10 +2,10 @@
 
 from datetime import datetime, timedelta
 
-from kernel.journals.linguistic_constraint.linguistic_constraint_event import (
+from veramem_kernel.journals.linguistic_constraint.linguistic_constraint_event import (
     LinguisticConstraintEvent,
 )
-from kernel.journals.linguistic_constraint.linguistic_constraint_journal_in_memory import (
+from veramem_kernel.journals.linguistic_constraint.linguistic_constraint_journal_in_memory import (
     InMemoryLinguisticConstraintJournal,
 )
 

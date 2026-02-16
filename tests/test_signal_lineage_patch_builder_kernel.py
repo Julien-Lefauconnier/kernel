@@ -1,13 +1,13 @@
 # tests/test_signal_lineage_patch_builder_kernel.py
 
-from kernel.signals.canonical.canonical_signal_category import CanonicalSignalCategory
-from kernel.signals.canonical.canonical_signal_key import CanonicalSignalKey
-from kernel.signals.lineage.signal_lineage_patch import (
+from veramem_kernel.signals.canonical.canonical_signal_category import CanonicalSignalCategory
+from veramem_kernel.signals.canonical.canonical_signal_key import CanonicalSignalKey
+from veramem_kernel.signals.lineage.signal_lineage_patch import (
     SignalLineagePatch,
     SignalLineagePatchType,
 )
-from kernel.signals.lineage.signal_lineage_diff import SignalLineageDiff
-from kernel.signals.lineage.signal_lineage_patch_builder import (
+from veramem_kernel.signals.lineage.signal_lineage_diff import SignalLineageDiff
+from veramem_kernel.signals.lineage.signal_lineage_patch_builder import (
     build_signal_lineage_patches,
 )
 

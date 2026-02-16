@@ -3,7 +3,7 @@
 import pytest
 from datetime import datetime, timedelta
 
-from kernel.signals.signal import Signal
+from veramem_kernel.signals.signal import Signal
 
 
 def test_signal_is_immutable():

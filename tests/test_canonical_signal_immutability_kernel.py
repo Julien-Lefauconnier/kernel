@@ -1,7 +1,7 @@
 # tests/test_canonical_signal_immutability_kernel.py
 
 import pytest
-from kernel.signals.canonical import (
+from veramem_kernel.signals.canonical import (
     CanonicalSignal,
     CanonicalSignalKey,
     CanonicalSignalCategory,

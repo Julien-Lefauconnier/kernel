@@ -4,9 +4,9 @@ import pytest
 from datetime import datetime, timedelta
 from dataclasses import FrozenInstanceError
 
-from kernel.journals.timeline.timeline_cursor import TimelineCursor
-from kernel.journals.timeline.timeline_window import TimelineWindow
-from kernel.journals.timeline.timeline_query import TimelineQuery
+from veramem_kernel.journals.timeline.timeline_cursor import TimelineCursor
+from veramem_kernel.journals.timeline.timeline_window import TimelineWindow
+from veramem_kernel.journals.timeline.timeline_query import TimelineQuery
 
 
 def test_query_can_be_created_with_defaults():

@@ -1,7 +1,7 @@
 # tests/test_observation_event_kernel.py
 
 from datetime import datetime
-from kernel.journals.observation.observation_event import ObservationEvent
+from veramem_kernel.journals.observation.observation_event import ObservationEvent
 
 
 def test_observation_event_is_immutable():

@@ -2,14 +2,14 @@
 
 import pytest
 
-from kernel.signals.canonical import (
+from veramem_kernel.signals.canonical import (
     CanonicalSignal,
     CanonicalSignalCategory,
     CanonicalSignalKey,
     CanonicalSignalSpec,
     CanonicalSignalRegistry,
 )
-from kernel.invariants.signal.canonical.canonical_signal_invariants import (
+from veramem_kernel.invariants.signal.canonical.canonical_signal_invariants import (
     validate_canonical_signal,
 )
 

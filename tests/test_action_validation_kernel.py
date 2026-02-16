@@ -4,8 +4,8 @@ from datetime import datetime
 
 import pytest
 
-from kernel.journals.action.action_validation_event import ActionValidationEvent
-from kernel.journals.action.action_validation_journal import (
+from veramem_kernel.journals.action.action_validation_event import ActionValidationEvent
+from veramem_kernel.journals.action.action_validation_journal import (
     ActionValidationJournal,
     get_action_validation_journal,
     reset_action_validation_journal,

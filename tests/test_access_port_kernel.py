@@ -1,9 +1,9 @@
 # tests/test_access_port_kernel.py
 
-from kernel.ports.access_port import decide_access
-from kernel.access.access_context import AccessContext
-from kernel.access.access_decision import AccessDecision
-from kernel.access.access_policy import AccessPolicy
+from veramem_kernel.ports.access_port import decide_access
+from veramem_kernel.access.access_context import AccessContext
+from veramem_kernel.access.access_decision import AccessDecision
+from veramem_kernel.access.access_policy import AccessPolicy
 
 
 class AllowAllPolicy(AccessPolicy):

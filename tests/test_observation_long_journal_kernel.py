@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-from kernel.journals.observation_long import (
+from veramem_kernel.journals.observation_long import (
     ObservationLongEvent,
     ObservationLongJournalInMemory,
 )

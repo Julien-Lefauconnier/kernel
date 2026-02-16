@@ -3,7 +3,7 @@
 from datetime import datetime
 import pytest
 
-from kernel.journals.audit.audit_event import AuditEvent
+from veramem_kernel.journals.audit.audit_event import AuditEvent
 
 
 def test_audit_event_is_immutable():

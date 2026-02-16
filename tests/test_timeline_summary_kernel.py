@@ -2,9 +2,9 @@
 
 from datetime import datetime, timedelta
 
-from kernel.journals.timeline.timeline_entry import TimelineEntry, TimelineEntryNature
-from kernel.journals.timeline.timeline_types import TimelineEntryType
-from kernel.journals.timeline.timeline_summary import summarize_timeline
+from veramem_kernel.journals.timeline.timeline_entry import TimelineEntry, TimelineEntryNature
+from veramem_kernel.journals.timeline.timeline_types import TimelineEntryType
+from veramem_kernel.journals.timeline.timeline_summary import summarize_timeline
 
 
 def make_entry(ts, t):

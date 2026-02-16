@@ -1,7 +1,7 @@
 # tests/test_observation_journal_kernel.py
 
-from kernel.journals.observation.observation_event import ObservationEvent
-from kernel.journals.observation.observation_journal_in_memory import (
+from veramem_kernel.journals.observation.observation_event import ObservationEvent
+from veramem_kernel.journals.observation.observation_journal_in_memory import (
     InMemoryObservationJournal,
 )
 from datetime import datetime

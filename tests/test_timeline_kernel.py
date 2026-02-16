@@ -4,14 +4,14 @@ from datetime import datetime, timedelta
 
 import pytest
 
-from kernel.journals.timeline.timeline_entry import (
+from veramem_kernel.journals.timeline.timeline_entry import (
     TimelineEntry,
     TimelineEntryNature,
 )
-from kernel.journals.timeline.timeline_journal import (
+from veramem_kernel.journals.timeline.timeline_journal import (
     TimelineJournal,
 )
-from kernel.journals.timeline.timeline_types import (
+from veramem_kernel.journals.timeline.timeline_types import (
     TimelineEntryType,
 )
 

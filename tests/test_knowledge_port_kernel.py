@@ -2,9 +2,9 @@
 
 import pytest
 
-from kernel.ports.knowledge_port import append_knowledge
-from kernel.journals.knowledge import get_knowledge_journal
-from kernel.journals.knowledge.knowledge_event import KnowledgeEvent
+from veramem_kernel.ports.knowledge_port import append_knowledge
+from veramem_kernel.journals.knowledge import get_knowledge_journal
+from veramem_kernel.journals.knowledge.knowledge_event import KnowledgeEvent
 
 
 def test_append_knowledge_port_appends_event():

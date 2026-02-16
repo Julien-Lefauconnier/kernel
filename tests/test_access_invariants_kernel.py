@@ -2,9 +2,9 @@
 
 import pytest
 
-from kernel.access.access_context import AccessContext
-from kernel.access.access_decision import AccessDecision
-from kernel.invariants.access.access_invariants import (
+from veramem_kernel.access.access_context import AccessContext
+from veramem_kernel.access.access_decision import AccessDecision
+from veramem_kernel.invariants.access.access_invariants import (
     assert_valid_context,
     assert_valid_decision,
 )

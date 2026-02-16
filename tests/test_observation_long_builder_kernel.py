@@ -1,6 +1,6 @@
 # tests/test_observation_long_builder_kernel.py
 
-from kernel.journals.observation_long import ObservationLongBuilder
+from veramem_kernel.journals.observation_long import ObservationLongBuilder
 
 
 def test_builder_creates_valid_event():

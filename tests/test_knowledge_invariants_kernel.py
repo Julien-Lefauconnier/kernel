@@ -4,8 +4,8 @@
 import pytest
 from datetime import datetime
 
-from kernel.journals.knowledge.knowledge_event import KnowledgeEvent
-from kernel.invariants.knowledge.knowledge_invariants import (
+from veramem_kernel.journals.knowledge.knowledge_event import KnowledgeEvent
+from veramem_kernel.invariants.knowledge.knowledge_invariants import (
     assert_has_timestamp,
     assert_has_source,
     assert_has_knowledge_type,

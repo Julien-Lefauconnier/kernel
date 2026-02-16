@@ -3,10 +3,10 @@
 import pytest
 from datetime import datetime
 
-from kernel.invariants.observation.observation_invariants import (
+from veramem_kernel.invariants.observation.observation_invariants import (
     ObservationInvariants,
 )
-from kernel.journals.observation.observation_event import ObservationEvent
+from veramem_kernel.journals.observation.observation_event import ObservationEvent
 
 
 def test_observation_invariants_accept_valid_event():

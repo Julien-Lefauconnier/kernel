@@ -3,10 +3,10 @@
 import pytest
 from datetime import datetime
 
-from kernel.journals.linguistic_constraint.linguistic_constraint_event import (
+from veramem_kernel.journals.linguistic_constraint.linguistic_constraint_event import (
     LinguisticConstraintEvent,
 )
-from kernel.invariants.linguistic_constraint.linguistic_constraint_invariants import (
+from veramem_kernel.invariants.linguistic_constraint.linguistic_constraint_invariants import (
     assert_valid_linguistic_constraint_event,
 )
 

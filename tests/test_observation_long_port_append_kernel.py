@@ -1,10 +1,10 @@
 # tests/test_observation_long_port_append_kernel.py
 
-from kernel.journals.observation_long import (
+from veramem_kernel.journals.observation_long import (
     ObservationLongJournalInMemory,
     ObservationLongWriter,
 )
-from kernel.ports.observation_long_port import append_long_observation
+from veramem_kernel.ports.observation_long_port import append_long_observation
 
 
 def test_append_long_observation_port_helper():

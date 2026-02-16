@@ -1,7 +1,7 @@
 # tests/test_access_context_kernel.py
 
 import pytest
-from kernel.access.access_context import AccessContext
+from veramem_kernel.access.access_context import AccessContext
 
 
 def test_access_context_is_immutable():

@@ -3,12 +3,12 @@
 import pytest
 from datetime import datetime
 
-from kernel.journals.observation_long import ObservationLongEvent
-from kernel.invariants.observation_long import assert_valid_observation_long_event
-from kernel.invariants.observation_long.observation_long_invariants import (
+from veramem_kernel.journals.observation_long import ObservationLongEvent
+from veramem_kernel.invariants.observation_long import assert_valid_observation_long_event
+from veramem_kernel.invariants.observation_long.observation_long_invariants import (
     validate_observation_long_event,
 )
-from kernel.journals.observation_long import ObservationLongBuilder
+from veramem_kernel.journals.observation_long import ObservationLongBuilder
 
 
 def test_valid_observation_long_event_passes():

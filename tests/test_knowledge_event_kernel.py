@@ -3,7 +3,7 @@
 from datetime import datetime
 import pytest
 
-from kernel.journals.knowledge.knowledge_event import KnowledgeEvent
+from veramem_kernel.journals.knowledge.knowledge_event import KnowledgeEvent
 
 
 def test_knowledge_event_is_immutable():

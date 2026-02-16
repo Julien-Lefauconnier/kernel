@@ -2,8 +2,8 @@
 
 import pytest
 
-from kernel.journals.knowledge.knowledge_event import KnowledgeEvent
-from kernel.journals.knowledge.knowledge_journal import KnowledgeJournal
+from veramem_kernel.journals.knowledge.knowledge_event import KnowledgeEvent
+from veramem_kernel.journals.knowledge.knowledge_journal import KnowledgeJournal
 
 
 def test_knowledge_journal_starts_empty():

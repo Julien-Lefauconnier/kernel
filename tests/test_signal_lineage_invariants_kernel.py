@@ -3,24 +3,24 @@
 import pytest
 from datetime import datetime
 
-from kernel.signals.canonical.canonical_signal_key import CanonicalSignalKey
-from kernel.signals.canonical.canonical_signal_category import CanonicalSignalCategory
-from kernel.signals.canonical.canonical_signal_spec import CanonicalSignalSpec
-from kernel.signals.canonical.canonical_signal_registry import CanonicalSignalRegistry
-from kernel.journals.timeline.timeline_cursor import TimelineCursor
-from kernel.journals.timeline.timeline_entry import TimelineEntry
-from kernel.journals.timeline.timeline_types import TimelineEntryType
+from veramem_kernel.signals.canonical.canonical_signal_key import CanonicalSignalKey
+from veramem_kernel.signals.canonical.canonical_signal_category import CanonicalSignalCategory
+from veramem_kernel.signals.canonical.canonical_signal_spec import CanonicalSignalSpec
+from veramem_kernel.signals.canonical.canonical_signal_registry import CanonicalSignalRegistry
+from veramem_kernel.journals.timeline.timeline_cursor import TimelineCursor
+from veramem_kernel.journals.timeline.timeline_entry import TimelineEntry
+from veramem_kernel.journals.timeline.timeline_types import TimelineEntryType
 
-from kernel.signals.lineage.signal_lineage_node import SignalLineageNode
-from kernel.signals.lineage.signal_lineage_errors import (
+from veramem_kernel.signals.lineage.signal_lineage_node import SignalLineageNode
+from veramem_kernel.signals.lineage.signal_lineage_errors import (
     SignalLineageInvariantViolation,
 )
 
-from kernel.journals.timeline.timeline_journal import (
+from veramem_kernel.journals.timeline.timeline_journal import (
     get_timeline_journal,
     reset_timeline_journal,
 )
-from kernel.invariants.signal.signal_lineage_invariants import (
+from veramem_kernel.invariants.signal.signal_lineage_invariants import (
     assert_no_self_parent,
     assert_signal_registered,
     assert_parents_registered,

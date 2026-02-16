@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-from kernel.journals.linguistic_constraint.linguistic_constraint_event import (
+from veramem_kernel.journals.linguistic_constraint.linguistic_constraint_event import (
     LinguisticConstraintEvent,
 )
 

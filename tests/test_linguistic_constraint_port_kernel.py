@@ -2,7 +2,7 @@
 
 from typing import Protocol
 
-from kernel.ports.linguistic_constraint_port import (
+from veramem_kernel.ports.linguistic_constraint_port import (
     LinguisticConstraintWriterPort,
     LinguisticConstraintReaderPort,
 )

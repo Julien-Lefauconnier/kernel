@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-from kernel.journals.observation_long import ObservationLongEvent
+from veramem_kernel.journals.observation_long import ObservationLongEvent
 
 
 def test_observation_long_event_is_immutable():

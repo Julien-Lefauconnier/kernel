@@ -2,8 +2,8 @@
 
 from datetime import datetime
 
-from kernel.journals.observation.observation_event import ObservationEvent
-from kernel.journals.observation.patterns.normative_pattern_builder import (
+from veramem_kernel.journals.observation.observation_event import ObservationEvent
+from veramem_kernel.journals.observation.patterns.normative_pattern_builder import (
     NormativePatternBuilder,
 )
 
