@@ -46,7 +46,7 @@ jobs:
 
       # ✅ Sigstore signature (keyless, via OIDC) — corrigé en v2
       - name: Sign artifacts with Sigstore
-        uses: sigstore/gh-action-sigstore-python@v2   
+        uses: sigstore/gh-action-sigstore-python@v3.2.0   
         with:
           inputs: dist/*
 
