@@ -1,6 +1,6 @@
 # kernel/tests/test_timeline_kernel.py
 
-from datetime import datetime, timedelta
+from datetime import datetime, timezone, timedelta, timezone
 
 import pytest
 
@@ -22,8 +22,8 @@ def test_timeline_entry_is_immutable():
     TimelineEntry must be strictly immutable once created.
     """
     entry = TimelineEntry(
-        entry_id="evt-1",
-        created_at=datetime.utcnow(),
+        entry_id="evt-0001",
+        created_at=datetime.now(timezone.utc),
         type=TimelineEntryType.SYSTEM_NOTICE,
         title="Test Event",
         description=None,
@@ -42,11 +42,11 @@ def test_timeline_journal_append_is_append_only():
     """
     journal = TimelineJournal()
 
-    t0 = datetime.utcnow()
+    t0 = datetime.now(timezone.utc)
     t1 = t0 + timedelta(seconds=1)
 
     entry1 = TimelineEntry(
-        entry_id="evt-1",
+        entry_id="evt-0001",
         created_at=t0,
         type=TimelineEntryType.SYSTEM_NOTICE,
         title="First",
@@ -56,7 +56,7 @@ def test_timeline_journal_append_is_append_only():
     )
 
     entry2 = TimelineEntry(
-        entry_id="evt-2",
+        entry_id="evt-0002",
         created_at=t1,
         type=TimelineEntryType.SYSTEM_NOTICE,
         title="Second",
@@ -71,8 +71,8 @@ def test_timeline_journal_append_is_append_only():
     events = journal.list_events()
 
     assert len(events) == 2
-    assert events[0].entry_id == "evt-1"
-    assert events[1].entry_id == "evt-2"
+    assert events[0].entry_id == "evt-0001"
+    assert events[1].entry_id == "evt-0002"
 
 
 def test_timeline_entry_timestamp_is_canonical():
@@ -80,10 +80,10 @@ def test_timeline_entry_timestamp_is_canonical():
     Kernel invariant:
     `timestamp` must be a stable alias of `created_at`.
     """
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
 
     entry = TimelineEntry(
-        entry_id="evt-ts",
+        entry_id="entry_id=str(uuid4())",
         created_at=now,
         type=TimelineEntryType.SYSTEM_NOTICE,
         title="State snapshot",

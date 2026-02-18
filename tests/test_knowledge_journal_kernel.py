@@ -1,10 +1,25 @@
 # kernel/tests/test_knowledge_journal_kernel.py
 
 import pytest
+from datetime import datetime, timezone, timezone, timedelta
+
 
 from veramem_kernel.journals.knowledge.knowledge_event import KnowledgeEvent
 from veramem_kernel.journals.knowledge.knowledge_journal import KnowledgeJournal
 
+
+# ------------
+import inspect
+from veramem_kernel.journals.knowledge.knowledge_event import KnowledgeEvent
+from veramem_kernel.journals.knowledge.knowledge_journal import KnowledgeJournal
+
+def test_debug():
+    print(inspect.getsource(KnowledgeEvent.create))
+
+def test__debug_journal_source():
+    print(inspect.getsource(KnowledgeJournal.append))
+
+# ----------------
 
 def test_knowledge_journal_starts_empty():
     journal = KnowledgeJournal()
@@ -60,3 +75,31 @@ def test_knowledge_journal_rejects_invalid_event():
 
     with pytest.raises(TypeError):
         journal.append("not-an-event")
+
+def test_knowledge_journal_rejects_non_monotonic():
+    j = KnowledgeJournal()
+    t2 = datetime(2024,1,2,tzinfo=timezone.utc)
+    t1 = datetime(2024,1,1,tzinfo=timezone.utc)
+    e2 = KnowledgeEvent.create(source="cognition", knowledge_type="fact", created_at=t2)
+    e1 = KnowledgeEvent.create(source="cognition", knowledge_type="fact", created_at=t1)
+    j.append(e2)
+    with pytest.raises(ValueError):
+        j.append(e1)
+
+
+def test_knowledge_journal_rejects_duplicate_event_id():
+    j = KnowledgeJournal()
+    t = datetime.now(timezone.utc)
+    e1 = KnowledgeEvent.create(event_id="x", source="cognition", knowledge_type="fact", created_at=t)
+    e2 = KnowledgeEvent.create(event_id="x", source="cognition", knowledge_type="fact", created_at=t)
+    j.append(e1)
+    with pytest.raises(ValueError):
+        j.append(e2)
+
+
+def test_knowledge_journal_rejects_future_drift():
+    j = KnowledgeJournal()
+    future = datetime.now(timezone.utc) + timedelta(hours=1)
+    e = KnowledgeEvent.create(source="cognition", knowledge_type="fact", created_at=future)
+    with pytest.raises(ValueError):
+        j.append(e)

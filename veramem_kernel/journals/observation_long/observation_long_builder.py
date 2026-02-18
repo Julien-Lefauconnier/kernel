@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Mapping, Any
 
 from veramem_kernel.journals.observation_long.observation_long_event import (
@@ -34,7 +34,7 @@ class ObservationLongBuilder:
             user_id=self.user_id,
             source_type=self.source_type,
             payload=dict(self.payload),
-            observed_at=datetime.utcnow(),
+            observed_at=datetime.now(timezone.utc),
         )
 
         validate_observation_long_event(event)

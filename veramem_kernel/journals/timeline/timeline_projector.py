@@ -15,7 +15,7 @@ Consumers MAY replace it with their own projector.
 
 
 from typing import Iterable, List, Any
-from uuid import uuid4
+import hashlib
 from datetime import datetime
 
 from veramem_kernel.journals.timeline.timeline_entry import TimelineEntry, TimelineEntryNature
@@ -39,32 +39,68 @@ def _timestamp(evt: Any) -> datetime:
     raise ValueError(f"Unsupported kernel event type: {type(evt)}")
 
 
+def _stable_entry_id(evt: Any) -> str:
+    """
+    Deterministic ID derived from kernel facts.
+    """
+    if not hasattr(evt, "event_id"):
+        raise ValueError("Kernel event missing event_id.")
+
+    payload = (
+        type(evt).__name__,
+        evt.event_id,
+    )
+    return hashlib.sha256(str(payload).encode()).hexdigest()
+
 
 def project_timeline(
     *,
     events: Iterable[Any],
 ) -> List[TimelineEntry]:
     """
-    Deterministic projection of kernel facts into timeline entries.
+    Deterministic and idempotent projection of kernel facts into timeline entries.
 
-    - Pure function
-    - No side effects
-    - No inference beyond temporal ordering
-    - Zero-knowledge compliant
+    Guarantees:
+    - purity
+    - determinism
+    - idempotence
+    - replay safety
+    - order invariance
     """
+
+    # ------------------------------------------------------------------
+    # 1) Input normalization
+    # ------------------------------------------------------------------
+
+    # Deduplicate by kernel identity
+    unique = {}
+    for evt in events:
+        event_id = getattr(evt, "event_id", None)
+        if event_id is None:
+            raise ValueError("Kernel events must expose a stable event_id.")
+        unique[event_id] = evt
+
+    # ------------------------------------------------------------------
+    # 2) Stable canonical ordering
+    # ------------------------------------------------------------------
+
+    sorted_events = sorted(
+        unique.values(),
+        key=lambda e: (_timestamp(e), getattr(e, "event_id")),
+    )
+
+    # ------------------------------------------------------------------
+    # 3) Projection
+    # ------------------------------------------------------------------
 
     entries: List[TimelineEntry] = []
 
-    # 1) Sort facts by canonical timestamp
-    sorted_events = sorted(events, key=_timestamp)
-
-    # 2) Project facts → timeline entries
     for evt in sorted_events:
 
         if isinstance(evt, ActionEvent):
             entries.append(
                 TimelineEntry(
-                    entry_id=str(uuid4()),
+                    entry_id=_stable_entry_id(evt),
                     created_at=evt.created_at,
                     type=TimelineEntryType.ACTION_PROPOSED,
                     title="An action was proposed",
@@ -85,7 +121,7 @@ def project_timeline(
 
             entries.append(
                 TimelineEntry(
-                    entry_id=str(uuid4()),
+                    entry_id=_stable_entry_id(evt),
                     created_at=evt.decided_at,
                     type=entry_type,
                     title="Action accepted" if evt.decision == "ACCEPTED" else "Action refused",
@@ -100,7 +136,7 @@ def project_timeline(
         elif isinstance(evt, KnowledgeEvent):
             entries.append(
                 TimelineEntry(
-                    entry_id=str(uuid4()),
+                    entry_id=_stable_entry_id(evt),
                     created_at=evt.created_at,
                     type=TimelineEntryType.SYSTEM_NOTICE,
                     title="Knowledge state updated",
@@ -116,3 +152,4 @@ def project_timeline(
             raise ValueError(f"Unsupported kernel event type: {type(evt)}")
 
     return entries
+

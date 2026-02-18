@@ -1,0 +1,11 @@
+{
+  "binary_sha256": "832674e59176d1dcb8338cee61480e138df6a18c91a0e35c7f06bfb9766e0ebe",
+  "common_prefix_len": 5,
+  "decision": "keep_both",
+  "fixture": "timeline_reconcile_v1",
+  "generator": {
+    "fixture_set": "veramem-kernel-conformance",
+    "generator_version": "v1",
+    "wire_version_hint": 1
+  }
+}

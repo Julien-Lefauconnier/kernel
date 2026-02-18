@@ -1,6 +1,7 @@
 # kernel/signals/signal_journal.py
 
 from typing import List
+from threading import Lock
 
 from veramem_kernel.signals.signal import Signal
 
@@ -24,6 +25,7 @@ class SignalJournal:
 
     def __init__(self):
         self._signals: List[Signal] = []
+        self._lock = Lock()
 
     # ------------------------------------------------------------------
     # Write API
@@ -35,7 +37,15 @@ class SignalJournal:
 
         The signal must already respect Signal invariants.
         """
-        self._signals.append(signal)
+        with self._lock:
+            if self._signals:
+                last = self._signals[-1]
+                if signal.timestamp < last.timestamp:
+                    raise ValueError(
+                        "SignalJournal requires monotonic timestamps."
+                    )
+
+            self._signals.append(signal)
 
     # ------------------------------------------------------------------
     # Read API
@@ -47,7 +57,8 @@ class SignalJournal:
 
         A defensive copy is returned to prevent external mutation.
         """
-        return list(self._signals)
+        with self._lock:
+            return list(self._signals)
 
     # ------------------------------------------------------------------
     # Test / lifecycle helpers
@@ -59,7 +70,8 @@ class SignalJournal:
         Clears all recorded signals.
         MUST NOT be used in production code.
         """
-        self._signals.clear()
+        with self._lock:
+            self._signals.clear()
 
 # ------------------------------------------------------------------
 # Singleton (V1)

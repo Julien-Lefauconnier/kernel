@@ -1,6 +1,6 @@
 # tests/test_action_journal_kernel.py
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 import pytest
 
@@ -22,7 +22,7 @@ def make_event(
 ):
     return ActionEvent(
         event_id=event_id,
-        created_at=created_at or datetime.utcnow(),
+        created_at=created_at or datetime.now(timezone.utc),
         user_ref=user_ref,
         place_ref=place_ref,
         intent=intent,

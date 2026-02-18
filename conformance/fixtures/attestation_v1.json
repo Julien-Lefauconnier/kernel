@@ -1,0 +1,14 @@
+{
+  "attestation_algo": "hmac-sha256",
+  "binary_sha256": "6e1a67335b89f43681eb89355781fe35689c3b8e06a93da51179565fe8e3187b",
+  "challenge_sha256": "e22c7df809936367cd8e5792aec1d8282495cd7d3dd0847ed157c1711168c572",
+  "commitment_hex": "2a7dc03340d6a38dc526cc9e030b927b78b36a41d92e42ee0a5bba55f4767222",
+  "fixture": "attestation_v1",
+  "generator": {
+    "conformance_key_sha256": "cb42b6ad8a162e004e7346def1b5d645c97266a87ebc9812e2c3c71d52acc407",
+    "fixture_set": "veramem-kernel-conformance",
+    "generator_version": "v1",
+    "wire_version_hint": 1
+  },
+  "signed_commitment_algo": "hmac-sha256"
+}

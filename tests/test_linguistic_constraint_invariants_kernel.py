@@ -1,7 +1,7 @@
 # tests/test_linguistic_constraint_invariants_kernel.py
 
 import pytest
-from datetime import datetime
+from datetime import datetime, timezone
 
 from veramem_kernel.journals.linguistic_constraint.linguistic_constraint_event import (
     LinguisticConstraintEvent,
@@ -19,7 +19,7 @@ def test_valid_constraint_event_passes_invariant():
         original_act="DECISION",
         final_act="ABSTENTION",
         reason="ACT_NOT_AUTHORIZED",
-        observed_at=datetime.utcnow(),
+        observed_at=datetime.now(timezone.utc),
     )
 
     assert_valid_linguistic_constraint_event(event)
@@ -33,7 +33,7 @@ def test_invalid_constraint_event_fails_if_no_downgrade():
         original_act="INFORMATION",
         final_act="INFORMATION",
         reason=None,
-        observed_at=datetime.utcnow(),
+        observed_at=datetime.now(timezone.utc),
     )
 
     with pytest.raises(AssertionError):

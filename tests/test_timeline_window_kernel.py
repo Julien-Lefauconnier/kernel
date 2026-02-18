@@ -1,6 +1,6 @@
 # tests/test_timeline_window_kernel.py
 
-from datetime import datetime, timedelta
+from datetime import datetime, timezone, timedelta, timezone
 import pytest
 
 from veramem_kernel.journals.timeline.timeline_cursor import TimelineCursor
@@ -13,7 +13,7 @@ def test_window_can_be_created_empty():
     assert window.before is None
 
 def test_window_with_after_cursor():
-    ts = datetime.utcnow()
+    ts = datetime.now(timezone.utc)
     cursor = TimelineCursor(timestamp=ts)
 
     window = TimelineWindow(after=cursor)
@@ -22,7 +22,7 @@ def test_window_with_after_cursor():
     assert window.before is None
 
 def test_window_with_before_cursor():
-    ts = datetime.utcnow()
+    ts = datetime.now(timezone.utc)
     cursor = TimelineCursor(timestamp=ts)
 
     window = TimelineWindow(before=cursor)
@@ -31,7 +31,7 @@ def test_window_with_before_cursor():
     assert window.after is None
 
 def test_window_with_after_and_before():
-    t1 = datetime.utcnow()
+    t1 = datetime.now(timezone.utc)
     t2 = t1 + timedelta(seconds=10)
 
     after = TimelineCursor(timestamp=t1)
@@ -43,7 +43,7 @@ def test_window_with_after_and_before():
     assert window.before == before
 
 def test_window_rejects_invalid_bounds():
-    t1 = datetime.utcnow()
+    t1 = datetime.now(timezone.utc)
     t2 = t1 + timedelta(seconds=10)
 
     after = TimelineCursor(timestamp=t2)
@@ -53,14 +53,14 @@ def test_window_rejects_invalid_bounds():
         TimelineWindow(after=after, before=before)
 
 def test_window_is_immutable():
-    cursor = TimelineCursor(timestamp=datetime.utcnow())
+    cursor = TimelineCursor(timestamp=datetime.now(timezone.utc))
     window = TimelineWindow(after=cursor)
 
     with pytest.raises(Exception):
         window.after = None
 
 def test_windows_with_same_bounds_are_equal():
-    ts = datetime.utcnow()
+    ts = datetime.now(timezone.utc)
 
     w1 = TimelineWindow(after=TimelineCursor(timestamp=ts))
     w2 = TimelineWindow(after=TimelineCursor(timestamp=ts))
@@ -68,7 +68,7 @@ def test_windows_with_same_bounds_are_equal():
     assert w1 == w2
 
 def test_windows_with_different_bounds_are_not_equal():
-    ts = datetime.utcnow()
+    ts = datetime.now(timezone.utc)
 
     w1 = TimelineWindow(after=TimelineCursor(timestamp=ts))
     w2 = TimelineWindow(before=TimelineCursor(timestamp=ts))
@@ -76,7 +76,7 @@ def test_windows_with_different_bounds_are_not_equal():
     assert w1 != w2
 
 def test_window_comparison_by_after_cursor():
-    t1 = datetime.utcnow()
+    t1 = datetime.now(timezone.utc)
     t2 = t1 + timedelta(seconds=5)
 
     w1 = TimelineWindow(after=TimelineCursor(timestamp=t1))
@@ -85,7 +85,7 @@ def test_window_comparison_by_after_cursor():
     assert w1 < w2
 
 def test_window_can_be_serialized_to_dict():
-    ts = datetime.utcnow()
+    ts = datetime.now(timezone.utc)
     cursor = TimelineCursor(timestamp=ts)
 
     window = TimelineWindow(after=cursor)

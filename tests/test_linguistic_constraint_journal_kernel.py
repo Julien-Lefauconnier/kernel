@@ -1,6 +1,6 @@
 # tests/test_linguistic_constraint_journal_kernel.py
 
-from datetime import datetime, timedelta
+from datetime import datetime, timezone, timedelta
 
 from veramem_kernel.journals.linguistic_constraint.linguistic_constraint_event import (
     LinguisticConstraintEvent,
@@ -20,7 +20,7 @@ def test_journal_appends_and_lists_events():
         original_act="DECISION",
         final_act="ABSTENTION",
         reason="ACT_NOT_AUTHORIZED",
-        observed_at=datetime.utcnow(),
+        observed_at=datetime.now(timezone.utc),
     )
 
     journal.append(event)
@@ -34,7 +34,7 @@ def test_journal_appends_and_lists_events():
 def test_journal_respects_since_filter():
     journal = InMemoryLinguisticConstraintJournal()
 
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
 
     old = LinguisticConstraintEvent(
         user_id="user-1",
@@ -65,7 +65,7 @@ def test_journal_respects_place_filter():
         original_act="DECISION",
         final_act="ABSTENTION",
         reason=None,
-        observed_at=datetime.utcnow(),
+        observed_at=datetime.now(timezone.utc),
     )
 
     e2 = LinguisticConstraintEvent(
@@ -75,7 +75,7 @@ def test_journal_respects_place_filter():
         original_act="DECISION",
         final_act="ABSTENTION",
         reason=None,
-        observed_at=datetime.utcnow(),
+        observed_at=datetime.now(timezone.utc),
     )
 
     journal.append(e1)

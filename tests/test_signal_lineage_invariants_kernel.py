@@ -1,7 +1,7 @@
 # tests/test_signal_lineage_invariants_kernel.py
 
 import pytest
-from datetime import datetime
+from datetime import datetime, timezone
 
 from veramem_kernel.signals.canonical.canonical_signal_key import CanonicalSignalKey
 from veramem_kernel.signals.canonical.canonical_signal_category import CanonicalSignalCategory
@@ -31,10 +31,20 @@ from veramem_kernel.invariants.signal.signal_lineage_invariants import (
     assert_supersedes_emitted_before_child,
     assert_signal_lineage_invariants,
     assert_supersedes_allowed_by_spec,
+    DictEmissionIndex,
 )
+
+def _mk_emissions(pairs: dict[CanonicalSignalKey, datetime]) -> DictEmissionIndex:
+    """
+    Build a deterministic emission index for tests.
+    """
+    return DictEmissionIndex(
+        {str(k): v for k, v in pairs.items()}
+    )
 
 
 def test_signal_lineage_rejects_self_parent():
+    CanonicalSignalRegistry._clear_for_tests()
     category = CanonicalSignalCategory.OBSERVATION_STATE
     key = CanonicalSignalKey(category, "self_signal")
 
@@ -48,7 +58,7 @@ def test_signal_lineage_rejects_self_parent():
 
     CanonicalSignalRegistry.register(spec)
 
-    cursor = TimelineCursor(1)
+    cursor = TimelineCursor(datetime(1970, 1, 1, 0, 0, 1, tzinfo=timezone.utc))
 
     node = SignalLineageNode(
         signal_key=key,
@@ -62,10 +72,11 @@ def test_signal_lineage_rejects_self_parent():
 
 
 def test_signal_lineage_rejects_unregistered_signal_key():
+    CanonicalSignalRegistry._clear_for_tests()
     category = CanonicalSignalCategory.OBSERVATION_STATE
     key = CanonicalSignalKey(category, "unregistered_signal")
 
-    cursor = TimelineCursor(1)
+    cursor = TimelineCursor(datetime(1970, 1, 1, 0, 0, 1, tzinfo=timezone.utc))
 
     node = SignalLineageNode(
         signal_key=key,
@@ -78,10 +89,12 @@ def test_signal_lineage_rejects_unregistered_signal_key():
         assert_signal_registered(node)
 
 def test_signal_lineage_rejects_unregistered_parent():
+    CanonicalSignalRegistry._clear_for_tests()
     category = CanonicalSignalCategory.OBSERVATION_STATE
 
     parent = CanonicalSignalKey(category, "parent_signal")
     child = CanonicalSignalKey(category, "child_signal")
+    cursor = TimelineCursor(datetime(1970, 1, 1, 0, 0, 1, tzinfo=timezone.utc))
 
     # On enregistre UNIQUEMENT l’enfant
     child_spec = CanonicalSignalSpec(
@@ -93,7 +106,7 @@ def test_signal_lineage_rejects_unregistered_parent():
     )
     CanonicalSignalRegistry.register(child_spec)
 
-    cursor = TimelineCursor(2)
+    TimelineCursor(datetime(1970, 1, 1, 0, 0, 1, tzinfo=timezone.utc))
 
     node = SignalLineageNode(
         signal_key=child,
@@ -106,10 +119,12 @@ def test_signal_lineage_rejects_unregistered_parent():
         assert_parents_registered(node)
 
 def test_signal_lineage_rejects_unregistered_supersedes():
+    CanonicalSignalRegistry._clear_for_tests()
     category = CanonicalSignalCategory.OBSERVATION_STATE
 
     superseded = CanonicalSignalKey(category, "old_signal")
     child = CanonicalSignalKey(category, "new_signal")
+    cursor = TimelineCursor(datetime(1970, 1, 1, 0, 0, 1, tzinfo=timezone.utc))
 
     # On enregistre uniquement l’enfant
     child_spec = CanonicalSignalSpec(
@@ -121,7 +136,7 @@ def test_signal_lineage_rejects_unregistered_supersedes():
     )
     CanonicalSignalRegistry.register(child_spec)
 
-    cursor = TimelineCursor(2)
+    TimelineCursor(datetime(1970, 1, 1, 0, 0, 1, tzinfo=timezone.utc))
 
     node = SignalLineageNode(
         signal_key=child,
@@ -135,6 +150,7 @@ def test_signal_lineage_rejects_unregistered_supersedes():
 
 
 def test_signal_lineage_rejects_supersedes_not_in_parents():
+
     CanonicalSignalRegistry._clear_for_tests()
 
     category = CanonicalSignalCategory.OBSERVATION_STATE
@@ -142,6 +158,7 @@ def test_signal_lineage_rejects_supersedes_not_in_parents():
     parent = CanonicalSignalKey(category, "parent_signal")
     superseded = CanonicalSignalKey(category, "old_signal")
     child = CanonicalSignalKey(category, "new_signal")
+    cursor = TimelineCursor(datetime(1970, 1, 1, 0, 0, 1, tzinfo=timezone.utc))
 
     for key in (parent, superseded, child):
         spec = CanonicalSignalSpec(
@@ -153,7 +170,7 @@ def test_signal_lineage_rejects_supersedes_not_in_parents():
         )
         CanonicalSignalRegistry.register(spec)
 
-    cursor = TimelineCursor(3)
+    TimelineCursor(datetime(1970, 1, 1, 0, 0, 1, tzinfo=timezone.utc))
 
     node = SignalLineageNode(
         signal_key=child,
@@ -191,7 +208,7 @@ def test_signal_lineage_rejects_parent_emitted_after_child():
     journal.append(
         TimelineEntry.unsafe(
             entry_id="signal-child",
-            created_at=datetime.fromtimestamp(1),
+            created_at=datetime.fromtimestamp(1, tz=timezone.utc),
             type=TimelineEntryType.SYSTEM_NOTICE,
             title="Signal emitted",
             description=None,
@@ -203,7 +220,7 @@ def test_signal_lineage_rejects_parent_emitted_after_child():
     journal.append(
         TimelineEntry.unsafe(
             entry_id="signal-parent",
-            created_at=datetime.fromtimestamp(2),
+            created_at=datetime.fromtimestamp(2, tz=timezone.utc),
             type=TimelineEntryType.SYSTEM_NOTICE,
             title="Signal emitted",
             description=None,
@@ -212,7 +229,7 @@ def test_signal_lineage_rejects_parent_emitted_after_child():
         )
     )
 
-    child_cursor = TimelineCursor(datetime.fromtimestamp(1))
+    child_cursor = TimelineCursor(datetime.fromtimestamp(1, tz=timezone.utc))
 
     node = SignalLineageNode(
         signal_key=child,
@@ -222,10 +239,16 @@ def test_signal_lineage_rejects_parent_emitted_after_child():
     )
 
     with pytest.raises(SignalLineageInvariantViolation):
-        assert_parents_emitted_before_child(node)
+        emissions = _mk_emissions({
+            parent: datetime.fromtimestamp(2, tz=timezone.utc),
+            child: datetime.fromtimestamp(1, tz=timezone.utc),
+        })
+
+        assert_parents_emitted_before_child(node, emissions)
 
 
 def test_signal_lineage_allows_simple_chain_without_cycle():
+    CanonicalSignalRegistry._clear_for_tests()
     category = CanonicalSignalCategory.OBSERVATION_STATE
 
     A = CanonicalSignalKey(category, "A")
@@ -235,13 +258,13 @@ def test_signal_lineage_allows_simple_chain_without_cycle():
     nodes = {
         B: SignalLineageNode(
             signal_key=B,
-            emitted_at=TimelineCursor(datetime.utcnow()),
+            emitted_at=TimelineCursor(datetime.now(timezone.utc)),
             parents=(A,),
             supersedes=None,
         ),
         C: SignalLineageNode(
             signal_key=C,
-            emitted_at=TimelineCursor(datetime.utcnow()),
+            emitted_at=TimelineCursor(datetime.now(timezone.utc)),
             parents=(B,),
             supersedes=None,
         ),
@@ -249,7 +272,7 @@ def test_signal_lineage_allows_simple_chain_without_cycle():
 
     node = SignalLineageNode(
         signal_key=A,
-        emitted_at=TimelineCursor(datetime.utcnow()),
+        emitted_at=TimelineCursor(datetime.now(timezone.utc)),
         parents=(),
         supersedes=None,
     )
@@ -259,6 +282,7 @@ def test_signal_lineage_allows_simple_chain_without_cycle():
 
 
 def test_signal_lineage_rejects_direct_indirect_cycle():
+    CanonicalSignalRegistry._clear_for_tests()
     category = CanonicalSignalCategory.OBSERVATION_STATE
 
     A = CanonicalSignalKey(category, "A")
@@ -267,7 +291,7 @@ def test_signal_lineage_rejects_direct_indirect_cycle():
     nodes = {
         A: SignalLineageNode(
             signal_key=A,
-            emitted_at=TimelineCursor(datetime.utcnow()),
+            emitted_at=TimelineCursor(datetime.now(timezone.utc)),
             parents=(B,),
             supersedes=None,
         )
@@ -275,7 +299,7 @@ def test_signal_lineage_rejects_direct_indirect_cycle():
 
     node = SignalLineageNode(
         signal_key=B,
-        emitted_at=TimelineCursor(datetime.utcnow()),
+        emitted_at=TimelineCursor(datetime.now(timezone.utc)),
         parents=(A,),
         supersedes=None,
     )
@@ -285,6 +309,7 @@ def test_signal_lineage_rejects_direct_indirect_cycle():
 
 
 def test_signal_lineage_rejects_long_cycle():
+    CanonicalSignalRegistry._clear_for_tests()
     category = CanonicalSignalCategory.OBSERVATION_STATE
 
     A = CanonicalSignalKey(category, "A")
@@ -294,13 +319,13 @@ def test_signal_lineage_rejects_long_cycle():
     nodes = {
         A: SignalLineageNode(
             signal_key=A,
-            emitted_at=TimelineCursor(datetime.utcnow()),
+            emitted_at=TimelineCursor(datetime.now(timezone.utc)),
             parents=(B,),
             supersedes=None,
         ),
         B: SignalLineageNode(
             signal_key=B,
-            emitted_at=TimelineCursor(datetime.utcnow()),
+            emitted_at=TimelineCursor(datetime.now(timezone.utc)),
             parents=(C,),
             supersedes=None,
         ),
@@ -308,7 +333,7 @@ def test_signal_lineage_rejects_long_cycle():
 
     node = SignalLineageNode(
         signal_key=C,
-        emitted_at=TimelineCursor(datetime.utcnow()),
+        emitted_at=TimelineCursor(datetime.now(timezone.utc)),
         parents=(A,),
         supersedes=None,
     )
@@ -318,6 +343,7 @@ def test_signal_lineage_rejects_long_cycle():
 
 
 def test_signal_lineage_rejects_cycle_via_supersedes():
+    CanonicalSignalRegistry._clear_for_tests()
     category = CanonicalSignalCategory.OBSERVATION_STATE
 
     A = CanonicalSignalKey(category, "A")
@@ -326,7 +352,7 @@ def test_signal_lineage_rejects_cycle_via_supersedes():
     nodes = {
         B: SignalLineageNode(
             signal_key=B,
-            emitted_at=TimelineCursor(datetime.utcnow()),
+            emitted_at=TimelineCursor(datetime.now(timezone.utc)),
             parents=(A,),
             supersedes=None,
         )
@@ -334,7 +360,7 @@ def test_signal_lineage_rejects_cycle_via_supersedes():
 
     node = SignalLineageNode(
         signal_key=A,
-        emitted_at=TimelineCursor(datetime.utcnow()),
+        emitted_at=TimelineCursor(datetime.now(timezone.utc)),
         parents=(),
         supersedes=B,
     )
@@ -368,8 +394,8 @@ def test_signal_lineage_rejects_supersedes_emitted_after_child():
     # enfant émis en premier
     journal.append(
         TimelineEntry.unsafe(
-            entry_id="child",
-            created_at=datetime.fromtimestamp(1),
+            entry_id="entry-child-0001",
+            created_at=datetime.fromtimestamp(1, tz=timezone.utc),
             type=TimelineEntryType.SYSTEM_NOTICE,
             title="Signal emitted",
             description=None,
@@ -381,8 +407,8 @@ def test_signal_lineage_rejects_supersedes_emitted_after_child():
     # superseded émis APRÈS
     journal.append(
         TimelineEntry.unsafe(
-            entry_id="superseded",
-            created_at=datetime.fromtimestamp(2),
+            entry_id="entry-superseded-0001",
+            created_at=datetime.fromtimestamp(2, tz=timezone.utc),
             type=TimelineEntryType.SYSTEM_NOTICE,
             title="Signal emitted",
             description=None,
@@ -393,13 +419,18 @@ def test_signal_lineage_rejects_supersedes_emitted_after_child():
 
     node = SignalLineageNode(
         signal_key=child,
-        emitted_at=TimelineCursor(datetime.fromtimestamp(1)),
+        emitted_at=TimelineCursor(datetime.fromtimestamp(1, tz=timezone.utc)),
         parents=(),
         supersedes=superseded,
     )
 
     with pytest.raises(SignalLineageInvariantViolation):
-        assert_supersedes_emitted_before_child(node)
+        emissions = _mk_emissions({
+            superseded: datetime.fromtimestamp(2, tz=timezone.utc),
+            child: datetime.fromtimestamp(1, tz=timezone.utc),
+        })
+
+        assert_supersedes_emitted_before_child(node, emissions)
 
 
 def test_signal_lineage_rejects_supersedes_never_emitted():
@@ -424,13 +455,17 @@ def test_signal_lineage_rejects_supersedes_never_emitted():
 
     node = SignalLineageNode(
         signal_key=child,
-        emitted_at=TimelineCursor(datetime.fromtimestamp(2)),
+        emitted_at=TimelineCursor(datetime.fromtimestamp(2, tz=timezone.utc)),
         parents=(),
         supersedes=superseded,
     )
 
     with pytest.raises(SignalLineageInvariantViolation):
-        assert_supersedes_emitted_before_child(node)
+        # superseded not present in emissions => must fail
+        emissions = _mk_emissions({
+            child: datetime.fromtimestamp(2, tz=timezone.utc),
+        })
+        assert_supersedes_emitted_before_child(node, emissions)
 
 
 def test_signal_lineage_allows_valid_supersedes_temporally():
@@ -458,7 +493,7 @@ def test_signal_lineage_allows_valid_supersedes_temporally():
     journal.append(
         TimelineEntry.unsafe(
             entry_id="superseded",
-            created_at=datetime.fromtimestamp(1),
+            created_at=datetime.fromtimestamp(1, tz=timezone.utc),
             type=TimelineEntryType.SYSTEM_NOTICE,
             title="Signal emitted",
             description=None,
@@ -469,16 +504,22 @@ def test_signal_lineage_allows_valid_supersedes_temporally():
 
     node = SignalLineageNode(
         signal_key=child,
-        emitted_at=TimelineCursor(datetime.fromtimestamp(2)),
+        emitted_at=TimelineCursor(datetime.fromtimestamp(2, tz=timezone.utc)),
         parents=(),
         supersedes=superseded,
     )
 
     # ne doit PAS lever
-    assert_supersedes_emitted_before_child(node)
+    emissions = _mk_emissions({
+        superseded: datetime.fromtimestamp(1, tz=timezone.utc),
+        child: datetime.fromtimestamp(2, tz=timezone.utc),
+    })
+
+    assert_supersedes_emitted_before_child(node, emissions)
 
 
 def test_signal_lineage_composite_invariant_passes_on_valid_node():
+    CanonicalSignalRegistry._clear_for_tests()
     category = CanonicalSignalCategory.OBSERVATION_STATE
 
     A = CanonicalSignalKey(category, "A")
@@ -500,8 +541,8 @@ def test_signal_lineage_composite_invariant_passes_on_valid_node():
 
     journal.append(
         TimelineEntry.unsafe(
-            entry_id="A",
-            created_at=datetime.fromtimestamp(1),
+            entry_id="entry-A-0001",
+            created_at=datetime.fromtimestamp(1, tz=timezone.utc),
             type=TimelineEntryType.SYSTEM_NOTICE,
             title="Signal emitted",
             description=None,
@@ -512,14 +553,14 @@ def test_signal_lineage_composite_invariant_passes_on_valid_node():
 
     node_A = SignalLineageNode(
         signal_key=A,
-        emitted_at=TimelineCursor(datetime.fromtimestamp(1)),
+        emitted_at=TimelineCursor(datetime.fromtimestamp(1, tz=timezone.utc)),
         parents=(),
         supersedes=None,
     )
 
     node_B = SignalLineageNode(
         signal_key=B,
-        emitted_at=TimelineCursor(datetime.fromtimestamp(2)),
+        emitted_at=TimelineCursor(datetime.fromtimestamp(2, tz=timezone.utc)),
         parents=(A,),
         supersedes=None,
     )
@@ -527,7 +568,16 @@ def test_signal_lineage_composite_invariant_passes_on_valid_node():
     known_nodes = {A: node_A}
 
     # ne doit PAS lever
-    assert_signal_lineage_invariants(node_B, known_nodes)
+    emissions = _mk_emissions({
+        A: datetime.fromtimestamp(1, tz=timezone.utc),
+        B: datetime.fromtimestamp(2, tz=timezone.utc),
+    })
+
+    assert_signal_lineage_invariants(
+        node_B,
+        known_nodes,
+        emissions=emissions,
+    )
 
 
 def test_signal_lineage_rejects_supersedes_when_not_allowed_by_spec():
@@ -562,7 +612,7 @@ def test_signal_lineage_rejects_supersedes_when_not_allowed_by_spec():
 
     node = SignalLineageNode(
         signal_key=child,
-        emitted_at=TimelineCursor(datetime.utcnow()),
+        emitted_at=TimelineCursor(datetime.now(timezone.utc)),
         parents=(),
         supersedes=superseded,
     )
@@ -593,7 +643,7 @@ def test_signal_lineage_allows_supersedes_when_allowed_by_spec():
 
     node = SignalLineageNode(
         signal_key=child,
-        emitted_at=TimelineCursor(datetime.utcnow()),
+        emitted_at=TimelineCursor(datetime.now(timezone.utc)),
         parents=(),
         supersedes=superseded,
     )
@@ -620,7 +670,7 @@ def test_signal_lineage_ignores_spec_when_no_supersedes():
 
     node = SignalLineageNode(
         signal_key=child,
-        emitted_at=TimelineCursor(datetime.utcnow()),
+        emitted_at=TimelineCursor(datetime.now(timezone.utc)),
         parents=(),
         supersedes=None,
     )

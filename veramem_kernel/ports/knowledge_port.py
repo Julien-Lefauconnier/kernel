@@ -1,5 +1,4 @@
 # kernel/ports/knowledge_port.py
-
 """
 Knowledge Port — public kernel entrypoint.
 
@@ -14,9 +13,17 @@ Rules:
 - kernel remains zero-knowledge
 """
 
+from abc import ABC, abstractmethod
+
 from veramem_kernel.journals.knowledge.knowledge_event import KnowledgeEvent
 from veramem_kernel.journals.knowledge import get_knowledge_journal
 
+
+
+class KnowledgePort(ABC):
+    @abstractmethod
+    def append(self, event: KnowledgeEvent) -> None:
+        pass
 
 def append_knowledge(event: KnowledgeEvent) -> None:
     """

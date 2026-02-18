@@ -49,3 +49,14 @@ coverage.xml
 
 # OS cognitive future
 node_modules/
+
+# test caches
+.hypothesis/
+.pytest_cache/
+__pycache__/
+*.pyc
+
+# build artifacts
+dist/
+*.egg-info/
+build/

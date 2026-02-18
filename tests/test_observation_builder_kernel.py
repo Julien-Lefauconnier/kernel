@@ -1,6 +1,6 @@
 # tests/test_observation_builder_kernel.py
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 from veramem_kernel.journals.observation import ObservationBuilder
 from veramem_kernel.journals.observation.observation_event import ObservationEvent
@@ -17,7 +17,7 @@ class DummyNormativeSignal:
         self.signal_type = "DISAGREE"
         self.message = "I disagree"
         self.source = "human"
-        self.created_at = datetime.utcnow()
+        self.created_at = datetime.now(timezone.utc)
 
 
 def test_builder_creates_observation_event():

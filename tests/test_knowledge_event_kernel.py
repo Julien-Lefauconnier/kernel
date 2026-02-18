@@ -1,6 +1,6 @@
 # kernel/tests/test_knowledge_event_kernel.py
 
-from datetime import datetime
+from datetime import datetime, timezone, timezone
 import pytest
 
 from veramem_kernel.journals.knowledge.knowledge_event import KnowledgeEvent
@@ -29,7 +29,7 @@ def test_knowledge_event_has_auto_id_and_timestamp():
 
 
 def test_knowledge_event_preserves_explicit_values():
-    now = datetime(2024, 1, 1)
+    now = datetime(2024, 1, 1, tzinfo=timezone.utc)
 
     event = KnowledgeEvent.create(
         event_id="event-123",
@@ -73,4 +73,10 @@ def test_knowledge_event_is_pure_data_object():
     )
 
     assert callable(event.create)
-    assert event.__class__.__dict__.get("__post_init__") is None
+
+def test_knowledge_event_timestamp_is_utc():
+    e = KnowledgeEvent.create(source="cognition", knowledge_type="fact")
+    assert e.created_at.tzinfo is not None
+    assert e.created_at.tzinfo == timezone.utc
+
+

@@ -1,0 +1,13 @@
+{
+  "base_total_entries": 5,
+  "binary_sha256": "79e0ee8e3a4a5ca9875ad6aa9c13e7c1773f0cc492e82e0735855d41d535bdd1",
+  "description": "Timeline delta between snapshot1 (first 5) and snapshot2 (first 10).",
+  "entries_added": 5,
+  "fixture": "timeline_delta_v1",
+  "generator": {
+    "fixture_set": "veramem-kernel-conformance",
+    "generator_version": "v1",
+    "wire_version_hint": 1
+  },
+  "target_total_entries": 10
+}

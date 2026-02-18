@@ -1,6 +1,6 @@
 # tests/test_action_validation_kernel.py
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 import pytest
 
@@ -25,7 +25,7 @@ def make_validation(
         user_ref="u1",
         place_ref="p1",
         decision=decision,
-        decided_at=decided_at or datetime.utcnow(),
+        decided_at=decided_at or datetime.now(timezone.utc),
     )
 
 

@@ -1,7 +1,7 @@
 # tests/test_audit_invariants_kernel.py
 
 import pytest
-from datetime import datetime
+from datetime import datetime, timezone
 
 from veramem_kernel.journals.audit.audit_event import AuditEvent
 from veramem_kernel.invariants.audit.audit_invariants import (
@@ -46,7 +46,7 @@ def test_audit_event_has_identity():
 def test_audit_event_missing_identity_raises():
     event = AuditEvent(
         event_id="",
-        created_at=datetime.utcnow(),
+        created_at=datetime.now(timezone.utc),
         source="test",
         source_id="src",
         event_type="TEST",

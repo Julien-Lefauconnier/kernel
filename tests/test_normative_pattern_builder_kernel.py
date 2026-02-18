@@ -1,6 +1,6 @@
 # tests/test_normative_pattern_builder_kernel.py
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 from veramem_kernel.journals.observation.observation_event import ObservationEvent
 from veramem_kernel.journals.observation.patterns.normative_pattern_builder import (
@@ -19,13 +19,13 @@ def test_normative_pattern_projection():
             user_id="u1",
             source_type="normative",
             payload=DummySignal("DISAGREE"),
-            created_at=datetime.utcnow(),
+            created_at=datetime.now(timezone.utc),
         ),
         ObservationEvent(
             user_id="u1",
             source_type="normative",
             payload=DummySignal("DISAGREE"),
-            created_at=datetime.utcnow(),
+            created_at=datetime.now(timezone.utc),
         ),
     ]
 

@@ -1,6 +1,6 @@
 # tests/test_timeline_projector_kernel.py
 
-from datetime import datetime, timedelta
+from datetime import datetime, timezone, timedelta, timezone
 
 from veramem_kernel.journals.timeline.timeline_projector import project_timeline
 from veramem_kernel.journals.timeline.timeline_types import TimelineEntryType
@@ -18,7 +18,7 @@ def make_action(
 ):
     return ActionEvent(
         event_id=event_id,
-        created_at=created_at or datetime.utcnow(),
+        created_at=created_at or datetime.now(timezone.utc),
         user_ref="u1",
         place_ref="p1",
         action_ref="act-1",
@@ -38,7 +38,7 @@ def make_validation(
         user_ref="u1",
         place_ref="p1",
         decision=decision,
-        decided_at=decided_at or datetime.utcnow(),
+        decided_at=decided_at or datetime.now(timezone.utc),
     )
 
 
@@ -90,7 +90,7 @@ def test_validation_event_projects_to_refused():
 # -------------------------------------------------
 
 def test_timeline_is_sorted_by_time():
-    t0 = datetime.utcnow()
+    t0 = datetime.now(timezone.utc)
     t1 = t0 + timedelta(seconds=5)
 
     action = make_action(created_at=t0)
@@ -119,9 +119,12 @@ def test_projector_is_pure_function():
     entries1 = project_timeline(events=events)
     entries2 = project_timeline(events=events)
 
-    assert entries1 != entries2  # different ids
-    assert [e.type for e in entries1] == [e.type for e in entries2]
-    assert [e.created_at for e in entries1] == [e.created_at for e in entries2]
+    # Pure function => deterministic output for same inputs
+    assert entries1 == entries2
+
+    # And no mutation / no shared list instance
+    assert entries1 is not entries2
+
 
 
 # -----------------------

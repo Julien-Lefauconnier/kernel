@@ -1,6 +1,6 @@
 # tests/test_timeline_reader_kernel.py
 
-from datetime import datetime, timedelta
+from datetime import datetime, timezone, timedelta, timezone
 
 from veramem_kernel.journals.timeline.timeline_reader import TimelineReader
 from veramem_kernel.journals.timeline.timeline_cursor import TimelineCursor
@@ -19,7 +19,7 @@ def make_event(ts: datetime) -> ActionEvent:
 
 
 def test_reader_without_window_returns_all_events():
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
 
     events = [
         make_event(now),
@@ -33,7 +33,7 @@ def test_reader_without_window_returns_all_events():
     assert result == events
 
 def test_reader_applies_after_cursor():
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
 
     e1 = make_event(now)
     e2 = make_event(now + timedelta(seconds=10))
@@ -49,7 +49,7 @@ def test_reader_applies_after_cursor():
     assert result == [e2, e3]
 
 def test_reader_applies_before_cursor():
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
 
     e1 = make_event(now)
     e2 = make_event(now + timedelta(seconds=10))
@@ -65,7 +65,7 @@ def test_reader_applies_before_cursor():
     assert result == [e1, e2]
 
 def test_reader_applies_after_and_before():
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
 
     e1 = make_event(now)
     e2 = make_event(now + timedelta(seconds=10))
@@ -83,7 +83,7 @@ def test_reader_applies_after_and_before():
     assert result == [e2, e3]
 
 def test_reader_preserves_event_order():
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
 
     e1 = make_event(now + timedelta(seconds=20))
     e2 = make_event(now)
@@ -103,7 +103,7 @@ def test_reader_with_empty_events_returns_empty():
     assert result == []
 
 def test_reader_is_stateless():
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
 
     e1 = make_event(now)
     e2 = make_event(now + timedelta(seconds=10))

@@ -1,4 +1,4 @@
-# kernel/ports/access_port.py
+# veramem_kernel/ports/access_port.py
 
 from typing import Any
 

@@ -1,7 +1,7 @@
 # tests/test_signal_lineage_resolver_kernel.py
 
 import pytest
-from datetime import datetime
+from datetime import datetime, timezone
 
 from veramem_kernel.signals.canonical.canonical_signal_key import CanonicalSignalKey
 from veramem_kernel.signals.canonical.canonical_signal_category import CanonicalSignalCategory
@@ -21,7 +21,7 @@ from veramem_kernel.journals.timeline.timeline_cursor import TimelineCursor
 # ---------------------------------------------------------------------
 
 def cursor():
-    return TimelineCursor(datetime.utcnow())
+    return TimelineCursor(datetime.now(timezone.utc))
 
 
 # ---------------------------------------------------------------------

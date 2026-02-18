@@ -14,15 +14,20 @@ The kernel:
 It ONLY enforces structural and declarative validity.
 """
 
+from datetime import timezone
 from veramem_kernel.journals.knowledge.knowledge_event import KnowledgeEvent
 
 
 def assert_has_timestamp(event: KnowledgeEvent) -> None:
-    """
-    Invariant: every knowledge event must be time-bound.
-    """
     if event.created_at is None:
         raise ValueError("KnowledgeEvent must have a created_at timestamp")
+    if event.created_at.tzinfo is None:
+        raise ValueError("KnowledgeEvent.created_at must be timezone-aware (UTC).")
+    
+    off = event.created_at.tzinfo.utcoffset(event.created_at)
+    if off is None or off.total_seconds() != 0:
+        raise ValueError("KnowledgeEvent.created_at must be in UTC.")
+
 
 
 def assert_has_source(event: KnowledgeEvent) -> None:

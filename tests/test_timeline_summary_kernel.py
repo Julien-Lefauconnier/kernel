@@ -1,6 +1,7 @@
 # tests/test_timeline_summary_kernel.py
 
-from datetime import datetime, timedelta
+from datetime import datetime, timezone, timedelta, timezone
+from uuid import uuid4
 
 from veramem_kernel.journals.timeline.timeline_entry import TimelineEntry, TimelineEntryNature
 from veramem_kernel.journals.timeline.timeline_types import TimelineEntryType
@@ -9,7 +10,7 @@ from veramem_kernel.journals.timeline.timeline_summary import summarize_timeline
 
 def make_entry(ts, t):
     return TimelineEntry(
-        entry_id="e",
+        entry_id="entry-0001",
         created_at=ts,
         type=t,
         title="x",
@@ -32,7 +33,7 @@ def test_empty_summary():
 
 
 def test_summary_detects_conflict_and_uncertainty():
-    t0 = datetime.utcnow()
+    t0 = datetime.now(timezone.utc)
     t1 = t0 + timedelta(seconds=1)
 
     entries = [

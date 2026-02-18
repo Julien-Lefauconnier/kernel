@@ -1,6 +1,8 @@
 # kernel/signals/lineage/signal_lineage_resolver.py
 
+from __future__ import annotations
 from typing import Dict, Set
+
 
 from veramem_kernel.signals.canonical.canonical_signal_key import CanonicalSignalKey
 from veramem_kernel.signals.lineage.signal_lineage_node import SignalLineageNode
@@ -35,10 +37,17 @@ def resolve_signal_lineage_view(
         )
 
     visited: Set[CanonicalSignalKey] = set()
+    stack: Set[CanonicalSignalKey] = set()
 
     def walk(current: CanonicalSignalKey) -> None:
+        if current in stack:
+            raise SignalLineageResolutionError(
+                f"cycle detected while resolving lineage at: {current}"
+            )
         if current in visited:
             return
+        
+        stack.add(current)
 
         node = known_nodes.get(current)
         if node is None:
@@ -53,6 +62,8 @@ def resolve_signal_lineage_view(
 
         if node.supersedes is not None:
             walk(node.supersedes)
+
+        stack.remove(current)
 
     walk(root)
 

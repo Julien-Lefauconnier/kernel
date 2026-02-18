@@ -1,0 +1,14 @@
+{
+  "attestation_algo": "ed25519",
+  "binary_sha256": "53466442946bc9fd678ac92d3dbd91658f26ee2242b4320da9739ab74effe4fa",
+  "challenge_sha256": "35588d0eb6e80dd09d3a6169a0713c7ad4d64bb1dc9d953fa1857bbf8376ad77",
+  "commitment_hex": "2a7dc03340d6a38dc526cc9e030b927b78b36a41d92e42ee0a5bba55f4767222",
+  "fixture": "attestation_ed25519_v1",
+  "generator": {
+    "fixture_set": "veramem-kernel-conformance",
+    "generator_version": "v1",
+    "seed_sha256": "4f8c8592f0e8f9838aecde709730ce0ac82b5b0f51f70bb9cae304d21c6a4b32",
+    "wire_version_hint": 1
+  },
+  "signed_commitment_algo": "ed25519"
+}

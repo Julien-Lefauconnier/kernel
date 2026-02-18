@@ -4,7 +4,7 @@ from veramem_kernel.journals.observation.observation_event import ObservationEve
 from veramem_kernel.journals.observation.observation_journal_in_memory import (
     InMemoryObservationJournal,
 )
-from datetime import datetime
+from datetime import datetime, timezone
 
 
 def test_append_and_list_observations():
@@ -15,7 +15,7 @@ def test_append_and_list_observations():
             user_id="u1",
             source_type="normative",
             payload="x",
-            created_at=datetime.utcnow(),
+            created_at=datetime.now(timezone.utc),
         )
     )
 

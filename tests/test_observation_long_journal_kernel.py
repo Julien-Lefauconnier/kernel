@@ -1,6 +1,6 @@
 # tests/test_observation_long_journal_kernel.py
 
-from datetime import datetime
+from datetime import datetime, timezone
 
 from veramem_kernel.journals.observation_long import (
     ObservationLongEvent,
@@ -15,14 +15,14 @@ def test_append_and_list_observation_long_events():
         user_id="u1",
         source_type="normative",
         payload={"rule": "no_personal_data"},
-        observed_at=datetime.utcnow(),
+        observed_at=datetime.now(timezone.utc),
     )
 
     e2 = ObservationLongEvent(
         user_id="u1",
         source_type="cognitive",
         payload={"stability": "low"},
-        observed_at=datetime.utcnow(),
+        observed_at=datetime.now(timezone.utc),
     )
 
     journal.append(e1)

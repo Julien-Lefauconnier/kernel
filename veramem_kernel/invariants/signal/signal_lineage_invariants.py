@@ -1,5 +1,11 @@
 # kernel/invariants/signal/signal_lineage_invariants.py
 
+from __future__ import annotations
+
+from dataclasses import dataclass
+from datetime import datetime
+from typing import Dict, Iterable, Optional, Protocol
+
 from veramem_kernel.signals.lineage.signal_lineage_node import SignalLineageNode
 from veramem_kernel.signals.lineage.signal_lineage_errors import (
     SignalLineageInvariantViolation,
@@ -7,8 +13,57 @@ from veramem_kernel.signals.lineage.signal_lineage_errors import (
 from veramem_kernel.signals.canonical.canonical_signal_registry import (
     CanonicalSignalRegistry,
 )
-from veramem_kernel.journals.timeline.timeline_journal import get_timeline_journal
 
+class EmissionIndex(Protocol):
+    """
+    Deterministic lookup: CanonicalSignalKey(str) -> first emission timestamp (UTC).
+    Must not perform IO, must not depend on global mutable state.
+    """
+    def first_seen(self, origin_ref: str) -> Optional[datetime]: ...
+
+
+@dataclass(frozen=True)
+class DictEmissionIndex:
+    _first_seen: Dict[str, datetime]
+
+    def first_seen(self, origin_ref: str) -> Optional[datetime]:
+        return self._first_seen.get(origin_ref)
+
+
+def build_emission_index(entries: Iterable) -> DictEmissionIndex:
+    """
+    Build a deterministic first-seen index from timeline entries.
+    Requires entries to expose: origin_ref (str|None) and timestamp (datetime).
+    """
+    def canonical_ts(e):
+        ts = getattr(e, "timestamp", None) or getattr(e, "created_at", None)
+        if ts is None:
+            raise ValueError("Timeline entry missing timestamp")
+        return ts
+
+    ordered = sorted(entries, key=canonical_ts)
+
+    first_seen: Dict[str, datetime] = {}
+
+    for entry in ordered:
+        origin = getattr(entry, "origin_ref", None)
+        if origin is None:
+            continue
+        ts = getattr(entry, "timestamp", None)
+        if ts is None:
+            ts = getattr(entry, "created_at", None)
+        if ts is None:
+            continue
+        if ts.tzinfo is None:
+            raise ValueError("Timeline timestamps must be timezone-aware (UTC).")
+        if ts.tzinfo.utcoffset(ts) is None:
+            raise ValueError("Invalid timezone on timeline timestamp.")
+        if ts.tzinfo.utcoffset(ts).total_seconds() != 0:
+            raise ValueError("Timeline timestamps must be in UTC.")
+
+        # first occurrence wins (deterministic given entries order)
+        first_seen.setdefault(str(origin), ts)
+    return DictEmissionIndex(first_seen)
 
 def assert_no_self_parent(node: SignalLineageNode) -> None:
     if node.signal_key in node.parents:
@@ -45,20 +100,13 @@ def assert_supersedes_in_parents(node: SignalLineageNode) -> None:
             "superseded signal must be included in parents"
         )
 
-def assert_parents_emitted_before_child(node: SignalLineageNode) -> None:
-    journal = get_timeline_journal()
-    entries = journal.list_events()
-
-    first_seen = {}
-
-    for entry in entries:
-        if entry.origin_ref is None:
-            continue
-
-        first_seen.setdefault(entry.origin_ref, entry.timestamp)
+def assert_parents_emitted_before_child(
+    node: SignalLineageNode,
+    emissions: EmissionIndex,
+) -> None:
 
     for parent in node.parents:
-        parent_ts = first_seen.get(str(parent))
+        parent_ts = emissions.first_seen(str(parent))
         if parent_ts is None or parent_ts >= node.emitted_at.timestamp:
             raise SignalLineageInvariantViolation(
                 "parent must be emitted before child"
@@ -114,30 +162,22 @@ def assert_no_cycle(
     for parent in initial_parents:
         walk(parent)
 
-def assert_supersedes_emitted_before_child(node: SignalLineageNode) -> None:
+def assert_supersedes_emitted_before_child(
+    node: SignalLineageNode,
+    emissions: EmissionIndex,
+) -> None:
     """
     Ensure that a superseded signal was emitted strictly before the current signal.
 
     This invariant is temporal and factual:
-    - it reads the timeline
-    - it relies on origin_ref to identify emitted signals
+    - it relies on an injected emission index (deterministic)
     """
 
     if node.supersedes is None:
         return
 
-    journal = get_timeline_journal()
-    entries = journal.list_events()
-
     superseded_key = str(node.supersedes)
-    first_seen_ts = None
-
-    for entry in entries:
-        if entry.origin_ref != superseded_key:
-            continue
-
-        first_seen_ts = entry.timestamp
-        break
+    first_seen_ts = emissions.first_seen(superseded_key)
 
     if first_seen_ts is None:
         raise SignalLineageInvariantViolation(
@@ -153,6 +193,8 @@ def assert_supersedes_emitted_before_child(node: SignalLineageNode) -> None:
 def assert_signal_lineage_invariants(
     node: SignalLineageNode,
     known_nodes: dict,
+    *,
+    emissions: EmissionIndex,
 ) -> None:
     """
     Enforce the full Signal Lineage invariant contract.
@@ -168,8 +210,8 @@ def assert_signal_lineage_invariants(
     assert_supersedes_in_parents(node)
 
     # --- Temporal ---
-    assert_parents_emitted_before_child(node)
-    assert_supersedes_emitted_before_child(node)
+    assert_parents_emitted_before_child(node, emissions)
+    assert_supersedes_emitted_before_child(node, emissions)
 
     # --- Graph consistency ---
     assert_no_cycle(node, known_nodes)

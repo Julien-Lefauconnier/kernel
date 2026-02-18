@@ -15,7 +15,7 @@ from veramem_kernel.invariants.signal.canonical.canonical_signal_invariants impo
 
 
 
-def setup_module():
+def _register_supersession_declared():
     key = CanonicalSignalKey(
         CanonicalSignalCategory.TEMPORAL_STATE,
         "supersession_declared",
@@ -32,7 +32,11 @@ def setup_module():
     CanonicalSignalRegistry.register(spec)
 
 
+
 def test_valid_canonical_signal_passes_validation():
+    CanonicalSignalRegistry._clear_for_tests()
+    _register_supersession_declared()
+
     signal = CanonicalSignal(
         signal_id="sig-1",
         key=CanonicalSignalKey(
@@ -40,7 +44,7 @@ def test_valid_canonical_signal_passes_validation():
             "supersession_declared",
         ),
         state="DECLARED",
-        subject_ref="timeline:123",
+        subject_ref="timeline_entry:123",
         temporal_anchor="t-1",
         origin="journal",
         supersedes=None,
@@ -49,37 +53,42 @@ def test_valid_canonical_signal_passes_validation():
     validate_canonical_signal(signal)
 
 
+
 def test_invalid_state_raises():
-    signal = CanonicalSignal(
-        signal_id="sig-2",
-        key=CanonicalSignalKey(
-            CanonicalSignalCategory.TEMPORAL_STATE,
-            "supersession_declared",
-        ),
-        state="INVALID",
-        subject_ref="timeline:123",
-        temporal_anchor="t-2",
-        origin="journal",
-        supersedes=None,
-    )
+    CanonicalSignalRegistry._clear_for_tests()
+    _register_supersession_declared()
 
     with pytest.raises(ValueError):
-        validate_canonical_signal(signal)
+        CanonicalSignal(
+            signal_id="sig-2",
+            key=CanonicalSignalKey(
+                CanonicalSignalCategory.TEMPORAL_STATE,
+                "supersession_declared",
+            ),
+            state="INVALID",
+            subject_ref="timeline_entry:123",
+            temporal_anchor="t-2",
+            origin="journal",
+            supersedes=None,
+        )
+
 
 
 def test_invalid_origin_raises():
-    signal = CanonicalSignal(
-        signal_id="sig-3",
-        key=CanonicalSignalKey(
-            CanonicalSignalCategory.TEMPORAL_STATE,
-            "supersession_declared",
-        ),
-        state="DECLARED",
-        subject_ref="timeline:123",
-        temporal_anchor="t-3",
-        origin="projection",
-        supersedes=None,
-    )
+    CanonicalSignalRegistry._clear_for_tests()
+    _register_supersession_declared()
 
     with pytest.raises(ValueError):
-        validate_canonical_signal(signal)
+        CanonicalSignal(
+            signal_id="sig-3",
+            key=CanonicalSignalKey(
+                CanonicalSignalCategory.TEMPORAL_STATE,
+                "supersession_declared",
+            ),
+            state="DECLARED",
+            subject_ref="timeline_entry:123",
+            temporal_anchor="t-3",
+            origin="projection",
+            supersedes=None,
+        )
+

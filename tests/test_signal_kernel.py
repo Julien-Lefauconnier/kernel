@@ -1,7 +1,8 @@
 # kernel/tests/test_signal_kernel.py
 
 import pytest
-from datetime import datetime, timedelta
+from datetime import datetime, timezone, timezone
+from uuid import uuid4
 
 from veramem_kernel.signals.signal import Signal
 
@@ -27,7 +28,7 @@ def test_signal_timestamp_is_mandatory():
     """
     with pytest.raises(ValueError):
         Signal(
-            signal_id="sig-1",
+            signal_id="sig-0001",
             timestamp=None,  # type: ignore
             payload={},
             origin="test",
@@ -39,10 +40,10 @@ def test_signal_timestamp_is_stable():
     Kernel invariant:
     Signal timestamp must remain stable and unmodified.
     """
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
 
     signal = Signal(
-        signal_id="sig-ts",
+       signal_id=f"sig-{uuid4()}",
         timestamp=now,
         payload="raw",
         origin=None,

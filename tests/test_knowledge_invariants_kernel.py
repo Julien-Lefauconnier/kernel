@@ -1,8 +1,8 @@
-# kernel/tests/test_knowledge_invariants_kernel.py
+# tests/test_knowledge_invariants_kernel.py
 
 
 import pytest
-from datetime import datetime
+from datetime import datetime, timezone, timezone
 
 from veramem_kernel.journals.knowledge.knowledge_event import KnowledgeEvent
 from veramem_kernel.invariants.knowledge.knowledge_invariants import (
@@ -16,7 +16,7 @@ def make_event(**overrides):
     base = dict(
         source="cognition",
         knowledge_type="fact",
-        created_at=datetime.utcnow(),
+        created_at=datetime.now(timezone.utc),
     )
     base.update(overrides)
     return KnowledgeEvent.create(**base)
@@ -40,14 +40,10 @@ def test_timestamp_is_always_set_by_factory():
 
 
 def test_empty_source_is_rejected():
-    event = make_event(source="")
-
     with pytest.raises(ValueError):
-        assert_has_source(event)
+        KnowledgeEvent.create(source="", knowledge_type="FACT")
 
 
 def test_missing_knowledge_type_is_rejected():
-    event = make_event(knowledge_type=None)
-
     with pytest.raises(ValueError):
-        assert_has_knowledge_type(event)
+        KnowledgeEvent.create(source="test", knowledge_type=None)

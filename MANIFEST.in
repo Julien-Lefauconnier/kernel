@@ -1,9 +1,84 @@
+# MANIFEST.in — Veramem Kernel Distribution Control
+# Purpose: Explicitly define which files are included in source distributions (sdist)
+#          and wheels. Ensures conformance fixtures, examples, and normative docs
+#          are available after `pip install`, while excluding test artifacts and caches.
+#
+# Rules:
+# - Use `include` for specific files or patterns that must be shipped
+# - Use `recursive-include` for entire subdirectories of interest
+# - Use `recursive-exclude` to remove unwanted subtrees or patterns
+# - Order matters: includes first, excludes last
+# - All paths are relative to the project root
+
+# === Required root-level metadata files ===
 include LICENSE
 include NOTICE
 include README.md
+include MAINTAINERS.md
+include SECURITY.md
+include CONTRIBUTING.md
+include GOVERNANCE.md
+include CODE_OF_CONDUCT.md
+include PROJECT_STATUS.md
+include ROADMAP.md
+include VISION.md
+include FAQ.md
+include GETTING_STARTED.md
 
+# === Conformance suite — Critical for interoperability and validation ===
+# Include all golden fixtures (binary + JSON + manifest)
+include conformance/fixtures/*.bin
+include conformance/fixtures/*.json
+include conformance/fixtures/manifest_v1.json
+
+# Include generator script and utilities (allow users to regenerate or audit vectors)
+recursive-include conformance *.py
+
+
+# === Examples — Pedagogical and onboarding material ===
+recursive-include examples *.py
+include veramem_kernel/py.typed
+recursive-include veramem_kernel *.py
+
+
+# === Normative documentation (protocol specs, formal models, security, governance) ===
+recursive-include protocol *.md
+recursive-include security *.md
+recursive-include governance *.md
+recursive-include docs *.md
+recursive-include diagrams *.md
+
+# === Exclude unnecessary or heavy artifacts ===
+# Tests — Never shipped in distributions
 recursive-exclude tests *
-recursive-exclude docs *
-recursive-exclude examples *
-recursive-exclude .github *
+
+# Python caches and temporary files
 recursive-exclude __pycache__ *
+recursive-exclude *.pyc
+recursive-exclude *.pyo
+recursive-exclude *.py-class
+
+# CI / local dev artifacts
+recursive-exclude .github *
+recursive-exclude .pytest_cache *
+recursive-exclude .mypy_cache *
+recursive-exclude .coverage *
+recursive-exclude htmlcov *
+recursive-exclude .coverage.*
+recursive-exclude coverage.xml
+recursive-exclude *.log
+recursive-exclude *.egg-info *
+recursive-exclude dist *
+recursive-exclude build *
+
+# Editor / OS junk
+recursive-exclude .DS_Store *
+recursive-exclude Thumbs.db *
+recursive-exclude *.swp
+recursive-exclude *.swo
+
+# === End of MANIFEST.in ===
+# After updating this file, validate with:
+#   python -m build --sdist
+#   tar -tvf dist/veramem_kernel-*.tar.gz | grep conformance/fixtures
+#   Ensure all expected .bin/.json are present

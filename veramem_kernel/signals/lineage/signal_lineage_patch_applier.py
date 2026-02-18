@@ -13,10 +13,12 @@ from veramem_kernel.signals.lineage.signal_lineage_view import (
 )
 from veramem_kernel.journals.timeline.timeline_cursor import TimelineCursor
 
-
 def apply_signal_lineage_patches(
     view: SignalLineageView,
     patches: Iterable[SignalLineagePatch],
+    *,
+    emitted_at: TimelineCursor,
+    strict: bool = True,
 ) -> SignalLineageView:
     """
     Apply a sequence of SignalLineagePatch to a SignalLineageView.
@@ -31,7 +33,7 @@ def apply_signal_lineage_patches(
     for key, parents in view.parent_map.items():
         nodes[key] = SignalLineageNode(
             signal_key=key,
-            emitted_at=TimelineCursor.now(),
+            emitted_at=emitted_at,
             parents=parents,
             supersedes=None,
         )
@@ -41,9 +43,16 @@ def apply_signal_lineage_patches(
         key = patch.key
 
         if patch.type is SignalLineagePatchType.ADD:
+            if strict:
+                for p in patch.parents or ():
+                    if p not in nodes:
+                        raise ValueError(
+                            f"Unknown parent in ADD patch: {p}"
+                        )
+                    
             nodes[key] = SignalLineageNode(
                 signal_key=key,
-                emitted_at=TimelineCursor.now(),
+                emitted_at=emitted_at,
                 parents=patch.parents or (),
                 supersedes=None,
             )
@@ -66,6 +75,8 @@ def apply_signal_lineage_patches(
             # Depth change is implicit via reprojection
             node = nodes.get(key)
             if node is None:
+                if strict:
+                    raise ValueError(f"Cannot MOVE unknown node: {key}")
                 continue
 
             # Preserve old parents as independent roots
@@ -96,6 +107,10 @@ def apply_signal_lineage_patches(
             node = nodes.get(key)
             if node is None:
                 continue
+            if strict:
+                for p in patch.parents or ():
+                    if p not in nodes:
+                        raise ValueError(f"Unknown parent in REWIRE: {p}")
 
             nodes[key] = SignalLineageNode(
                 signal_key=key,

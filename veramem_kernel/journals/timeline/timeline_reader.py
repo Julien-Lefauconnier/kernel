@@ -1,9 +1,25 @@
 # kernel/journals/timeline/timeline_reader.py
 
+from datetime import datetime
 from typing import Iterable, List, Optional
 
 from veramem_kernel.journals.timeline.timeline_window import TimelineWindow
 
+
+def _timestamp(evt):
+    try:
+        ts = getattr(evt, "timestamp", None)
+        if ts is not None:
+            if not isinstance(ts, datetime):
+                raise TypeError("Invalid timestamp type")
+            return ts
+
+        ts = getattr(evt, "created_at")
+        if not isinstance(ts, datetime):
+            raise TypeError("Invalid created_at type")
+        return ts
+    except Exception as e:
+        raise TypeError("Invalid timeline event object") from e
 
 class TimelineReader:
     """
@@ -39,7 +55,13 @@ class TimelineReader:
         result = []
 
         for evt in events:
-            ts = evt.created_at
+            ts = _timestamp(evt)
+            if ts.tzinfo is None:
+                raise TypeError("Timeline event timestamp must be timezone-aware.")
+            if ts.tzinfo.utcoffset(ts) is None:
+                raise TypeError("Timeline event timestamp has invalid timezone.")
+            if ts.tzinfo.utcoffset(ts).total_seconds() != 0:
+                raise TypeError("Timeline event timestamp must be UTC.")
 
             if window.after is not None:
                 if ts <= window.after.timestamp:
@@ -52,3 +74,4 @@ class TimelineReader:
             result.append(evt)
 
         return result
+

@@ -1,7 +1,7 @@
 # kernel/journals/audit/audit_event.py
 
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional, Mapping
 from uuid import uuid4
 
@@ -38,7 +38,7 @@ class AuditEvent:
     ) -> "AuditEvent":
         return cls(
             event_id=event_id or str(uuid4()),
-            created_at=created_at or datetime.utcnow(),
+            created_at=created_at or datetime.now(timezone.utc),
             source=source,
             source_id=source_id,
             event_type=event_type,

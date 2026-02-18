@@ -1,7 +1,7 @@
 # tests/test_observation_invariants_kernel.py
 
 import pytest
-from datetime import datetime
+from datetime import datetime, timezone
 
 from veramem_kernel.invariants.observation.observation_invariants import (
     ObservationInvariants,
@@ -18,7 +18,7 @@ def test_observation_invariants_accept_valid_event():
         user_id="user-1",
         source_type="normative",
         payload={"signal_type": "DISAGREE"},
-        created_at=datetime.utcnow(),
+        created_at=datetime.now(timezone.utc),
     )
 
     assert ObservationInvariants.is_valid(event) is True
@@ -34,7 +34,7 @@ def test_observation_invariants_reject_missing_user_id():
         user_id="",
         source_type="normative",
         payload={},
-        created_at=datetime.utcnow(),
+        created_at=datetime.now(timezone.utc),
     )
 
     assert ObservationInvariants.is_valid(event) is False
@@ -52,7 +52,7 @@ def test_observation_invariants_reject_missing_source_type():
         user_id="user-1",
         source_type="",
         payload={},
-        created_at=datetime.utcnow(),
+        created_at=datetime.now(timezone.utc),
     )
 
     assert ObservationInvariants.is_valid(event) is False

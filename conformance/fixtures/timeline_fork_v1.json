@@ -1,0 +1,13 @@
+{
+  "binary_sha256": "2b8b719b148d4db5cd9507cb599f0cfd19eb15cd33a71cfaf56df8e6be05f4ae",
+  "common_prefix_len": 5,
+  "fixture": "timeline_fork_v1",
+  "generator": {
+    "fixture_set": "veramem-kernel-conformance",
+    "generator_version": "v1",
+    "wire_version_hint": 1
+  },
+  "kind": "fork",
+  "left_total_entries": 8,
+  "right_total_entries": 8
+}

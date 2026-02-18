@@ -1,5 +1,8 @@
 # kernel/invaraints/signals/canonical/canonical_signal_invariants.py
 
+from __future__ import annotations
+import unicodedata
+
 from veramem_kernel.signals.canonical.canonical_signal import CanonicalSignal
 from veramem_kernel.signals.canonical.canonical_signal_registry import (
     CanonicalSignalRegistry,
@@ -8,6 +11,29 @@ from veramem_kernel.signals.canonical.canonical_signal_registry import (
 
 def validate_canonical_signal(signal: CanonicalSignal) -> None:
     spec = CanonicalSignalRegistry.get(signal.key)
+    # Expected formats: "kind:id" or "kind/id"
+    subject_ref = unicodedata.normalize("NFKC", (signal.subject_ref or "")).strip()
+    if not subject_ref:
+        raise ValueError("CanonicalSignal.subject_ref must be defined.")
+
+    if ":" in subject_ref:
+        subject_kind = subject_ref.split(":", 1)[0]
+    elif "/" in subject_ref:
+        subject_kind = subject_ref.split("/", 1)[0]
+    else:
+        raise ValueError(
+            "Invalid CanonicalSignal.subject_ref format. "
+            "Expected 'kind:id' or 'kind/id'."
+        )
+    
+    if subject_kind.strip() != subject_kind:
+        raise ValueError("Invalid subject kind format.")
+
+    if subject_kind not in spec.subject_kinds:
+        raise ValueError(
+            f"Subject kind '{subject_kind}' not allowed for {signal.key}"
+        )
+
 
     if signal.state not in spec.states_allowed:
         raise ValueError(

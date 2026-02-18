@@ -46,6 +46,12 @@ dependencies = []
 Repository = "https://github.com/Julien-Lefauconnier/kernel"
 Issues = "https://github.com/Julien-Lefauconnier/kernel/issues"
 
+[tool.poetry.dev-dependencies]
+hypothesis = "^6.0"
+
+[project.optional-dependencies]
+crypto = ["pynacl>=1.5"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 addopts = "-q"

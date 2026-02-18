@@ -151,31 +151,43 @@ def build_signal_lineage_view(
     """
 
     visited: set[CanonicalSignalKey] = set()
+    stack: set[CanonicalSignalKey] = set()
 
     def walk(current_key: CanonicalSignalKey, current_depth: int):
+        if current_key in stack:
+            raise ValueError(
+                f"Cycle detected in signal lineage at {current_key}"
+            )
+
         if current_key in visited:
             return set(), current_depth
 
         visited.add(current_key)
+        stack.add(current_key)
 
-        node = known_nodes.get(current_key)
-        if node is None:
-            return set(), current_depth
+        try:
+            node = known_nodes.get(current_key)
+            if node is None:
+                return set(), current_depth
 
-        ancestors = set()
-        max_depth = current_depth
+            ancestors = set()
+            max_depth = current_depth
 
-        next_keys = list(node.parents)
-        if node.supersedes is not None:
-            next_keys.append(node.supersedes)
+            next_keys = list(node.parents)
+            if node.supersedes is not None:
+                next_keys.append(node.supersedes)
 
-        for parent_key in next_keys:
-            ancestors.add(parent_key)
-            sub_ancestors, sub_depth = walk(parent_key, current_depth + 1)
-            ancestors.update(sub_ancestors)
-            max_depth = max(max_depth, sub_depth)
+            for parent_key in next_keys:
+                ancestors.add(parent_key)
+                sub_ancestors, sub_depth = walk(parent_key, current_depth + 1)
+                ancestors.update(sub_ancestors)
+                max_depth = max(max_depth, sub_depth)
 
-        return ancestors, max_depth
+            return ancestors, max_depth
+        
+        finally:
+            stack.remove(current_key)
+    
 
     # Start from this node's direct lineage
     root_keys = list(node.parents)

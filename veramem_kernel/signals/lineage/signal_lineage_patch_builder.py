@@ -2,6 +2,7 @@
 
 from typing import Tuple
 
+from veramem_kernel.signals.lineage.signal_lineage_view import SignalLineageView
 from veramem_kernel.signals.lineage.signal_lineage_diff import SignalLineageDiff
 from veramem_kernel.signals.lineage.signal_lineage_patch import (
     SignalLineagePatch,
@@ -24,6 +25,7 @@ def build_signal_lineage_patches(
 
     This function is PURE and SIDE-EFFECT FREE.
     """
+    
 
     patches: list[SignalLineagePatch] = []
 
@@ -68,3 +70,5 @@ def build_signal_lineage_patches(
         )
 
     return tuple(patches)
+
+

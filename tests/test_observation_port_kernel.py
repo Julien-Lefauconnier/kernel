@@ -1,7 +1,7 @@
 # tests/test_observation_port_kernel.py
 
 import pytest
-from datetime import datetime
+from datetime import datetime, timezone
 
 from veramem_kernel.ports.observation_port import ObservationPort
 from veramem_kernel.journals.observation.observation_event import ObservationEvent
@@ -32,7 +32,7 @@ def test_observation_port_accepts_observation_event():
         user_id="user-1",
         source_type="normative",
         payload={"signal_type": "DISAGREE"},
-        created_at=datetime.utcnow(),
+        created_at=datetime.now(timezone.utc),
     )
 
     port.record(event)
@@ -54,14 +54,14 @@ def test_observation_port_is_append_only():
         user_id="user-1",
         source_type="normative",
         payload={"signal_type": "DISAGREE"},
-        created_at=datetime.utcnow(),
+        created_at=datetime.now(timezone.utc),
     )
 
     e2 = ObservationEvent(
         user_id="user-1",
         source_type="normative",
         payload={"signal_type": "DISAGREE"},
-        created_at=datetime.utcnow(),
+        created_at=datetime.now(timezone.utc),
     )
 
     port.record(e1)

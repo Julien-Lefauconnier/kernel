@@ -1,7 +1,7 @@
 # tests/test_timeline_query_kernel.py
 
 import pytest
-from datetime import datetime, timedelta
+from datetime import datetime, timezone, timedelta, timezone
 from dataclasses import FrozenInstanceError
 
 from veramem_kernel.journals.timeline.timeline_cursor import TimelineCursor
@@ -18,7 +18,7 @@ def test_query_can_be_created_with_defaults():
 
 
 def test_query_accepts_window():
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
 
     window = TimelineWindow(
         after=TimelineCursor(timestamp=now),

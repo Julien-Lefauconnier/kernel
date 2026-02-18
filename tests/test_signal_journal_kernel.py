@@ -1,6 +1,6 @@
 # kernel/tests/test_signal_journal_kernel.py
 
-from datetime import datetime, timedelta
+from datetime import datetime, timezone, timedelta, timezone
 
 from veramem_kernel.signals.signal import Signal
 from veramem_kernel.signals.signal_journal import SignalJournal
@@ -33,17 +33,17 @@ def test_signal_journal_preserves_insertion_order():
     """
     journal = SignalJournal()
 
-    t0 = datetime.utcnow()
+    t0 = datetime.now(timezone.utc)
     t1 = t0 + timedelta(seconds=1)
 
     signal1 = Signal(
-        signal_id="sig-1",
+        signal_id="sig-0001",
         timestamp=t0,
         payload="first",
         origin=None,
     )
     signal2 = Signal(
-        signal_id="sig-2",
+        signal_id="sig-0002",
         timestamp=t1,
         payload="second",
         origin=None,
@@ -54,7 +54,7 @@ def test_signal_journal_preserves_insertion_order():
 
     signals = journal.list_signals()
 
-    assert [s.signal_id for s in signals] == ["sig-1", "sig-2"]
+    assert [s.signal_id for s in signals] == ["sig-0001", "sig-0002"]
 
 
 def test_signal_journal_can_be_reset_for_tests():

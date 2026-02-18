@@ -1,6 +1,6 @@
 # tests/test_audit_event_kernel.py
 
-from datetime import datetime
+from datetime import datetime, timezone, timezone
 import pytest
 
 from veramem_kernel.journals.audit.audit_event import AuditEvent
@@ -31,7 +31,7 @@ def test_audit_event_has_auto_id_and_timestamp():
 
 
 def test_audit_event_preserves_explicit_values():
-    now = datetime(2024, 1, 1)
+    now = datetime(2024, 1, 1, tzinfo=timezone.utc)
 
     event = AuditEvent.create(
         event_id="audit-123",

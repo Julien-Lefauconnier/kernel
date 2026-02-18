@@ -1,6 +1,6 @@
 # kernel/tests/test_action_event_kernel.py
 
-from datetime import datetime
+from datetime import datetime, timezone
 import pytest
 
 from veramem_kernel.journals.action.action_event import ActionEvent
@@ -9,7 +9,7 @@ from veramem_kernel.journals.action.action_event import ActionEvent
 def test_action_event_is_immutable():
     evt = ActionEvent(
         event_id="e1",
-        created_at=datetime.utcnow(),
+        created_at=datetime.now(timezone.utc),
         action_ref="memory.store",
         mode="assisted",
     )
@@ -29,7 +29,7 @@ def test_action_event_requires_created_at():
 def test_action_event_accepts_opaque_metadata():
     evt = ActionEvent(
         event_id="e3",
-        created_at=datetime.utcnow(),
+        created_at=datetime.now(timezone.utc),
         extras={"hash": "abc123", "debug": True},
     )
 

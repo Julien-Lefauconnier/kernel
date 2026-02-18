@@ -1,7 +1,7 @@
 # tests/test_timeline_view_kernel.py
 
 import pytest
-from datetime import datetime
+from datetime import datetime, timezone, timezone
 from uuid import uuid4
 
 from veramem_kernel.journals.timeline.timeline_entry import (
@@ -17,7 +17,7 @@ from veramem_kernel.journals.timeline.timeline_view_types import TimelineViewRol
 def make_entry(entry_type, *, nature=TimelineEntryNature.EVENT):
     return TimelineEntry(
         entry_id=str(uuid4()),
-        created_at=datetime.utcnow(),
+        created_at=datetime.now(timezone.utc),
         type=entry_type,
         title=entry_type.value,
         description=None,

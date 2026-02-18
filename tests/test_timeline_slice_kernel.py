@@ -1,6 +1,6 @@
 # tests/test_timeline_slice_kernel.py
 
-from datetime import datetime
+from datetime import datetime, timezone, timezone, timedelta
 import pytest
 
 from veramem_kernel.journals.timeline.timeline_slice import TimelineSlice
@@ -23,7 +23,7 @@ def make_entry(ts):
 
 
 def test_slice_creation():
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
     entries = [make_entry(now)]
 
     slice_ = TimelineSlice(entries=entries)
@@ -32,7 +32,7 @@ def test_slice_creation():
 
 
 def test_slice_is_immutable():
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
     slice_ = TimelineSlice(entries=[make_entry(now)])
 
     with pytest.raises(AttributeError):
@@ -40,7 +40,7 @@ def test_slice_is_immutable():
 
 
 def test_slice_can_have_cursors():
-    now = datetime.utcnow()
+    now = datetime.now(timezone.utc)
     after = TimelineCursor(timestamp=now)
 
     slice_ = TimelineSlice(
@@ -53,8 +53,9 @@ def test_slice_can_have_cursors():
 
 
 def test_slice_preserves_order():
-    t1 = datetime.utcnow()
-    t2 = t1.replace(second=t1.second + 1)
+    base = datetime(2025, 1, 1, 12, 0, 58, tzinfo=timezone.utc)  # seconde=58
+    t1 = base
+    t2 = base + timedelta(seconds=1)                            # seconde=59 → valide
 
     e1 = make_entry(t1)
     e2 = make_entry(t2)

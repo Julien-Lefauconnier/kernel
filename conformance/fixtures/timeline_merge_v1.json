@@ -1,0 +1,12 @@
+{
+  "binary_sha256": "8a6ce7a1e454c919ce99625ee1a6e33c10d05ae9306b39d726fa334bbae60651",
+  "fixture": "timeline_merge_v1",
+  "generator": {
+    "fixture_set": "veramem-kernel-conformance",
+    "generator_version": "v1",
+    "wire_version_hint": 1
+  },
+  "kind": "merged",
+  "merged_total_entries": 11,
+  "reason": null
+}

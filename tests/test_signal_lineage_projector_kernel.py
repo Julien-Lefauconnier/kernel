@@ -1,7 +1,7 @@
 # tests/test_signal_lineage_projector_kernel.py
 
 import pytest
-from datetime import datetime
+from datetime import datetime, timezone, timezone
 
 from veramem_kernel.signals.canonical.canonical_signal_category import CanonicalSignalCategory
 from veramem_kernel.signals.canonical.canonical_signal_key import CanonicalSignalKey
@@ -12,7 +12,7 @@ from veramem_kernel.signals.lineage.signal_lineage_projector import project_sign
 
 def cursor():
     from veramem_kernel.journals.timeline.timeline_cursor import TimelineCursor
-    return TimelineCursor(datetime.utcnow())
+    return TimelineCursor(datetime.now(timezone.utc))
 
 
 def test_signal_lineage_projector_projects_single_node():

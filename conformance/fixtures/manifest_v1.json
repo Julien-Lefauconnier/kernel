@@ -1,0 +1,15 @@
+{
+  "conformance_key_sha256": "cb42b6ad8a162e004e7346def1b5d645c97266a87ebc9812e2c3c71d52acc407",
+  "fixture_set": "veramem-kernel-conformance",
+  "fixtures": {
+    "attestation_ed25519_v1": "53466442946bc9fd678ac92d3dbd91658f26ee2242b4320da9739ab74effe4fa",
+    "attestation_v1": "6e1a67335b89f43681eb89355781fe35689c3b8e06a93da51179565fe8e3187b",
+    "timeline_delta_v1": "79e0ee8e3a4a5ca9875ad6aa9c13e7c1773f0cc492e82e0735855d41d535bdd1",
+    "timeline_fork_v1": "2b8b719b148d4db5cd9507cb599f0cfd19eb15cd33a71cfaf56df8e6be05f4ae",
+    "timeline_merge_v1": "8a6ce7a1e454c919ce99625ee1a6e33c10d05ae9306b39d726fa334bbae60651",
+    "timeline_reconcile_v1": "832674e59176d1dcb8338cee61480e138df6a18c91a0e35c7f06bfb9766e0ebe"
+  },
+  "generated_at_unix": 1771434630,
+  "generator_version": "v1",
+  "wire_version_hint": 1
+}
