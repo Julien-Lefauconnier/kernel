@@ -1,24 +1,19 @@
 name: Release
-
 on:
   push:
     tags:
       - "v*"
-
 concurrency:
   group: release-${{ github.ref }}
   cancel-in-progress: false
-
 permissions:
-  contents: write          
-  id-token: write          
-  attestations: write      
+  contents: write
+  id-token: write
+  attestations: write
   actions: read
-
 jobs:
   build-sign-publish:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -49,9 +44,9 @@ jobs:
         with:
           subject-path: "dist/*"
 
-      # ✅ Sigstore signature (keyless, via OIDC)
+      # ✅ Sigstore signature (keyless, via OIDC) — corrigé en v2
       - name: Sign artifacts with Sigstore
-        uses: sigstore/gh-action-sigstore-python@v3
+        uses: sigstore/gh-action-sigstore-python@v2   
         with:
           inputs: dist/*
 
