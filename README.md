@@ -1,5 +1,4 @@
 # Veramem Kernel
-
 **A deterministic cognitive core for recording truth, enforcing invariants, and preserving temporal integrity.**
 
 The Veramem Kernel is a minimal, sovereign foundation designed to make factual systems **auditable, deterministic, and composable by construction**.
@@ -9,6 +8,12 @@ It provides a formal substrate for building:
 - compliant cognitive systems
 - distributed memory infrastructures
 - long-term digital identity and knowledge preservation
+
+[![CI](https://github.com/Julien-Lefauconnier/kernel/actions/workflows/ci.yml/badge.svg)](https://github.com/Julien-Lefauconnier/kernel/actions)
+[![PyPI version](https://badge.fury.io/py/veramem-kernel.svg)](https://badge.fury.io/py/veramem-kernel)
+[![Python versions](https://img.shields.io/pypi/pyversions/veramem-kernel.svg)](https://pypi.org/project/veramem-kernel/)
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Conformance](https://img.shields.io/badge/conformance-passed-brightgreen)](conformance/)
 
 ---
 
@@ -40,47 +45,19 @@ It guarantees that **what is recorded is stable, ordered, and verifiable**.
 
 The kernel provides a small and strictly defined set of primitives:
 
-### Append-only journals
-Immutable recording of facts across domains such as:
-- observations
-- knowledge
-- signals
-- audits
-- constraints
+- **Append-only journals** — Immutable recording of facts across domains (observations, knowledge, signals, audits, constraints)
+- **Monotonic timeline** — Single irreversible ordering with fork/reconciliation support
+- **Signal lineage** — Provenance tracking, signal evolution, conflict resolution
+- **Invariant enforcement** — Every write validated against formal invariants
+- **Deterministic behavior** — Same inputs always produce the same outputs (no hidden randomness or side effects)
 
-Facts cannot be modified or removed at runtime.
-
-### Monotonic timeline
-A single, irreversible ordering of events ensures:
-- temporal integrity
-- reproducible replay
-- causal traceability
-- fork and reconciliation support
-
-### Signal lineage
-Built-in primitives for:
-- provenance tracking
-- evolution of signals
-- conflict resolution frameworks
-- explainable historical state
-
-### Invariant enforcement
-Every write is validated against explicit formal invariants.  
-Invalid states are rejected immediately.
-
-### Deterministic behavior
-Given the same inputs, the kernel always produces the same outputs.
-
-No hidden randomness.  
-No implicit side effects.
+All operations are pure, auditable, and reproducible.
 
 ---
 
 ## What the Veramem Kernel is NOT
 
-The kernel is intentionally minimal and incomplete.
-
-It does NOT:
+The kernel is intentionally minimal and incomplete. It does **NOT**:
 - interpret signals or infer meaning
 - apply business or policy logic
 - resolve priorities or optimize outcomes
@@ -88,48 +65,18 @@ It does NOT:
 - expose user-facing APIs
 - manage databases or storage
 - trigger external side effects
-- perform filtering or personalization
 
-These responsibilities belong outside the kernel.
-
-This strict separation is essential for:
-- safety
-- auditability
-- long-term reliability
+These responsibilities belong outside the kernel. This strict separation is essential for **safety**, **auditability**, and **long-term reliability**.
 
 ---
 
 ## Architecture Boundaries
 
-Veramem enforces a strong separation between layers.
+Veramem enforces a strong separation between layers:
 
-### Kernel (truth layer)
-
-The kernel is the sole authority for:
-- factual recording
-- temporal ordering
-- invariant enforcement
-- historical integrity
-
-It never interprets or executes.
-
-### Application stack
-
-The application stack:
-- projects kernel facts
-- applies policies
-- orchestrates workflows
-- builds interfaces
-- manages storage and infrastructure
-
-### Reflexive layer
-
-The reflexive layer produces:
-- governed explanations
-- compliance narratives
-- declarative system capabilities
-
-It operates strictly on projected facts and never influences kernel state.
+- **Kernel (truth layer)** — Factual recording, temporal ordering, invariant enforcement, historical integrity
+- **Application stack** — Projects facts, applies policies, orchestrates workflows, manages storage
+- **Reflexive layer** — Governed explanations, compliance narratives (never influences kernel state)
 
 Violating these boundaries compromises determinism and trust.
 
@@ -141,28 +88,27 @@ The Veramem Kernel is designed to be embedded in systems requiring strong guaran
 
 Typical use cases:
 - AI memory and cognitive architectures
-- compliance and governance systems
-- digital identity and long-term knowledge
-- distributed coordination and consensus
-- reproducible research environments
-- regulated or high-trust infrastructures
+- Compliance and governance systems
+- Digital identity and long-term knowledge preservation
+- Distributed coordination and consensus
+- Reproducible research environments
+- Regulated or high-trust infrastructures
 
 ---
 
 ## Installation
 
-The kernel is published on PyPI:
+The kernel is published on [PyPI](https://pypi.org/project/veramem-kernel/):
 
 ```bash
+# Core kernel (minimal, no crypto dependencies)
 pip install veramem-kernel
-```
-### Optional cryptography
 
-For distributed trust and Ed25519 support:
-
-```bash
+# With Ed25519 support for distributed trust & attestation
 pip install veramem-kernel[crypto]
 ```
+
+Requires Python 3.10+.
 
 ---
 
@@ -171,34 +117,21 @@ pip install veramem-kernel[crypto]
 Run a minimal deterministic timeline:
 
 ```bash
-python examples/basic_timeline.py
+python -m examples.basic_timeline
 ```
 
----
+Explore more examples in the examples/ directory:
 
-## Examples
-
-The repository contains a growing collection of generic and domain-agnostic examples demonstrating the guarantees of the Veramem Kernel.
-
-These examples illustrate:
-
-- deterministic timelines
-- distributed state evolution
-- auditable AI memory
-- replay and verification
-- identity and attestation
-- conflict traceability
-- Explainable AI Backbone
-- Long-Term Memory
-- Zero-knowledge Governance
-
-See the `examples/` directory for runnable demonstrations.
+- distributed_timeline.py — Fork, divergence, deterministic merge
+- explainable_ai_backbone.py — Governed explanations & audit trails
+- long_term_memory.py — Epochs, snapshots, long-horizon reconstruction
+- etc... (more than 15 examples)
 
 ---
 
-## Core Guarantees
+### Core Guarantees
 
-The kernel provides a small set of non-negotiable guarantees:
+The kernel provides non-negotiable guarantees enforced by construction:
 
 - Append-only truth
 - Temporal integrity
@@ -206,51 +139,50 @@ The kernel provides a small set of non-negotiable guarantees:
 - Invariant safety
 - Reproducibility
 - Auditability
-- Separation concerns
-- Cryptographic integrity (HMAC-SHA256 baseline + Ed25519 for distributed trust)
+- Strict separation of concerns
+- Cryptographic integrity (HMAC-SHA256 baseline + Ed25519 via [crypto])
 
-These properties are enforced by construction and verified through extensive tests.
+These properties are verified through extensive tests and conformance fixtures (included in the package).
 
 ---
-## Badges
 
-[![CI](https://github.com/Julien-Lefauconnier/kernel/actions/workflows/ci.yml/badge.svg)](https://github.com/Julien-Lefauconnier/kernel/actions)
-[![PyPI](https://img.shields.io/pypi/v/veramem-kernel)](https://pypi.org/project/veramem-kernel/)
-[![Python](https://img.shields.io/pypi/pyversions/veramem-kernel)](https://pypi.org/project/veramem-kernel/)
-[![Conformance](https://img.shields.io/badge/conformance-passed-brightgreen)](conformance/)
-[![License](https://img.shields.io/badge/License-Apache%202.0-blue)](LICENSE)
+## Conformance & Interoperability
 
-The kernel is published on PyPI (current: v1.0.2):
+Golden fixtures (deterministic test vectors) are included:
+
+- Attestation (HMAC + Ed25519)
+- Timeline delta, fork, merge, reconcile
+
+Regenerate and verify in CI:
+
+```bash
+python conformance/generate_fixtures.py
+git diff --exit-code conformance/fixtures/
+```
+
+See conformance/ for the full suite.
 
 ---
 
 ## Open Source Scope
 
-This repository contains only the Veramem Kernel.
+This repository contains only the Veramem Kernel:
 
-It includes:
-
-- the deterministic cognitive core
+- deterministic core
 - invariant enforcement
 - signal lineage
 - timeline integrity
 - cryptographic primitives
 - formal specifications and models
 
-It does not include:
-
-- storage backends
-- orchestration layers
-- deployment systems
-- hosted or commercial services
-
-These belong to separate components of the Veramem ecosystem.
+It does not include storage backends, orchestration layers, deployment systems, or hosted services.
+License: Apache 2.0
 
 ---
 
 ## Research & Formal Foundations
 
-The kernel is grounded in:
+Grounded in:
 
 - formal invariant systems
 - deterministic computation
@@ -258,7 +190,7 @@ The kernel is grounded in:
 - distributed trust architectures
 - zero-knowledge cognitive design
 
-See the protocol/ and docs/ directories for specifications.
+See protocol/, docs/, and formal/ directories.
 
 ---
 
@@ -267,19 +199,17 @@ See the protocol/ and docs/ directories for specifications.
 We welcome contributions from:
 
 - distributed systems engineers
-- formal methods researchers
-- cryptographers
-- AI safety and governance experts
+- formal methods & cryptography researchers
+- AI safety & governance experts
 
 Please read:
 
-- CONTRIBUTING.md
-- MAINTAINERS.md (we welcome new maintainers!)
-- SECURITY.md
-- GOVERNANCE.md
+CONTRIBUTING.md
+MAINTAINERS.md (we welcome new maintainers!)
+SECURITY.md
+GOVERNANCE.md
 
----
 
-## License
-
-This project is licensed under the Apache License, Version 2.0.
+Start with good first issues or help improve conformance tests!
+The Veramem Kernel is built to outlive any single contributor.
+Join us in creating a durable foundation for verifiable, trustworthy systems.
