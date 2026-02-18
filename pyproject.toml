@@ -69,4 +69,4 @@ exclude = ["tests*", "docs*", "examples*"]
 "veramem_kernel" = ["py.typed"]
 
 [tool.setuptools_scm]
-fallback_version = "1.0.2"
+fallback_version = "1.1.0"
