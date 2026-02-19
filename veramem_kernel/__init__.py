@@ -1,9 +1,9 @@
 # veramem_kernel/__init__.py
 
-__version__ = "1.0.2"
-
-# Public API namespace
+from importlib.metadata import version as pkg_version
 from . import api
+
+__version__ = pkg_version("veramem-kernel")
 
 __all__ = [
     "__version__",
