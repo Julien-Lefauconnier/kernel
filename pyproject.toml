@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "veramem-kernel"
-version = "1.0.2"
+version = "1.1.3"
 description = "Minimal deterministic cognitive kernel for traceable and auditable reasoning systems."
 readme = "README.md"
 requires-python = ">=3.10"
