@@ -158,3 +158,20 @@ Its long-term resilience depends on:
 - distributed stewardship.
 
 We welcome contributors committed to these principles.
+
+---
+
+## 11. Transition Status
+
+The founder is actively seeking to transfer long-term stewardship of the Veramem Kernel.
+
+The project is considered technically stable and ready for community governance.
+
+Possible future models:
+
+- Independent core maintainers
+- Research-driven governance
+- Foundation-backed stewardship
+- Open standardization
+
+The goal is resilience and continuity beyond any single individual.

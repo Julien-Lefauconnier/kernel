@@ -15,6 +15,36 @@ It provides a formal substrate for building:
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Conformance](https://img.shields.io/badge/conformance-passed-brightgreen)](conformance/)
 
+
+---
+
+## ⚠️ Maintainers Wanted — Project Handover
+
+I am actively looking to **hand over the Veramem Kernel**.
+
+The kernel is stable, deterministic, published on PyPI, and has a strong technical foundation.  
+However, I no longer have the time and energy to fully grow and maintain it.
+
+### 🎯 Handover goals
+
+- Find **one primary maintainer** (ownership transfer)
+- Or **2–3 active co-maintainers**
+- Or encourage serious forks aligned with the core philosophy:
+  - append-only truth layer
+  - strict invariants
+  - deterministic behavior
+  - safety-first design
+
+📌 More details about governance, vision, and expectations:  
+→ See [MAINTAINERS.md](MAINTAINERS.md)
+
+📩 Interested?  
+Open an issue with the label **maintainership** or contact me directly.
+
+The project remains under **Apache 2.0** — anyone is free to fork, adapt, and build on it.
+
+The long-term goal is for Veramem to become a **community-driven open standard**.
+
 ---
 
 ## Why Veramem?
@@ -191,6 +221,27 @@ Grounded in:
 - zero-knowledge cognitive design
 
 See protocol/, docs/, and formal/ directories.
+
+---
+
+## Cognitive Foundations
+
+The Veramem Kernel is grounded in the following cognitive and architectural frameworks:
+
+- **ARVIS — Adaptive Resilient Vigilant Intelligence System**
+- **ZKCS — Zero-Knowledge Cognitive Systems**
+
+These define the principles of:
+
+- reasoning under constraints
+- explicit uncertainty
+- abstention as a valid outcome
+- traceable cognition
+- zero-knowledge architecture
+
+See:
+- docs/research/ARVIS.md
+- docs/research/ZKCS.md
 
 ---
 
