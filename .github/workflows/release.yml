@@ -51,6 +51,12 @@ jobs:
         with:
           inputs: dist/*
 
+      # NOUVEAU : Extract files to upload to Pypi
+      - name: Prepare PyPI files
+        run: |
+          mkdir -p dist-pypi
+          cp dist/*.whl dist/*.tar.gz dist-pypi/
+
       # ✅ GitHub Release (attache dist + signatures)
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
@@ -63,4 +69,4 @@ jobs:
       - name: Publish to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          packages-dir: dist
+          packages-dir: dist-pypi
