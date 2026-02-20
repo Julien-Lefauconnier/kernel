@@ -8,6 +8,18 @@ from veramem_kernel.signals.canonical.canonical_signal_registry import (
     CanonicalSignalRegistry,
 )
 
+def extract_subject_kind(ref: str) -> str:
+    ref = (ref or "").strip()
+    if not ref:
+        raise ValueError("subject_ref requis")
+
+    if ":" in ref:
+        return ref.rsplit(":", 1)[0]
+    if "/" in ref:
+        return ref.split("/", 1)[0]
+    
+    # Si pas de séparateur → on considère que c'est déjà le kind pur
+    return ref
 
 def validate_canonical_signal(signal: CanonicalSignal) -> None:
     spec = CanonicalSignalRegistry.get(signal.key)
@@ -17,7 +29,7 @@ def validate_canonical_signal(signal: CanonicalSignal) -> None:
         raise ValueError("CanonicalSignal.subject_ref must be defined.")
 
     if ":" in subject_ref:
-        subject_kind = subject_ref.split(":", 1)[0]
+        subject_kind = extract_subject_kind(subject_ref)
     elif "/" in subject_ref:
         subject_kind = subject_ref.split("/", 1)[0]
     else:
