@@ -1,5 +1,15 @@
 # Veramem FAQ
 
+This document provides a stable reference.
+
+👉 A living FAQ is also maintained in GitHub Discussions:
+https://github.com/Julien-Lefauconnier/kernel/discussions/categories/q-a
+
+You can:
+- Ask new questions,
+- Search previous answers,
+- Participate in the community knowledge base.
+
 ## General
 
 ### What is Veramem?

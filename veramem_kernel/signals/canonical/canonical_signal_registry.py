@@ -50,3 +50,15 @@ class CanonicalSignalRegistry:
         with cls._lock:
             cls._frozen = True
 
+
+def register_all_canonical_signals() -> None:
+    """
+    Bootstrap complet du registry canonique.
+    Appelée automatiquement au premier import du module canonical.
+    Version 1.1.7 — Unified registration
+    """
+    from .specs.timeline import register_timeline_signals
+    from .specs.memory_long import register_memory_long_signals
+
+    register_timeline_signals()
+    register_memory_long_signals()
