@@ -121,6 +121,38 @@ Includes:
 - signal lineage,
 - invariants,
 - cognitive structures.
+- canonical signal registry (closed-world model)
+- cognitive vocabulary standardization
+
+---
+
+### 4.3.1 Canonical Cognitive Vocabulary
+
+The kernel defines a minimal **canonical cognitive vocabulary**.
+
+This vocabulary standardizes:
+
+- decision states,
+- risk signals,
+- validation (gate) outcomes.
+
+Properties:
+
+- closed-world (no unknown signals allowed),
+- deterministic validation,
+- domain-separated semantics.
+
+This enables:
+
+- interoperability between cognitive systems,
+- standardized reasoning traces,
+- cross-implementation auditability.
+
+Future work includes:
+
+- vocabulary extension policies,
+- semantic compatibility guarantees,
+- formal verification of cognitive representations.
 
 ---
 
@@ -310,6 +342,12 @@ Standardization supports:
 The goal is:
 
 > a global, open, and verifiable standard for durable cognitive memory.
+
+This includes:
+
+- a shared canonical signal language,
+- interoperable cognitive systems,
+- auditable reasoning across implementations.
 
 ---
 

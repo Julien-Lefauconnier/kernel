@@ -136,3 +136,63 @@ Future versions may register:
 ## 9. Conclusion
 
 The registry ensures that independent implementations remain interoperable and secure.
+
+
+---
+
+## 10. Canonical Signal Registry (Closed World)
+
+The Veramem Kernel defines a **closed-world canonical signal system**.
+
+All signals MUST be:
+- pre-registered
+- domain-separated
+- validated against strict invariants
+
+### 10.1 Timeline Signals
+
+| Category          | Code                   |
+|------------------|------------------------|
+| TEMPORAL_STATE   | memory_long_projected  |
+| TEMPORAL_STATE   | ghost_signal           |
+
+### 10.2 Cognitive Signals (ARVIS)
+
+#### Decision
+
+| Category        | Code                     |
+|----------------|--------------------------|
+| DECISION_STATE | decision_emitted         |
+| DECISION_STATE | decision_actionable      |
+| DECISION_STATE | decision_memory_related  |
+| DECISION_STATE | decision_meta            |
+| DECISION_STATE | decision_informational   |
+
+#### Risk
+
+| Category     | Code                      |
+|-------------|---------------------------|
+| RISK_STATE  | uncertainty_detected      |
+| RISK_STATE  | conflict_detected         |
+| RISK_STATE  | instability_detected      |
+| RISK_STATE  | early_warning_detected    |
+
+#### Validation
+
+| Category          | Code                         |
+|------------------|------------------------------|
+| VALIDATION_STATE | gate_allow                   |
+| VALIDATION_STATE | gate_require_confirmation    |
+| VALIDATION_STATE | gate_abstain                 |
+| VALIDATION_STATE | projection_valid             |
+| VALIDATION_STATE | projection_invalid           |
+
+### 10.3 Properties
+
+The canonical signal system guarantees:
+
+- **closed-world enforcement** (no unknown signals allowed)
+- **deterministic validation**
+- **cross-system compatibility**
+
+This enables integration with external cognitive systems while preserving kernel invariants.

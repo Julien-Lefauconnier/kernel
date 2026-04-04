@@ -8,6 +8,10 @@ from veramem_kernel.signals.canonical import (
     CanonicalSignalSpec,
     CanonicalSignalRegistry,
 )
+from veramem_kernel.signals.canonical.canonical_signal_registry import (
+    CanonicalSignalRegistry,
+    register_all_canonical_signals,
+)
 
 
 def test_register_and_get_canonical_signal_spec():
@@ -48,3 +52,58 @@ def test_duplicate_canonical_signal_key_raises():
 
     with pytest.raises(ValueError):
         CanonicalSignalRegistry.register(spec)
+
+
+
+def test_new_decision_signals_are_registered():
+    CanonicalSignalRegistry._clear_for_tests()
+    register_all_canonical_signals()
+
+    assert CanonicalSignalRegistry.has(
+        CanonicalSignalKey(
+            CanonicalSignalCategory.DECISION_STATE,
+            "decision_emitted",
+        )
+    )
+    assert CanonicalSignalRegistry.has(
+        CanonicalSignalKey(
+            CanonicalSignalCategory.DECISION_STATE,
+            "decision_actionable",
+        )
+    )
+
+
+def test_new_risk_signals_are_registered():
+    CanonicalSignalRegistry._clear_for_tests()
+    register_all_canonical_signals()
+
+    assert CanonicalSignalRegistry.has(
+        CanonicalSignalKey(
+            CanonicalSignalCategory.RISK_STATE,
+            "uncertainty_detected",
+        )
+    )
+    assert CanonicalSignalRegistry.has(
+        CanonicalSignalKey(
+            CanonicalSignalCategory.RISK_STATE,
+            "instability_detected",
+        )
+    )
+
+
+def test_new_validation_signals_are_registered():
+    CanonicalSignalRegistry._clear_for_tests()
+    register_all_canonical_signals()
+
+    assert CanonicalSignalRegistry.has(
+        CanonicalSignalKey(
+            CanonicalSignalCategory.VALIDATION_STATE,
+            "gate_allow",
+        )
+    )
+    assert CanonicalSignalRegistry.has(
+        CanonicalSignalKey(
+            CanonicalSignalCategory.VALIDATION_STATE,
+            "projection_invalid",
+        )
+    )

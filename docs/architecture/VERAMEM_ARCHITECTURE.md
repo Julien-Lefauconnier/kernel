@@ -74,6 +74,7 @@ It provides:
 - signal lineage,
 - cryptographic commitments,
 - attestation primitives.
+- canonical signal validation (closed-world model)
 
 The kernel is:
 
@@ -105,6 +106,46 @@ It enforces:
 - Signal lineage invariants,
 - Device attestation,
 - Zero-knowledge constraints.
+- Canonical signal invariants (semantic integrity)
+
+### 4.2 Canonical Signal Layer
+
+The kernel embeds a **closed-world canonical signal registry**.
+
+All signals with semantics MUST:
+- be pre-registered,
+- conform to a canonical specification,
+- be validated at construction time.
+
+This ensures:
+- deterministic interpretation,
+- strict semantic control,
+- cross-system interoperability.
+
+The canonical signal layer acts as a **semantic boundary** between:
+
+- raw signals (uninterpreted observations),
+- structured cognition (external reasoning systems).
+
+
+### 4.3 Cognitive Interoperability
+
+The kernel integrates a minimal **universal cognitive vocabulary**.
+
+This includes:
+
+- decision states,
+- risk states,
+- validation (gate) states.
+
+These signals enable:
+
+- explainable reasoning,
+- traceable decision processes,
+- auditable uncertainty handling.
+
+External systems (e.g. ARVIS) can map their internal representations
+to canonical signals without leaking internal reasoning.
 
 ---
 

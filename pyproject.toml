@@ -7,10 +7,10 @@ dynamic = []
 name = "veramem-kernel"
 version = "1.1.8"
 description = "Minimal deterministic cognitive kernel for traceable and auditable reasoning systems."
-readme = "README.md"
 requires-python = ">=3.10"
 license = "Apache-2.0"
 license-files = ["LICENSE", "NOTICE"]
+readme = { file = "README.md", content-type = "text/markdown" }
 
 keywords = [
     "ai",
@@ -47,8 +47,8 @@ dependencies = []
 Repository = "https://github.com/Julien-Lefauconnier/kernel"
 Issues = "https://github.com/Julien-Lefauconnier/kernel/issues"
 
-[tool.poetry.dev-dependencies]
-hypothesis = "^6.0"
+[project.optional-dependencies]
+dev = ["hypothesis>=6.0"]
 
 [project.optional-dependencies]
 crypto = ["pynacl>=1.5"]

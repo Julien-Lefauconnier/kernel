@@ -10,3 +10,6 @@ class CanonicalSignalCategory(str, Enum):
     ACCESS_STATE = "access_state"
     GOVERNANCE_STATE = "governance_state"
     OBSERVATION_STATE = "observation_state"
+    DECISION_STATE = "decision_state"
+    RISK_STATE = "risk_state"
+    VALIDATION_STATE = "validation_state"

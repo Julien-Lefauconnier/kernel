@@ -11,6 +11,57 @@ They represent raw observations with:
 
 Signals are immutable and time-bound.
 
+## Canonical Signals (Closed World)
+
+The kernel enforces a **closed-world canonical signal registry**.
+
+All `CanonicalSignal` instances MUST:
+- reference a registered `CanonicalSignalKey`
+- comply with a declared `CanonicalSignalSpec`
+
+This guarantees:
+- deterministic interpretation
+- cross-system interoperability
+- strict validation at construction time
+
+### Domain Separation
+
+Canonical signals are grouped by domains:
+
+| Domain            | Category             | Origin    |
+|------------------|----------------------|-----------|
+| Timeline         | `TEMPORAL_STATE`     | `timeline`|
+| Decision (ARVIS) | `DECISION_STATE`     | `arvis`   |
+| Risk (ARVIS)     | `RISK_STATE`         | `arvis`   |
+| Validation       | `VALIDATION_STATE`   | `arvis`   |
+
+### Cognitive Vocabulary (ARVIS)
+
+The kernel now embeds a **universal cognitive vocabulary**:
+
+#### Decision
+- `decision_emitted`
+- `decision_actionable`
+- `decision_memory_related`
+- `decision_meta`
+- `decision_informational`
+
+#### Risk
+- `uncertainty_detected`
+- `conflict_detected`
+- `instability_detected`
+- `early_warning_detected`
+
+#### Validation (Gate)
+- `gate_allow`
+- `gate_require_confirmation`
+- `gate_abstain`
+- `projection_valid`
+- `projection_invalid`
+
+These signals enable interoperability with cognitive systems such as **ARVIS**.
+
+
 ## Core Concepts
 
 ### Signal
