@@ -49,8 +49,6 @@ Issues = "https://github.com/Julien-Lefauconnier/kernel/issues"
 
 [project.optional-dependencies]
 dev = ["hypothesis>=6.0"]
-
-[project.optional-dependencies]
 crypto = ["pynacl>=1.5"]
 
 [tool.pytest.ini_options]
