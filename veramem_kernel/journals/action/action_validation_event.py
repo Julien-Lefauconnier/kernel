@@ -13,10 +13,10 @@ class ActionValidationEvent:
     Represents the fact that a user explicitly accepted or refused
     an action at a given time.
 
-    ❌ No execution logic
-    ❌ No action mode
-    ❌ No policy
-    ❌ No justification
+    - No execution logic
+    - No action mode
+    - No policy
+    - No justification
 
     ✔ Time-bound
     ✔ Immutable
@@ -38,3 +38,7 @@ class ActionValidationEvent:
                 "ActionValidationEvent.decided_at must not be None "
                 "(kernel events are strictly time-bound)."
             )
+        
+    @property
+    def timestamp(self) -> datetime:
+        return self.decided_at

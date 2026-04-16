@@ -37,3 +37,17 @@ class LinguisticConstraintEvent:
                 "reason",
                 "ACT_NOT_AUTHORIZED_FOR_CONVERSATION_MODE",
             )
+
+        if self.observed_at is None:
+            raise ValueError("LinguisticConstraintEvent.observed_at must not be None")
+
+        if self.observed_at.tzinfo is None:
+            raise ValueError("LinguisticConstraintEvent.observed_at must be timezone-aware")
+
+        offset = self.observed_at.tzinfo.utcoffset(self.observed_at)
+        if offset is None or offset.total_seconds() != 0:
+            raise ValueError("LinguisticConstraintEvent.observed_at must be UTC")
+
+    @property
+    def timestamp(self) -> datetime:
+        return self.observed_at

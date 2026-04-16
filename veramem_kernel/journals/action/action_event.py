@@ -16,10 +16,10 @@ class ActionEvent:
     This event represents the fact that an action decision
     entered the system at a given time.
 
-    ❌ No cognition
-    ❌ No conflicts
-    ❌ No presentation
-    ❌ No policy
+    - No cognition
+    - No conflicts
+    - No presentation
+    - No policy
 
     ✔ Time-bound
     ✔ Immutable
@@ -48,6 +48,10 @@ class ActionEvent:
                 "ActionEvent.created_at must not be None "
                 "(kernel events are strictly time-bound)."
             )
+    
+    @property
+    def timestamp(self) -> datetime:
+        return self.created_at
     
     @classmethod
     def create(

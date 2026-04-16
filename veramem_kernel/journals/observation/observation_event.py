@@ -23,3 +23,14 @@ class ObservationEvent:
     created_at: datetime
     #  optional fields
     place_id: str | None = None
+
+    def __post_init__(self):
+        if self.created_at is None:
+            raise ValueError("ObservationEvent.created_at must not be None")
+
+        if self.created_at.tzinfo is None:
+            raise ValueError("ObservationEvent.created_at must be timezone-aware")
+
+        offset = self.created_at.tzinfo.utcoffset(self.created_at)
+        if offset is None or offset.total_seconds() != 0:
+            raise ValueError("ObservationEvent.created_at must be UTC")

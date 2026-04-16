@@ -59,3 +59,7 @@ class SignalEvent:
             "event_id",
             _norm_ascii(self.event_id, field="event_id")
         )
+
+    @property
+    def timestamp(self) -> datetime:
+        return self.created_at

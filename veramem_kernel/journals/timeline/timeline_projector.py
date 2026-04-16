@@ -24,6 +24,9 @@ from veramem_kernel.journals.knowledge.knowledge_event import KnowledgeEvent
 
 from veramem_kernel.journals.action.action_event import ActionEvent
 from veramem_kernel.journals.action.action_validation_event import ActionValidationEvent
+from veramem_kernel.journals.observation_long.observation_long_event import (
+    ObservationLongEvent,
+)
 
 
 def _timestamp(evt: Any) -> datetime:
@@ -36,6 +39,8 @@ def _timestamp(evt: Any) -> datetime:
         return evt.decided_at
     if isinstance(evt, KnowledgeEvent):
         return evt.created_at
+    if isinstance(evt, ObservationLongEvent):
+        return evt.observed_at
     raise ValueError(f"Unsupported kernel event type: {type(evt)}")
 
 
@@ -143,6 +148,21 @@ def project_timeline(
                     description=None,
                     action_id=None,
                     place_id=evt.place_ref,
+                    origin_ref="kernel",
+                    nature=TimelineEntryNature.STATE,
+                )
+            )
+
+        elif isinstance(evt, ObservationLongEvent):
+            entries.append(
+                TimelineEntry(
+                    entry_id=_stable_entry_id(evt),
+                    created_at=evt.timestamp,
+                    type=TimelineEntryType.MEMORY_LONG_STATE,
+                    title="Longitudinal observation recorded",
+                    description=None,
+                    action_id=None,
+                    place_id=None,
                     origin_ref="kernel",
                     nature=TimelineEntryNature.STATE,
                 )

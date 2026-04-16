@@ -22,27 +22,23 @@ def test_valid_observation_long_event_passes():
 
 
 def test_missing_user_id_fails():
-    event = ObservationLongEvent(
-        user_id="",
-        source_type="governance",
-        payload={"x": 1},
-        observed_at=datetime.now(timezone.utc),
-    )
-
     with pytest.raises(ValueError):
-        assert_valid_observation_long_event(event)
+        ObservationLongEvent(
+            user_id="",
+            source_type="governance",
+            payload={"x": 1},
+            observed_at=datetime.now(timezone.utc),
+        )
 
 
 def test_missing_source_type_fails():
-    event = ObservationLongEvent(
-        user_id="u1",
-        source_type="",
-        payload={"x": 1},
-        observed_at=datetime.now(timezone.utc),
-    )
-
     with pytest.raises(ValueError):
-        validate_observation_long_event(event)
+        ObservationLongEvent(
+            user_id="u1",
+            source_type="",
+            payload={"x": 1},
+            observed_at=datetime.now(timezone.utc),
+        )
 
 
 def test_validate_observation_long_event_accepts_valid():
@@ -56,25 +52,20 @@ def test_validate_observation_long_event_accepts_valid():
 
 
 def test_validate_observation_long_event_rejects_missing_user():
-    event = ObservationLongEvent(
-        user_id="",
-        source_type="governance",
-        payload={"x": 1},
-        observed_at=datetime.now(timezone.utc),
-    )
-
     with pytest.raises(ValueError):
-        validate_observation_long_event(event)
-
+        ObservationLongEvent(
+            user_id="",
+            source_type="governance",
+            payload={"x": 1},
+            observed_at=datetime.now(timezone.utc),
+        )
 
 
 def test_validate_observation_long_event_rejects_non_dict_payload():
-    event = ObservationLongEvent(
-        user_id="u1",
-        source_type="governance",
-        payload="not a dict",
-        observed_at=datetime.now(timezone.utc),
-    )
-
     with pytest.raises(TypeError):
-        validate_observation_long_event(event)
+        ObservationLongEvent(
+            user_id="u1",
+            source_type="governance",
+            payload="not a dict",
+            observed_at=datetime.now(timezone.utc),
+        )

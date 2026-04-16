@@ -62,18 +62,10 @@ def test_observation_invariants_reject_missing_source_type():
 
 
 def test_observation_invariants_reject_missing_created_at():
-    """
-    created_at must always exist (append-only traceability).
-    """
-
-    event = ObservationEvent(
-        user_id="user-1",
-        source_type="normative",
-        payload={},
-        created_at=None,  # type: ignore[arg-type]
-    )
-
-    assert ObservationInvariants.is_valid(event) is False
-
     with pytest.raises(ValueError):
-        ObservationInvariants.assert_valid(event)
+        ObservationEvent(
+            user_id="user-1",
+            source_type="normative",
+            payload={},
+            created_at=None,
+        )

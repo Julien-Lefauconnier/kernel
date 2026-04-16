@@ -8,6 +8,7 @@ from veramem_kernel.journals.timeline.timeline_types import TimelineEntryType
 from veramem_kernel.journals.action.action_event import ActionEvent
 from veramem_kernel.journals.action.action_validation_event import ActionValidationEvent
 from veramem_kernel.journals.knowledge.knowledge_event import KnowledgeEvent
+from veramem_kernel.journals.observation_long import ObservationLongEvent
 
 
 
@@ -25,6 +26,13 @@ def make_action(
         intent="remember",
     )
 
+
+def make_obs():
+    return ObservationLongEvent.create(
+        user_id="u1",
+        source_type="memory",
+        payload={"key": "x"},
+    )
 
 def make_validation(
     *,
@@ -154,3 +162,43 @@ def test_knowledge_event_projects_to_state_entry():
     assert entry.created_at == evt.created_at
     assert entry.place_id == "p1"
     assert entry.title == "Knowledge state updated"
+
+
+# ----------------
+# projection long
+# ----------------
+
+def test_observation_long_projects_to_state():
+    evt = make_obs()
+
+    entries = project_timeline(events=[evt])
+
+    assert len(entries) == 1
+    entry = entries[0]
+
+    assert entry.type == TimelineEntryType.MEMORY_LONG_STATE
+    assert entry.nature.name == "STATE"
+    assert entry.created_at == evt.observed_at
+
+
+def test_mixed_events_projection():
+    a = make_action()
+    k = make_knowledge()
+    o = make_obs()
+
+    entries = project_timeline(events=[o, a, k])
+
+    assert len(entries) == 3
+
+    # ordre chronologique
+    timestamps = [e.created_at for e in entries]
+    assert timestamps == sorted(timestamps)
+
+
+def test_projection_idempotence_with_observation_long():
+    evt = make_obs()
+
+    e1 = project_timeline(events=[evt])
+    e2 = project_timeline(events=[evt])
+
+    assert e1 == e2

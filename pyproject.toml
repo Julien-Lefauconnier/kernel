@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 dynamic = []
 name = "veramem-kernel"
-version = "1.1.9"
+version = "1.2.0"
 description = "Minimal deterministic cognitive kernel for traceable and auditable reasoning systems."
 requires-python = ">=3.10"
 license = "Apache-2.0"

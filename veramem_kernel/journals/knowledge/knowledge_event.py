@@ -85,6 +85,9 @@ class KnowledgeEvent:
         object.__setattr__(self, "user_ref", _norm_optional_ref(self.user_ref, field="user_ref"))
         object.__setattr__(self, "place_ref", _norm_optional_ref(self.place_ref, field="place_ref"))
 
+    @property
+    def timestamp(self) -> datetime:
+        return self.created_at
 
     @classmethod
     def create(
