@@ -1,4 +1,4 @@
-# kernel/signals/canonical/canonical_signal_category.py
+# veramem_kernel/signals/canonical/canonical_signal_category.py
 
 from enum import Enum
 

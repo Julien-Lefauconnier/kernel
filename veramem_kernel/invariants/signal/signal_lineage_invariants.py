@@ -1,4 +1,4 @@
-# kernel/invariants/signal/signal_lineage_invariants.py
+# veramem_kernel/invariants/signal/signal_lineage_invariants.py
 
 from __future__ import annotations
 

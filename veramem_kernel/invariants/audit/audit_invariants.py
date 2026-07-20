@@ -1,4 +1,4 @@
-# kernel/invariants/audit/audit_invariants.py
+# veramem_kernel/invariants/audit/audit_invariants.py
 
 """
 AUDIT KERNEL INVARIANTS (NORMATIVE)

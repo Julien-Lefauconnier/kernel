@@ -1,4 +1,4 @@
-# kernel/journals/audit/__init__.py
+# veramem_kernel/journals/audit/__init__.py
 
 from veramem_kernel.journals.audit.audit_journal import AuditJournal
 

@@ -1,4 +1,4 @@
-# kernel/journals/action/action_event.py
+# veramem_kernel/journals/action/action_event.py
 
 from dataclasses import dataclass, field
 from datetime import datetime, timezone

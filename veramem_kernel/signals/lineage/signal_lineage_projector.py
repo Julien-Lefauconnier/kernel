@@ -1,4 +1,4 @@
-# kernel/signals/lineage/signal_lineage_projector.py
+# veramem_kernel/signals/lineage/signal_lineage_projector.py
 
 from collections import defaultdict, deque, OrderedDict
 from typing import Dict, Tuple

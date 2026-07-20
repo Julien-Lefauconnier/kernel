@@ -1,4 +1,4 @@
-# kernel/invariants/observation_long/observation_long_invariants.py
+# veramem_kernel/invariants/observation_long/observation_long_invariants.py
 
 from __future__ import annotations
 

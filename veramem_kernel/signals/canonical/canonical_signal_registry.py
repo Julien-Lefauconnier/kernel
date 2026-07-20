@@ -1,4 +1,4 @@
-# kernel/signals/canonical/canonical_signal_registry.py
+# veramem_kernel/signals/canonical/canonical_signal_registry.py
 
 from typing import Dict, Tuple
 from threading import Lock

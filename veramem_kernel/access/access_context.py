@@ -1,4 +1,4 @@
-# kernel/access/access_context.py
+# veramem_kernel/access/access_context.py
 
 from dataclasses import dataclass
 from typing import Optional

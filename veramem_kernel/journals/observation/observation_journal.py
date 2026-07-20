@@ -1,4 +1,4 @@
-# kernel/journals/observation/observation_journal.py
+# veramem_kernel/journals/observation/observation_journal.py
 
 from datetime import datetime
 from typing import List, Protocol

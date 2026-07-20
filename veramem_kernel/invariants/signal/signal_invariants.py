@@ -1,4 +1,4 @@
-# kernel/invariants/signal/signal_invariants.py
+# veramem_kernel/invariants/signal/signal_invariants.py
 
 """
 SIGNAL KERNEL INVARIANTS (NORMATIVE)

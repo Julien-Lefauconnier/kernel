@@ -1,4 +1,4 @@
-# kernel/signals/lineage/signal_lineage_errors.py
+# veramem_kernel/signals/lineage/signal_lineage_errors.py
 
 class SignalLineageError(Exception):
     """

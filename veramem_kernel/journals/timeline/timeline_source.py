@@ -1,4 +1,4 @@
-# kernel/kernel/journals/timeline/timeline_source.py
+# veramem_kernel/kernel/journals/timeline/timeline_source.py
 from typing import Protocol
 from datetime import datetime
 

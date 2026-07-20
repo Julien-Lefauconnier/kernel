@@ -1,4 +1,4 @@
-# kernel/invariants/observation_long/__init__.py
+# veramem_kernel/invariants/observation_long/__init__.py
 
 """
 Kernel invariants for longitudinal observations.

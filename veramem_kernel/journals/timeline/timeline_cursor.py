@@ -1,4 +1,4 @@
-# kernel/journals/timeline/timeline_cursor.py
+# veramem_kernel/journals/timeline/timeline_cursor.py
 """
 TimelineCursor is intentionally NOT orderable.
 

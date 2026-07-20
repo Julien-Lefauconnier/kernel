@@ -1,4 +1,4 @@
-# kernel/signals/lineage/signal_lineage_node.py
+# veramem_kernel/signals/lineage/signal_lineage_node.py
 
 from dataclasses import dataclass
 from typing import Tuple, Optional

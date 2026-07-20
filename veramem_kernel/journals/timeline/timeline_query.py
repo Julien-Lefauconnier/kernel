@@ -1,4 +1,4 @@
-# kernel/journals/timeline/timeline_query.py
+# veramem_kernel/journals/timeline/timeline_query.py
 
 from dataclasses import dataclass
 from typing import Optional

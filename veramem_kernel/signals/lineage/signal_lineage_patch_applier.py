@@ -1,4 +1,4 @@
-# kernel/signals/lineage/signal_lineage_patch_applier.py
+# veramem_kernel/signals/lineage/signal_lineage_patch_applier.py
 
 from typing import Iterable, Dict
 

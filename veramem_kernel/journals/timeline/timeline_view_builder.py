@@ -1,4 +1,4 @@
-# kernel/journals/timeline/timeline_view_builder.py
+# veramem_kernel/journals/timeline/timeline_view_builder.py
 
 from typing import Iterable, List
 

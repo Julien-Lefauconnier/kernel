@@ -1,4 +1,4 @@
-# kernel/journals/timeline/timeline_projector.py
+# veramem_kernel/journals/timeline/timeline_projector.py
 
 """
 TimelineProjector is a PURE structural projection tool.

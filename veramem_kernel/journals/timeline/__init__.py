@@ -1,4 +1,4 @@
-# kernel/journals/timeline/__init__.py
+# veramem_kernel/journals/timeline/__init__.py
 
 from .timeline_entry import TimelineEntry, TimelineEntryNature
 from .timeline_types import TimelineEntryType

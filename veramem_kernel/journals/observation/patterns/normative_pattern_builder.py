@@ -1,4 +1,4 @@
-# kernel/journals/observation/patterns/normative_pattern_builder.py
+# veramem_kernel/journals/observation/patterns/normative_pattern_builder.py
 
 import hashlib
 from typing import Dict, Iterable, Tuple, List

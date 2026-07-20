@@ -1,4 +1,4 @@
-# kernel/signals/signal.py
+# veramem_kernel/signals/signal.py
 
 from dataclasses import dataclass
 from datetime import datetime, timezone

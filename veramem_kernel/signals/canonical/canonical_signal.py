@@ -1,4 +1,4 @@
-# kernel/signals/canonical/canonical_signal.py
+# veramem_kernel/signals/canonical/canonical_signal.py
 
 from dataclasses import dataclass
 from typing import Optional
@@ -16,7 +16,7 @@ class CanonicalSignal:
     origin: str
     supersedes: Optional[str] = None
 
-    def __post_init__(self):
+    def __post_init__(self) -> None:
         spec = CanonicalSignalRegistry.get(self.key)
 
         if self.state not in spec.states_allowed:

@@ -1,4 +1,4 @@
-# kernel/journals/observation/observation_event.py
+# veramem_kernel/journals/observation/observation_event.py
 
 from dataclasses import dataclass
 from datetime import datetime

@@ -1,4 +1,4 @@
-# kernel/invariants/linguistic_constraint/linguistic_constraint_invariants.py
+# veramem_kernel/invariants/linguistic_constraint/linguistic_constraint_invariants.py
 
 """
 Kernel invariants — Linguistic Constraint

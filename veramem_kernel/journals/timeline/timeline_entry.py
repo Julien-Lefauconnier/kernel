@@ -1,4 +1,4 @@
-# kernel/journals/timeline/timeline_entry.py
+# veramem_kernel/journals/timeline/timeline_entry.py
 
 from dataclasses import dataclass
 import unicodedata

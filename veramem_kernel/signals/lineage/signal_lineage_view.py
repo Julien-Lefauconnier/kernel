@@ -1,4 +1,4 @@
-# kernel/signals/lineage/signal_lineage_view.py
+# veramem_kernel/signals/lineage/signal_lineage_view.py
 
 from dataclasses import dataclass
 from typing import Dict, FrozenSet, Tuple, Mapping

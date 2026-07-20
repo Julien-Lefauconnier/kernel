@@ -1,4 +1,4 @@
-# kernel/journals/observation/observation_builder.py
+# veramem_kernel/journals/observation/observation_builder.py
 
 from datetime import datetime, timezone
 

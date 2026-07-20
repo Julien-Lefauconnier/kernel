@@ -1,4 +1,4 @@
-# kernel/journals/audit/audit_event.py
+# veramem_kernel/journals/audit/audit_event.py
 
 from dataclasses import dataclass
 from datetime import datetime, timezone

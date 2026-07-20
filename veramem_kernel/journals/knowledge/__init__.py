@@ -1,4 +1,4 @@
-# kernel/journals/knowledge/__init__.py
+# veramem_kernel/journals/knowledge/__init__.py
 
 from .knowledge_journal import (
     KnowledgeJournal,

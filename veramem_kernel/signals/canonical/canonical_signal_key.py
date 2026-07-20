@@ -1,4 +1,4 @@
-# kernel/signals/canonical/canonical_signal_key.py
+# veramem_kernel/signals/canonical/canonical_signal_key.py
 
 from dataclasses import dataclass
 from .canonical_signal_category import CanonicalSignalCategory

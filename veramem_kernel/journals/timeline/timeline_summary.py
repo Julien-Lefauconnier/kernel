@@ -1,4 +1,4 @@
-# kernel/journals/timeline/timeline_summary.py
+# veramem_kernel/journals/timeline/timeline_summary.py
 
 from typing import List, Optional
 

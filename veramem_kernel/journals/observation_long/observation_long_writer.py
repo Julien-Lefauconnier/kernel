@@ -1,4 +1,4 @@
-# kernel/journals/observation_long/observation_long_writer.py
+# veramem_kernel/journals/observation_long/observation_long_writer.py
 
 from __future__ import annotations
 

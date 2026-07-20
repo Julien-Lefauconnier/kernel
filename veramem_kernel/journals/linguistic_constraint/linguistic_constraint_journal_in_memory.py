@@ -1,4 +1,4 @@
-# kernel/journals/linguistic_constraint/linguistic_constraint_journal_in_memory.py
+# veramem_kernel/journals/linguistic_constraint/linguistic_constraint_journal_in_memory.py
 
 from __future__ import annotations
 

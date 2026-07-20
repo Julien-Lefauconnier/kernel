@@ -1,4 +1,4 @@
-# kernel/journals/knowledge/knowledge_port_adapter.py
+# veramem_kernel/journals/knowledge/knowledge_port_adapter.py
 
 from veramem_kernel.journals.knowledge import KnowledgeJournal
 from veramem_kernel.journals.knowledge.knowledge_event import KnowledgeEvent

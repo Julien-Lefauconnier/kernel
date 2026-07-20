@@ -1,4 +1,4 @@
-# kernel/invariants/access/access_invariants.py
+# veramem_kernel/invariants/access/access_invariants.py
 
 from veramem_kernel.access.access_context import AccessContext
 from veramem_kernel.access.access_decision import AccessDecision

@@ -1,4 +1,4 @@
-# kernel/ports/knowledge_port.py
+# veramem_kernel/ports/knowledge_port.py
 """
 Knowledge Port — public kernel entrypoint.
 

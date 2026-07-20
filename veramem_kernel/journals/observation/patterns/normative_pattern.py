@@ -1,4 +1,4 @@
-# kernel/journals/observation/patterns/normative_pattern.py
+# veramem_kernel/journals/observation/patterns/normative_pattern.py
 
 from dataclasses import dataclass
 from datetime import datetime

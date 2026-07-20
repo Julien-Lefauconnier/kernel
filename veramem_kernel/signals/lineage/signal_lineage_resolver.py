@@ -1,4 +1,4 @@
-# kernel/signals/lineage/signal_lineage_resolver.py
+# veramem_kernel/signals/lineage/signal_lineage_resolver.py
 
 from __future__ import annotations
 from typing import Dict, Set

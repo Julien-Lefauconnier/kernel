@@ -1,4 +1,4 @@
-# kernel/journals/observation_long/__init__.py
+# veramem_kernel/journals/observation_long/__init__.py
 
 """
 Kernel longitudinal observation journal.

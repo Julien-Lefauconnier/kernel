@@ -1,4 +1,4 @@
-# kernel/journals/timeline/timeline_view.py
+# veramem_kernel/journals/timeline/timeline_view.py
 
 from dataclasses import dataclass
 from typing import Tuple

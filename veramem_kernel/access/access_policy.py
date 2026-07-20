@@ -1,4 +1,4 @@
-# kernel/access/access_policy.py
+# veramem_kernel/access/access_policy.py
 
 from abc import ABC, abstractmethod
 from typing import Any

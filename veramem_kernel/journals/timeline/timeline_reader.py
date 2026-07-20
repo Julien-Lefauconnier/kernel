@@ -1,4 +1,4 @@
-# kernel/journals/timeline/timeline_reader.py
+# veramem_kernel/journals/timeline/timeline_reader.py
 
 from datetime import datetime
 from typing import Iterable, List, Optional

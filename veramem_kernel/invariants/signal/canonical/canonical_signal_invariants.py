@@ -1,4 +1,4 @@
-# kernel/invaraints/signals/canonical/canonical_signal_invariants.py
+# veramem_kernel/invaraints/signals/canonical/canonical_signal_invariants.py
 
 from __future__ import annotations
 import unicodedata

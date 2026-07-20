@@ -1,4 +1,4 @@
-# kernel/kernel/journals/timeline/timeline_journal.py
+# veramem_kernel/kernel/journals/timeline/timeline_journal.py
 
 from typing import List
 from threading import Lock

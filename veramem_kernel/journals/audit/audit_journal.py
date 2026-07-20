@@ -1,4 +1,4 @@
-# kernel/journals/audit/audit_journal.py
+# veramem_kernel/journals/audit/audit_journal.py
 
 from typing import Iterable, List
 

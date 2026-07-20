@@ -1,4 +1,4 @@
-# kernel/ports/audit_port.py
+# veramem_kernel/ports/audit_port.py
 
 """
 Audit Port — public kernel entrypoint.

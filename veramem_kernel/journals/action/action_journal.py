@@ -1,4 +1,4 @@
-# kernel/journals/action/action_journal.py
+# veramem_kernel/journals/action/action_journal.py
 
 from typing import List
 

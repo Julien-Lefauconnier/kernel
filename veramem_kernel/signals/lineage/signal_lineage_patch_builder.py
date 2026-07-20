@@ -1,4 +1,4 @@
-# kernel/signals/lineage/signal_lineage_patch_builder.py
+# veramem_kernel/signals/lineage/signal_lineage_patch_builder.py
 
 from typing import Tuple
 

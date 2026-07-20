@@ -1,4 +1,4 @@
-# kernel/ports/signal_port.py
+# veramem_kernel/ports/signal_port.py
 
 from abc import ABC, abstractmethod
 from typing import Iterable

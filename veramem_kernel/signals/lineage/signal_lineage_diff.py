@@ -1,4 +1,4 @@
-# kernel/signals/lineage/signal_lineage_diff.py
+# veramem_kernel/signals/lineage/signal_lineage_diff.py
 
 from dataclasses import dataclass
 from typing import FrozenSet

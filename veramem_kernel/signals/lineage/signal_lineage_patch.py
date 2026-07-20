@@ -1,4 +1,4 @@
-# kernel/signals/lineage/signal_lineage_patch.py
+# veramem_kernel/signals/lineage/signal_lineage_patch.py
 
 from dataclasses import dataclass
 from enum import Enum, auto

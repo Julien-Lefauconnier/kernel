@@ -1,4 +1,4 @@
-# kernel/journals/observation/observation_writer.py
+# veramem_kernel/journals/observation/observation_writer.py
 
 from datetime import datetime, timezone
 from typing import Any

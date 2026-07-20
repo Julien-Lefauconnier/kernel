@@ -1,4 +1,4 @@
-# kernel/journals/observation/observation_journal_in_memory.py
+# veramem_kernel/journals/observation/observation_journal_in_memory.py
 
 from datetime import datetime
 from typing import List

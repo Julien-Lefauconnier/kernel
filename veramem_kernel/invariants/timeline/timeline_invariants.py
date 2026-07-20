@@ -1,4 +1,4 @@
-# kernel/invariants/timeline/timeline_invariants.py
+# veramem_kernel/invariants/timeline/timeline_invariants.py
 
 """
 TIMELINE KERNEL INVARIANTS (NORMATIVE)

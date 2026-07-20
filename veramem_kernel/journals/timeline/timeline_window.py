@@ -1,4 +1,4 @@
-# kernel/journals/timeline/timeline_window.py
+# veramem_kernel/journals/timeline/timeline_window.py
 
 from dataclasses import dataclass
 from typing import Optional, Dict

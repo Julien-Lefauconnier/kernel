@@ -1,4 +1,4 @@
-# kernel/journals/action/action_validation_event.py
+# veramem_kernel/journals/action/action_validation_event.py
 
 from dataclasses import dataclass
 from datetime import datetime

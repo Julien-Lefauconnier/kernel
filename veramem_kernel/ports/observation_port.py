@@ -1,4 +1,4 @@
-# kernel/ports/observation_port.py
+# veramem_kernel/ports/observation_port.py
 
 from __future__ import annotations
 

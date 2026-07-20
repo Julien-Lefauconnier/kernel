@@ -1,4 +1,4 @@
-# kernel/access/access_decision.py
+# veramem_kernel/access/access_decision.py
 
 from enum import Enum
 

@@ -1,4 +1,4 @@
-# kernel/signals/signal_journal.py
+# veramem_kernel/signals/signal_journal.py
 
 from typing import List
 from threading import Lock
@@ -23,7 +23,7 @@ class SignalJournal:
     - deterministic
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._signals: List[Signal] = []
         self._lock = Lock()
 

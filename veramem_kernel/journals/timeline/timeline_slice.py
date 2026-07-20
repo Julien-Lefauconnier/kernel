@@ -1,4 +1,4 @@
-# kernel/journals/timeline/timeline_slice.py
+# veramem_kernel/journals/timeline/timeline_slice.py
 
 from dataclasses import dataclass
 from typing import Iterable, Tuple, Optional

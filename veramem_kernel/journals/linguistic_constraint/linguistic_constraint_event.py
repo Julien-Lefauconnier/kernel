@@ -1,4 +1,4 @@
-# kernel/journals/linguistic_constraint/linguistic_constraint_event.py
+# veramem_kernel/journals/linguistic_constraint/linguistic_constraint_event.py
 
 from __future__ import annotations
 

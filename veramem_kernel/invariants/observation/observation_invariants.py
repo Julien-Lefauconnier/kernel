@@ -1,4 +1,4 @@
-# kernel/invariants/observation/observation_invariants.py
+# veramem_kernel/invariants/observation/observation_invariants.py
 
 from veramem_kernel.journals.observation.observation_event import ObservationEvent
 

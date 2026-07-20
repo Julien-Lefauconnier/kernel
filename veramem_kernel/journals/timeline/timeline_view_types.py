@@ -1,4 +1,4 @@
-# kernel/journals/timeline/timeline_view_types.py
+# veramem_kernel/journals/timeline/timeline_view_types.py
 
 from enum import Enum
 

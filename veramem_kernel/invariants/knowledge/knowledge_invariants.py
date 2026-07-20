@@ -1,4 +1,4 @@
-# kernel/invariants/knowledge/knowledge_invariants.py
+# veramem_kernel/invariants/knowledge/knowledge_invariants.py
 
 """
 KNOWLEDGE KERNEL INVARIANTS (NORMATIVE)
