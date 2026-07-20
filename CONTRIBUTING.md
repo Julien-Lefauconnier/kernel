@@ -2,7 +2,7 @@
 
 Thank you for your interest in contributing to Veramem.
 
-This project aims to build a **deterministic, verifiable, and privacy-preserving memory kernel** designed for long-term cognitive systems and distributed trust.
+This project aims to build a **deterministic, verifiable, and privacy-preserving memory kernel** designed for long-term memory systems and distributed trust.
 
 Because Veramem is intended to become a **global open standard**, contributions must meet high requirements in terms of:
 

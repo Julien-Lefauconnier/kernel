@@ -1,5 +1,5 @@
 # Veramem Kernel
-**A deterministic cognitive core for recording truth, enforcing invariants, and preserving temporal integrity.**
+**A deterministic truth core for recording facts, enforcing invariants, and preserving temporal integrity.**
 
 The Veramem Kernel is a minimal, sovereign foundation designed to make factual systems **auditable, deterministic, and composable by construction**.
 

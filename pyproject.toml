@@ -5,21 +5,23 @@ build-backend = "setuptools.build_meta"
 [project]
 dynamic = []
 name = "veramem-kernel"
-version = "1.2.0"
-description = "Minimal deterministic cognitive kernel for traceable and auditable reasoning systems."
+version = "1.2.1"
+description = "Minimal deterministic truth kernel: append-only journals, temporal integrity, invariant enforcement, and verifiable lineage for auditable systems."
 requires-python = ">=3.10"
 license = "Apache-2.0"
 license-files = ["LICENSE", "NOTICE"]
 readme = { file = "README.md", content-type = "text/markdown" }
 
 keywords = [
-    "ai",
-    "cognitive",
     "deterministic",
+    "append-only",
+    "provenance",
+    "temporal-integrity",
+    "attestation",
     "auditability",
     "traceability",
-    "reasoning",
-    "kernel"
+    "memory",
+    "kernel",
 ]
 
 maintainers = [

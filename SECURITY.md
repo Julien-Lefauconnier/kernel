@@ -1,6 +1,6 @@
 # Security Policy
 
-Veramem is designed as a security-first, deterministic, and verifiable cognitive kernel.
+Veramem is designed as a security-first, deterministic, and verifiable truth kernel.
 
 Security is a foundational property of the system.  
 We welcome responsible disclosure and collaboration with the security and cryptography community.
